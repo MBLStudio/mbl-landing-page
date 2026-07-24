@@ -28,23 +28,121 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "ProfessionalService",
+    "@id": "https://landing.mblcorporacion.es/#organizacion",
     "name": "MBL Studio",
+    "legalName": "MBL Corporación S.L.",
     "url": "https://landing.mblcorporacion.es",
     "email": "desarrollo@mblcorporacion.es",
-    "description": "Software a medida para pequeñas y medianas empresas en España",
+    "description": "Software a medida para pequeñas y medianas empresas: control de jornada laboral, agenda inteligente y páginas web. Operativo en 48 horas, sin hardware ni instalaciones.",
+    "slogan": "Digitaliza tu empresa en 48 horas",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Palencia",
       "addressRegion": "Castilla y León",
+      "postalCode": "34001",
       "addressCountry": "ES"
     },
-    "areaServed": ["Palencia", "Castilla y León", "España", "Italia"],
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 42.0096,
+      "longitude": -4.5288
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Palencia" },
+      { "@type": "AdministrativeArea", "name": "Castilla y León" },
+      { "@type": "Country", "name": "España" },
+      { "@type": "Country", "name": "Italia" }
+    ],
+    "knowsLanguage": ["es", "it"],
     "priceRange": "€€",
+    "currenciesAccepted": "EUR",
     "foundingDate": "2024",
     "telephone": "+34686579082",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+34686579082",
+      "email": "desarrollo@mblcorporacion.es",
+      "contactType": "sales",
+      "availableLanguage": ["Spanish", "Italian"],
+      "areaServed": ["ES", "IT"]
+    },
     "image": "https://landing.mblcorporacion.es/og-image.png",
-    "openingHours": ["Mo-Fr 09:00-19:00"],
+    "logo": "https://landing.mblcorporacion.es/og-image.png",
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "19:00"
+    }],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios de digitalización para empresas",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "Control de jornada laboral",
+          "description": "Registro horario legal para empleados, con informes automáticos y sin hardware. Cumple con la normativa española de control horario.",
+          "url": "https://landing.mblcorporacion.es/control-jornada/",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "25.00",
+            "priceCurrency": "EUR",
+            "unitText": "hasta 10 empleados",
+            "billingDuration": 1,
+            "billingIncrement": 1,
+            "unitCode": "MON"
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Agenda inteligente",
+          "description": "Gestión de citas y reservas online con avisos automáticos a clientes.",
+          "url": "https://landing.mblcorporacion.es/agenda-inteligente/",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "25.00",
+            "priceCurrency": "EUR",
+            "unitText": "hasta 10 empleados",
+            "billingDuration": 1,
+            "billingIncrement": 1,
+            "unitCode": "MON"
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Página web profesional",
+          "description": "Diseño y desarrollo de página web para empresas, optimizada para móvil y buscadores.",
+          "url": "https://landing.mblcorporacion.es/pagina-web/"
+        },
+        {
+          "@type": "Offer",
+          "name": "Software para empresas de limpieza",
+          "description": "Gestión de partes de trabajo, cuadrantes y control de personal para empresas de limpieza.",
+          "url": "https://landing.mblcorporacion.es/empresas-limpieza/"
+        },
+        {
+          "@type": "Offer",
+          "name": "Alta y puesta en marcha",
+          "description": "Configuración completa del sistema y alta de todo el equipo. Operativo en 48 horas.",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "149.00",
+            "priceCurrency": "EUR"
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Formación presencial",
+          "description": "Sesión de formación presencial opcional para el equipo, en Palencia y provincia.",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "150.00",
+            "priceCurrency": "EUR"
+          }
+        }
+      ]
+    },
     "sameAs": ["https://www.linkedin.com/company/mbl-studio/"]
   }
   </script>
