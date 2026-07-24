@@ -605,7 +605,20 @@
       box-shadow: 0 8px 24px rgba(0,113,227,0.22);
     }
     .form-submit:hover { background: var(--accent-h); transform: translateY(-1px); }
+    .form-submit:disabled { opacity: 0.6; cursor: wait; transform: none; }
     .form-note { font-size: 12px; color: var(--soft); text-align: center; margin-top: 10px; }
+
+    .diag-fallback {
+      margin-top: 18px; padding: 18px 20px; border-radius: 14px;
+      background: rgba(37,211,102,0.08); border: 1px solid rgba(37,211,102,0.28);
+    }
+    .diag-fallback p { font-size: 14px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+    .fallback-wa {
+      display: inline-block; background: #25D366; color: #fff; text-decoration: none;
+      font-size: 15px; font-weight: 700; padding: 12px 26px; border-radius: 12px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .fallback-wa:hover { background: #1eb457; transform: translateY(-1px); }
 
     .diag-success {
       text-align: center; padding: 40px 20px; display: none;
@@ -1111,7 +1124,9 @@
               <p id="result-desc">Déjanos tus datos y te enviamos una propuesta personalizada en menos de 24 horas.</p>
             </div>
             <form id="diag-form" onsubmit="submitDiag(event)">
-              <input type="hidden" name="_subject" value="[MBL Studio] Nuevo diagnóstico recibido" />
+              <!-- Honeypot: invisible para personas, los bots lo rellenan y descartamos el envío -->
+              <input type="text" name="website" tabindex="-1" autocomplete="off"
+                     aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" />
               <input type="hidden" name="q1" id="h_q1" />
               <input type="hidden" name="q2" id="h_q2" />
               <input type="hidden" name="q3" id="h_q3" />
@@ -1164,6 +1179,11 @@
               <button class="form-submit" type="submit">Enviar y recibir propuesta gratuita</button>
               <p class="form-note">Sin compromiso · Respuesta en menos de 24h · desarrollo@mblcorporacion.es</p>
             </form>
+            <div class="diag-fallback" id="diag-fallback" style="display:none">
+              <p><strong>No hemos podido enviar el formulario.</strong> Escríbenos por WhatsApp y llegas directo —
+                 el mensaje va ya escrito con tus respuestas.</p>
+              <a class="fallback-wa" href="#" target="_blank" rel="noopener">Continuar por WhatsApp →</a>
+            </div>
             <div class="diag-success" id="diag-success">
               <div class="success-icon">✅</div>
               <h3>¡Solicitud recibida!</h3>
@@ -1328,86 +1348,56 @@
       const extra = form.querySelector('[name=extra]').value;
 
       const payload = {
-        access_key: 'ebc21289-7d97-472c-9270-19cf0ecd251d',
-        subject: '[MBL Studio] Nuevo diagnóstico recibido',
-        from_name: 'MBL Studio Web',
         nombre, empresa, telefono, email, sector_form, preferencia, extra,
         q1: answers.q1, q2: answers.q2, q3: answers.q3,
-        sector: selectedSector
+        sector: selectedSector,
+        website: form.querySelector('[name=website]').value, // honeypot antispam
+        origen: window.location.pathname + window.location.search
       };
 
-      // Enviar a Telegram
-      function sendTelegram(nombre, empresa, telefono, email, sector_form, preferencia, extra) {
-        const BOT_TOKEN = '8771261571:AAGOC1y7WyjPLax3UxzlpegZvvb3czPvKtc';
-        const CHAT_ID = '913438273';
-        const msg = `🔔 *Nuevo lead en MBL Studio*
+      const btn = form.querySelector('.form-submit');
+      const textoBtn = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
 
-👤 *Nombre:* ${nombre || '—'}
-🏢 *Empresa:* ${empresa || '—'}
-📞 *Teléfono:* ${telefono || '—'}
-📧 *Email:* ${email || '—'}
-
-📋 *Diagnóstico:*
-1️⃣ Qué le quita tiempo: ${answers.q1 || '—'}
-2️⃣ Tamaño del equipo: ${answers.q2 || '—'}
-3️⃣ Objetivo: ${answers.q3 || '—'}
-
-🏭 *Sector:* ${sector_form || selectedSector || '—'}
-⭐ *Preferencia:* ${preferencia || '—'}
-💬 *Mensaje extra:* ${extra || '—'}`;
-
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'Markdown' })
-        }).catch(() => {});
-      }
-
-      fetch('https://api.web3forms.com/submit', {
+      fetch('/api/lead', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).then(r => r.json()).then(res => {
-        sendTelegram(nombre, empresa, telefono, email, sector_form, preferencia, extra);
-        if (res.success) {
-          form.style.display = 'none';
-          document.getElementById('diag-success').style.display = 'block';
-        } else {
-          fallbackMail();
-        }
+      }).then(r => {
+        if (!r.ok) throw new Error('respuesta ' + r.status);
+        form.style.display = 'none';
+        document.getElementById('diag-success').style.display = 'block';
       }).catch(() => {
-        sendTelegram(nombre, empresa, telefono, email, sector_form, preferencia, extra);
-        fallbackMail();
+        // Solo si el envío falla de verdad ofrecemos WhatsApp como salida.
+        btn.disabled = false;
+        btn.textContent = textoBtn;
+        mostrarFallbackWhatsApp();
       });
     }
 
-    function fallbackMail() {
-      const nombre = document.querySelector('[name=nombre]').value;
-      const empresa = document.querySelector('[name=empresa]').value;
-      const tel = document.querySelector('[name=telefono]').value;
-      const extra = document.querySelector('[name=extra]').value;
-      const subject = encodeURIComponent('[MBL Studio] Diagnóstico — ' + (empresa || 'Nueva consulta'));
-      const body = encodeURIComponent(
-`Hola MBL Studio,
+    // Se muestra solo si el POST a /api/lead ha fallado, para no perder el lead.
+    function mostrarFallbackWhatsApp() {
+      const aviso = document.getElementById('diag-fallback');
+      const form = document.getElementById('diag-form');
+      const nombre = form.querySelector('[name=nombre]').value;
+      const empresa = form.querySelector('[name=empresa]').value;
+      const tel = form.querySelector('[name=telefono]').value;
+      const extra = form.querySelector('[name=extra]').value;
 
-He completado el diagnóstico en vuestra web.
+      const texto = encodeURIComponent(
+`Hola MBL Studio, he hecho el diagnóstico en vuestra web:
 
-— Respuestas:
-1) Qué me quita tiempo: ${answers.q1}
-2) Tamaño del equipo: ${answers.q2}
-3) Objetivo: ${answers.q3}
-4) Sector: ${selectedSector || 'No indicado'}
+• Qué me quita tiempo: ${answers.q1 || '—'}
+• Tamaño del equipo: ${answers.q2 || '—'}
+• Objetivo: ${answers.q3 || '—'}
+• Sector: ${selectedSector || '—'}
 
-— Datos de contacto:
-Nombre: ${nombre}
-Empresa: ${empresa}
-Teléfono: ${tel}
-Extra: ${extra || '-'}
+Soy ${nombre} de ${empresa}. Mi teléfono: ${tel}${extra ? '\n\n' + extra : ''}`);
 
-Gracias.`);
-      window.location.href = `mailto:desarrollo@mblcorporacion.es?subject=${subject}&body=${body}`;
-      document.getElementById('diag-form').style.display = 'none';
-      document.getElementById('diag-success').style.display = 'block';
+      aviso.querySelector('a').href = 'https://wa.me/34686579082?text=' + texto;
+      aviso.style.display = 'block';
+      aviso.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   </script>
 </body>
