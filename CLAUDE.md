@@ -237,4 +237,4 @@ Risk table: Clear naming, structure, maintainability, or small refactors → `re
 
 ## Publicar
 
-Vercel publica desde `main` solo los cambios de quien tiene plaza de pago (Alejandro). Desde otro ordenador, proponlos con `node ~/mbl-toolkit/herramientas/github/cambios.mjs proponer --titulo "..."` y los publica Alejandro.
+Vercel publica desde `main` solo los cambios de quien tiene plaza de pago (Alejandro). Desde otro ordenador, proponlos con `node ~/mbl-toolkit/herramientas/github/cambios.mjs proponer --titulo "..."` y los publica Alejandro (ve el detalle con `cambios.mjs ver <repo> <número>`).
