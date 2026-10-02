@@ -234,3 +234,7 @@ Risk table: Clear naming, structure, maintainability, or small refactors → `re
 - At **release**, always: validate the existing content-bound receipt with native `review-validate`; never start a reviewer or reset its budget. (validate immutable release tree, provenance, evidence, and publication boundary)
 - At **post-sdd-phase**, after the apply phase completes: if no valid receipt exists, explicitly run `review/start(target)`; otherwise reuse the receipt. (explicitly start ordinary bounded implementation review after apply only when no valid receipt exists)
 <!-- /gentle-ai:trigger-rules -->
+
+## Publicar
+
+Vercel publica desde `main` solo los cambios de quien tiene plaza de pago (Alejandro). Desde otro ordenador, proponlos con `node ~/mbl-toolkit/herramientas/github/cambios.mjs proponer --titulo "..."` y los publica Alejandro.
