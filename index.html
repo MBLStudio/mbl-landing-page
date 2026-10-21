@@ -181,610 +181,309 @@
   </script>
   <style>
     :root {
-      --bg: #f0efe9;
-      --bg2: #f7f6f2;
-      --surface: #ffffff;
-      --border: rgba(0,0,0,0.07);
-      --border2: rgba(0,0,0,0.04);
-      --text: #1d1d1f;
-      --muted: #6e6e73;
-      --soft: #a1a1a6;
-      --accent: #2c5282;
-      --accent-h: #2a4a7f;
-      --accent-light: rgba(44,82,130,0.07);
-      --accent-mid: rgba(44,82,130,0.13);
-      --green: #30d158;
+      --bg: #070B10; --ink: #F2F6F7; --muted: #9AA8B4; --soft: #6E7D8A; --teal: #2BB3A3; --teal-2: #5FD6C6;
+      --glass: rgba(12, 18, 26, .62); --glass-strong: rgba(12, 18, 26, .82); --line: rgba(255, 255, 255, .09);
       --radius: 20px;
-      --radius2: 28px;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
-      --shadow: 0 8px 32px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04);
-      --shadow-lg: 0 24px 64px rgba(0,0,0,0.09), 0 8px 24px rgba(0,0,0,0.05);
-      --max: 1060px;
-      --font: 'Outfit', system-ui, sans-serif;
-      --serif: 'DM Serif Display', Georgia, serif;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    body { background: var(--bg); color: var(--ink); font-family: 'Outfit', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; }
+    em { font-family: 'DM Serif Display', Georgia, serif; font-style: italic; font-weight: 400; color: var(--teal-2); }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); }
 
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s cubic-bezier(.22,.68,0,1.2), transform 0.7s cubic-bezier(.22,.68,0,1.2);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
+    /* ── Fixed 3D space behind the whole page ── */
+    #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+    .vignette { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse 85% 75% at 50% 45%, transparent 50%, rgba(3, 5, 8, .85) 100%); }
+    main, footer { position: relative; z-index: 1; }
+    .fallback { display: none; }
+    .no-gl .fallback { display: flex; position: absolute; inset: 0; align-items: center; justify-content: center; padding: 0 8vw 30vh; }
+    .no-gl .fallback svg { width: min(620px, 84vw); height: auto; }
 
-    /* ── HEADER ── */
-    header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      background: rgba(250,250,250,0.85);
-      backdrop-filter: saturate(180%) blur(22px);
-      -webkit-backdrop-filter: saturate(180%) blur(22px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 54px;
-    }
-    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
-    .brand-mark {
-      width: 33px; height: 33px; border-radius: 9px;
-      background: linear-gradient(135deg, #1d1d1f 0%, #3a3a3c 100%);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: var(--shadow-sm);
-      flex-shrink: 0;
-    }
-    .brand-mark span { font-weight: 900; font-size: 11px; color: white; letter-spacing: -0.3px; }
-    .brand-name { font-weight: 700; font-size: 15px; letter-spacing: -0.3px; }
-    nav { display: flex; align-items: center; gap: 4px; }
-    .nav-link {
-      font-size: 13px; font-weight: 500; color: var(--muted);
-      text-decoration: none; padding: 6px 12px; border-radius: 20px;
-      transition: color 0.2s, background 0.2s; cursor: pointer;
-    }
-    .nav-link:hover { color: var(--text); background: rgba(0,0,0,0.05); }
-    .nav-cta {
-      font-size: 13px; font-weight: 600; color: white;
-      background: var(--accent); border: none; cursor: pointer;
-      padding: 8px 18px; border-radius: 20px; text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      white-space: nowrap;
-    }
-    .nav-cta:hover { background: var(--accent-h); transform: translateY(-1px); }
+    /* ── Header ── */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 10; transition: background .3s, border-color .3s, backdrop-filter .3s; border-bottom: 1px solid transparent; }
+    header.scrolled { background: rgba(7, 11, 16, .72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-color: var(--line); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-logo svg { height: 24px; width: auto; display: block; }
+    .brand-name { font-weight: 600; font-size: 15px; color: var(--muted); letter-spacing: .02em; }
+    nav { display: flex; align-items: center; gap: 26px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-link:hover { color: var(--ink); }
+    .nav-cta { background: var(--teal); color: #03201C; border: 0; font: 600 14px 'Outfit', sans-serif; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px -8px rgba(43, 179, 163, .8); }
 
-    /* ── HERO ── */
-    .hero {
-      padding: 148px 0 100px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 900px 500px at 50% -80px, rgba(0,113,227,0.06), transparent),
-        radial-gradient(ellipse 500px 300px at 10% 90%, rgba(0,113,227,0.04), transparent),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-    }
-    .hero-content { position: relative; z-index: 1; }
+    /* ── Hero (sticky while the line climbs and the logo leaves) ── */
+    .hero { height: 200vh; position: relative; }
+    .hero-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+    .hero-copy { position: absolute; left: 0; right: 0; bottom: clamp(28px, 7vh, 80px); text-align: center; padding: 0 16px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); border: 1px solid var(--line); background: rgba(12, 18, 26, .5); padding: 7px 14px; border-radius: 999px; margin-bottom: 18px; }
+    .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 10px var(--teal); }
+    .hero-title { font-size: clamp(34px, 4.6vw, 60px); font-weight: 700; letter-spacing: -.03em; line-height: 1.04; }
+    .hero-sub { color: var(--muted); font-size: clamp(16px, 1.3vw, 18px); line-height: 1.55; max-width: 36em; margin: 14px auto 24px; }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #03201C; border: 0; font: 600 16px 'Outfit', sans-serif; padding: 15px 26px; border-radius: 999px; cursor: pointer; text-decoration: none; box-shadow: 0 12px 40px -12px rgba(43, 179, 163, .8); transition: transform .2s, box-shadow .2s; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 50px -10px rgba(43, 179, 163, .95); }
+    .btn-secondary { display: inline-flex; align-items: center; color: var(--ink); font-weight: 500; font-size: 16px; padding: 15px 24px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .16); text-decoration: none; background: rgba(12, 18, 26, .4); transition: border-color .2s; }
+    .btn-secondary:hover { border-color: rgba(255, 255, 255, .4); }
+    .hero-proof { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px 18px; margin-top: 22px; color: var(--muted); font-size: 14px; }
+    .proof-icon { color: var(--teal); font-weight: 700; margin-right: 4px; }
+    .proof-div { width: 1px; height: 14px; background: var(--line); }
+    .scroll-hint { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px;
+      color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; transition: opacity .4s; }
+    .scroll-hint .mouse { position: relative; width: 20px; height: 31px; border: 1.5px solid rgba(255, 255, 255, .35); border-radius: 11px; }
+    .scroll-hint .mouse::after { content: ""; position: absolute; left: 50%; top: 6px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--teal); animation: wheel 1.6s ease-in-out infinite; }
+    .ready .scroll-hint.gone { opacity: 0; }
+    .intro { opacity: 0; transform: translateY(16px); transition: opacity 1s cubic-bezier(.2, .7, .2, 1), transform 1s cubic-bezier(.2, .7, .2, 1); }
+    .ready .intro { opacity: 1; transform: none; }
+    .ready .i1 { transition-delay: .1s; } .ready .i2 { transition-delay: .2s; } .ready .i3 { transition-delay: .3s; } .ready .i4 { transition-delay: .5s; }
 
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--accent-light); border: 1px solid var(--accent-mid);
-      border-radius: 999px; padding: 6px 16px;
-      font-size: 12px; font-weight: 600; color: var(--accent);
-      margin-bottom: 32px;
-      opacity: 0; transform: translateY(12px);
-      animation: fadeUp 0.6s 0.1s ease forwards;
-    }
-    .badge-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent);
-      animation: blink 2s ease infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    /* ── Sections ── */
+    section.block { padding: clamp(80px, 12vh, 130px) 0; }
+    .section-label { color: var(--teal); font-weight: 600; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 14px; }
+    .section-title { font-size: clamp(32px, 4vw, 52px); font-weight: 700; letter-spacing: -.03em; line-height: 1.06; }
+    .section-sub { color: var(--muted); font-size: 18px; line-height: 1.6; max-width: 36em; margin-top: 16px; }
+    .glass { background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius); backdrop-filter: blur(16px) saturate(120%); -webkit-backdrop-filter: blur(16px) saturate(120%); }
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: .08s; } .reveal-delay-2 { transition-delay: .16s; } .reveal-delay-3 { transition-delay: .24s; }
+    .icon-tile { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: rgba(43, 179, 163, .1); border: 1px solid rgba(43, 179, 163, .25); }
+    .text-link { display: inline-flex; align-items: center; gap: 6px; color: var(--teal-2); font-weight: 600; font-size: 15px; text-decoration: none; transition: gap .2s; }
+    .text-link:hover { gap: 10px; }
+    .soft-link { display: inline-flex; margin-top: 10px; font-size: 13px; color: var(--soft); text-decoration: none; transition: color .2s; }
+    .soft-link:hover { color: var(--teal-2); }
 
-    .hero-title {
-      font-size: clamp(42px, 7vw, 82px);
-      font-weight: 800;
-      letter-spacing: -2.5px;
-      line-height: 1.02;
-      margin-bottom: 20px;
-      opacity: 0; transform: translateY(20px);
-      animation: fadeUp 0.7s 0.2s ease forwards;
-    }
-    .hero-title em {
-      font-style: normal;
-      font-family: var(--serif);
-      font-weight: 400;
-      color: var(--accent);
-    }
-    .hero-sub {
-      font-size: clamp(16px, 2vw, 20px);
-      font-weight: 400;
-      color: var(--muted);
-      max-width: 52ch;
-      margin: 0 auto 36px;
-      line-height: 1.55;
-      opacity: 0; transform: translateY(20px);
-      animation: fadeUp 0.7s 0.3s ease forwards;
-    }
-    .hero-actions {
-      display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
-      opacity: 0; transform: translateY(20px);
-      animation: fadeUp 0.7s 0.4s ease forwards;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--accent); color: white;
-      font-family: var(--font); font-weight: 600; font-size: 15px;
-      padding: 14px 28px; border-radius: 14px; border: none; cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 8px 24px rgba(0,113,227,0.25);
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-primary:hover {
-      background: var(--accent-h); transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(0,113,227,0.32);
-    }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--surface); color: var(--text);
-      font-family: var(--font); font-weight: 600; font-size: 15px;
-      padding: 14px 28px; border-radius: 14px;
-      border: 1px solid var(--border); cursor: pointer;
-      text-decoration: none;
-      box-shadow: var(--shadow-sm);
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-secondary:hover { background: var(--bg2); transform: translateY(-2px); box-shadow: var(--shadow); }
+    /* Products */
+    .productos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 48px; }
+    .producto-card { padding: 32px; display: flex; flex-direction: column; align-items: flex-start; transition: border-color .3s, transform .3s; }
+    .producto-card:hover { border-color: rgba(43, 179, 163, .35); transform: translateY(-4px); }
+    .producto-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 999px; margin: 20px 0 12px; }
+    .badge-live { color: var(--teal-2); background: rgba(43, 179, 163, .12); border: 1px solid rgba(43, 179, 163, .3); }
+    .badge-dev { color: #E8C37A; background: rgba(232, 195, 122, .1); border: 1px solid rgba(232, 195, 122, .28); }
+    .badge-dot-sm { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .producto-card h3 { font-size: 24px; letter-spacing: -.02em; margin-bottom: 10px; }
+    .producto-card > p { color: var(--muted); line-height: 1.6; }
+    .feature-list { list-style: none; margin: 20px 0 24px; display: grid; gap: 10px; }
+    .feature-list li, .web-features li { position: relative; padding-left: 26px; color: #C9D3DA; font-size: 15px; }
+    .feature-list li::before, .web-features li::before { content: "✓"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+    .producto-card .text-link { margin-top: auto; }
 
-    .hero-proof {
-      margin-top: 52px;
-      display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.6s ease forwards;
-    }
-    .proof-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); }
-    .proof-icon { font-size: 15px; }
-    .proof-div { width: 1px; height: 16px; background: var(--border); }
+    /* Web a medida */
+    .web-card { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; padding: clamp(28px, 4vw, 48px); align-items: center; }
+    .web-title { font-size: clamp(30px, 3.4vw, 44px); letter-spacing: -.03em; line-height: 1.08; margin: 18px 0 14px; }
+    .web-sub { color: var(--muted); line-height: 1.6; font-size: 17px; }
+    .web-features { list-style: none; display: grid; gap: 10px; margin-top: 22px; }
+    .web-cta { display: flex; flex-direction: column; align-items: flex-start; margin-top: 28px; }
+    .web-preview { border-radius: 14px; border: 1px solid var(--line); background: rgba(5, 9, 13, .7); overflow: hidden; transform: perspective(900px) rotateY(-8deg) rotateX(4deg); box-shadow: 0 30px 80px -30px rgba(43, 179, 163, .35); }
+    .wp-bar { display: flex; gap: 6px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    .wp-bar span { width: 9px; height: 9px; border-radius: 50%; background: #2a3540; }
+    .wp-hero { height: 120px; margin: 16px; border-radius: 10px; background: linear-gradient(135deg, rgba(43, 179, 163, .5), rgba(21, 94, 117, .4)); }
+    .wp-lines { padding: 0 16px; display: grid; gap: 8px; }
+    .wp-line { height: 9px; border-radius: 5px; background: #1f2a35; }
+    .wp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 16px; }
+    .wp-card { height: 60px; border-radius: 8px; background: #131d27; border: 1px solid var(--line); }
+    .web-extras { margin-top: 28px; }
+    .web-extras-label { color: var(--soft); font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 14px; }
+    .web-extras-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .web-extra-card { display: flex; gap: 14px; padding: 22px; }
+    .web-extra-icon { font-size: 22px; }
+    .web-extra-title { font-weight: 600; margin-bottom: 6px; }
+    .web-extra-desc { color: var(--muted); font-size: 14px; line-height: 1.55; }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* Sectores */
+    .sectores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
+    .sector-card { padding: 22px 18px; text-align: center; cursor: pointer; transition: border-color .25s, transform .25s, background .25s; }
+    .sector-card:hover { border-color: rgba(43, 179, 163, .4); transform: translateY(-3px); }
+    .sector-card.selected { border-color: var(--teal); background: rgba(43, 179, 163, .14); }
+    .sector-emoji { font-size: 28px; display: block; margin-bottom: 10px; }
+    .sector-name { font-weight: 600; }
+    .sector-desc { color: var(--soft); font-size: 13px; margin-top: 4px; }
 
-    /* ── SECTION BASE ── */
-    section { padding: 90px 0; }
-    .section-label {
-      font-size: 12px; font-weight: 700; letter-spacing: 1.2px;
-      text-transform: uppercase; color: var(--accent);
-      margin-bottom: 14px;
-    }
-    .section-title {
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 800; letter-spacing: -1.2px; line-height: 1.1;
-      margin-bottom: 16px;
-    }
-    .section-title em { font-style: italic; font-family: var(--serif); font-weight: 400; }
-    .section-sub {
-      font-size: 17px; color: var(--muted); line-height: 1.6;
-      max-width: 54ch; margin-bottom: 52px;
-    }
+    /* Cómo */
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+    .step-card { padding: 30px; position: relative; }
+    .step-num { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #03201C; background: var(--teal); box-shadow: 0 0 24px rgba(43, 179, 163, .55); margin-bottom: 18px; }
+    .step-card h3 { font-size: 20px; margin-bottom: 8px; }
+    .step-card p { color: var(--muted); line-height: 1.6; font-size: 15px; }
+    .step-connector { position: absolute; top: 52px; right: -21px; width: 22px; height: 2px; background: linear-gradient(90deg, var(--teal), transparent); }
 
-    /* ── PRODUCTOS ── */
-    .productos { background: var(--bg2); }
-    .productos-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-    }
-    .producto-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius2);
-      padding: 36px;
-      box-shadow: var(--shadow);
-      position: relative; overflow: hidden;
-      transition: transform 0.3s cubic-bezier(.22,.68,0,1.2), box-shadow 0.3s ease;
-      cursor: default;
-    }
-    .producto-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .producto-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      border-radius: var(--radius2) var(--radius2) 0 0;
-    }
-    .producto-card.jornada::before { background: linear-gradient(90deg, #0071e3, #34aadc); }
-    .producto-card.agenda::before { background: linear-gradient(90deg, #30d158, #0071e3); }
+    /* Caso */
+    .caso-card { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; padding: clamp(28px, 4vw, 44px); margin-top: 36px; align-items: center; }
+    .caso-tag { display: inline-block; color: var(--teal-2); font-size: 13px; font-weight: 600; background: rgba(43, 179, 163, .12); border: 1px solid rgba(43, 179, 163, .3); padding: 5px 11px; border-radius: 999px; margin-bottom: 16px; }
+    .caso-card h3 { font-size: 24px; letter-spacing: -.02em; margin-bottom: 12px; }
+    .caso-card p { color: var(--muted); line-height: 1.65; }
+    .caso-links { display: flex; flex-direction: column; align-items: flex-start; margin-top: 18px; }
+    .caso-stats { display: grid; gap: 18px; }
+    .stat-item { padding: 6px 0; }
+    .stat-num { font-size: 44px; font-weight: 800; letter-spacing: -.03em; color: var(--ink); text-shadow: 0 0 30px rgba(43, 179, 163, .45); }
+    .stat-label { color: var(--muted); font-size: 14px; }
+    .stat-div { height: 1px; background: var(--line); }
 
-    .producto-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; margin-bottom: 20px;
-    }
-    .jornada .producto-icon { background: rgba(0,113,227,0.08); }
-    .agenda .producto-icon { background: rgba(48,209,88,0.08); }
-
-    .producto-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 11px; font-weight: 600;
-      padding: 4px 10px; border-radius: 999px; margin-bottom: 14px;
-    }
-    .badge-live { background: rgba(48,209,88,0.1); color: #1a9e3f; }
-    .badge-dev { background: rgba(255,159,10,0.1); color: #cc7a00; }
-    .badge-dot-sm { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-
-    .producto-card h3 {
-      font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 10px;
-    }
-    .producto-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
-
-    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-    .feature-list li {
-      display: flex; align-items: center; gap: 9px;
-      font-size: 13px; color: var(--muted);
-    }
-    .feature-list li::before {
-      content: ''; width: 16px; height: 16px; border-radius: 50%;
-      background: var(--accent-light); border: 1.5px solid var(--accent-mid);
-      flex-shrink: 0;
-      background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%230071e3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: center;
-    }
-    .producto-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 13px; font-weight: 600; color: var(--accent);
-      margin-top: 24px; text-decoration: none;
-      transition: gap 0.2s;
-    }
-    .producto-link:hover { gap: 9px; }
-
-    /* ── WEB A MEDIDA ── */
-    .web-medida { background: var(--bg); padding: 0 0 80px; }
-    .web-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      overflow: hidden;
-      position: relative;
-    }
-    .web-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      border-radius: var(--radius2) var(--radius2) 0 0;
-      background: linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7);
-    }
-    .web-card-left { padding: 44px 44px 44px 44px; }
-    .web-icon { font-size: 36px; margin-bottom: 16px; }
-    .web-title {
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 14px;
-    }
-    .web-title em { font-style: normal; font-family: var(--serif); font-weight: 400; color: #6366f1; }
-    .web-sub { font-size: 15px; color: var(--muted); line-height: 1.6; max-width: 40ch; margin-bottom: 24px; }
-    .web-features { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-    .web-features li {
-      display: flex; align-items: center; gap: 9px;
-      font-size: 13px; color: var(--muted);
-    }
-    .web-features li::before {
-      content: ''; width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
-      background: rgba(99,102,241,0.08);
-      border: 1.5px solid rgba(99,102,241,0.2);
-      background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%236366f1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: center;
-    }
-    .web-card-right {
-      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
-      display: flex; align-items: center; justify-content: center;
-      padding: 44px;
-    }
-    .web-preview {
-      background: white;
-      border-radius: 14px;
-      box-shadow: var(--shadow-lg);
-      width: 100%; max-width: 320px;
-      padding: 16px;
-      border: 1px solid rgba(99,102,241,0.1);
-    }
-    .wp-bar { display: flex; gap: 5px; margin-bottom: 12px; }
-    .wp-bar span { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
-    .wp-bar span:nth-child(1) { background: #fca5a5; }
-    .wp-bar span:nth-child(2) { background: #fde68a; }
-    .wp-bar span:nth-child(3) { background: #86efac; }
-    .wp-hero { height: 90px; background: linear-gradient(135deg, #6366f1, #a855f7); border-radius: 10px; margin-bottom: 14px; }
-    .wp-lines { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; padding: 0 4px; }
-    .wp-line { height: 8px; background: var(--border); border-radius: 999px; }
-    .wp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 4px; }
-    .wp-card { height: 52px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); }
-    @media (max-width: 768px) {
-      .web-card { grid-template-columns: 1fr; }
-      .web-card-right { display: none; }
-      .web-card-left { padding: 32px 24px; }
-    }
-    /* ── EXTRAS SECUNDARIOS ── */
-    .web-extras { margin-top: 20px; }
-    .web-extras-label {
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 14px;
-    }
-    .web-extras-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-    }
-    .web-extra-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 22px 20px;
-      display: flex; gap: 16px; align-items: flex-start;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .web-extra-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.06); transform: translateY(-2px); }
-    .web-extra-icon { font-size: 26px; flex-shrink: 0; }
-    .web-extra-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-    .web-extra-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-    @media (max-width: 768px) {
-      .web-extras-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ── SECTORES ── */
-    .sectores-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-    }
-    .sector-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 22px 18px;
-      text-align: center; cursor: pointer;
-      transition: transform 0.25s cubic-bezier(.22,.68,0,1.2), box-shadow 0.25s ease, border-color 0.2s;
-      box-shadow: var(--shadow-sm);
-    }
-    .sector-card:hover, .sector-card.selected {
-      transform: translateY(-3px); box-shadow: var(--shadow);
-      border-color: var(--accent);
-    }
-    .sector-card.selected { background: var(--accent-light); }
-    .sector-emoji { font-size: 28px; margin-bottom: 10px; display: block; }
-    .sector-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-    .sector-desc { font-size: 11px; color: var(--soft); }
-
-    /* ── CÓMO FUNCIONA ── */
-    .como { background: var(--bg2); }
-    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .step-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius2); padding: 32px 28px;
-      box-shadow: var(--shadow-sm); position: relative;
-    }
-    .step-num {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: var(--accent); color: white;
-      font-size: 15px; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 18px;
-    }
-    .step-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.3px; }
-    .step-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-    .step-connector {
-      position: absolute; top: 50px; right: -12px;
-      width: 24px; height: 2px; background: var(--border);
-      z-index: 1;
-    }
-
-    /* ── CASO REAL ── */
-    .caso-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius2); padding: 48px;
-      box-shadow: var(--shadow); display: grid;
-      grid-template-columns: 1fr auto; gap: 48px; align-items: center;
-    }
-    .caso-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(48,209,88,0.1); color: #1a9e3f;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-      padding: 5px 12px; border-radius: 999px; margin-bottom: 18px;
-    }
-    .caso-card h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 10px; }
-    .caso-card p { font-size: 15px; color: var(--muted); line-height: 1.65; }
-    .caso-stats { display: flex; flex-direction: column; gap: 16px; }
-    .stat-item { text-align: center; }
-    .stat-num { font-size: 38px; font-weight: 800; letter-spacing: -1.5px; color: var(--accent); line-height: 1; }
-    .stat-label { font-size: 12px; color: var(--soft); margin-top: 4px; }
-    .stat-div { width: 40px; height: 1px; background: var(--border); margin: 0 auto; }
-
-    /* ── DIAGNÓSTICO ── */
-    .diag-section { background: var(--bg2); }
-    .diag-wrapper {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius2); box-shadow: var(--shadow-lg);
-      overflow: hidden;
-    }
-    .diag-header {
-      background: linear-gradient(135deg, #1d1d1f 0%, #3a3a3c 100%);
-      padding: 36px 40px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .diag-header-text h3 { font-size: 22px; font-weight: 700; color: white; margin-bottom: 6px; }
-    .diag-header-text p { font-size: 14px; color: rgba(255,255,255,0.6); }
+    /* Diagnóstico */
+    .diag-wrapper { margin-top: 40px; overflow: hidden; background: var(--glass-strong); }
+    .diag-header { display: flex; align-items: center; justify-content: space-between; padding: 22px 28px; border-bottom: 1px solid var(--line); }
+    .diag-header h3 { font-size: 18px; }
+    .diag-header p { color: var(--muted); font-size: 14px; margin-top: 4px; }
     .diag-progress-dots { display: flex; gap: 8px; }
-    .dpd {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      transition: background 0.3s, transform 0.3s;
-    }
-    .dpd.active { background: white; transform: scale(1.3); }
-    .dpd.done { background: rgba(255,255,255,0.5); }
-
-    .diag-body { padding: 40px; }
-
+    .dpd { width: 28px; height: 6px; border-radius: 3px; background: #22303c; transition: background .3s; }
+    .dpd.active { background: var(--teal); box-shadow: 0 0 12px rgba(43, 179, 163, .6); }
+    .dpd.done { background: rgba(43, 179, 163, .45); }
+    .diag-body { padding: 28px; }
     .diag-panel { display: none; }
-    .diag-panel.active { display: block; animation: panelIn 0.4s cubic-bezier(.22,.68,0,1.2) both; }
-    @keyframes panelIn { from { opacity:0; transform:translateX(18px); } to { opacity:1; transform:translateX(0); } }
-
-    .diag-question { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 8px; }
-    .diag-hint { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
-
-    .diag-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .diag-panel.active { display: block; animation: fadeIn .4s ease; }
+    .diag-question { font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+    .diag-hint { color: var(--muted); font-size: 14px; margin: 6px 0 20px; }
+    .diag-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .diag-options.cols-3 { grid-template-columns: repeat(3, 1fr); }
-    .diag-opt {
-      background: var(--bg2); border: 1.5px solid var(--border);
-      border-radius: var(--radius); padding: 16px 18px;
-      cursor: pointer; text-align: left;
-      transition: border-color 0.2s, background 0.2s, transform 0.15s;
-    }
-    .diag-opt:hover { border-color: rgba(0,113,227,0.3); background: var(--accent-light); transform: translateY(-1px); }
-    .diag-opt.selected { border-color: var(--accent); background: var(--accent-light); }
-    .diag-opt-icon { font-size: 22px; margin-bottom: 8px; display: block; }
-    .diag-opt-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-    .diag-opt-desc { font-size: 12px; color: var(--soft); }
-
-    .diag-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 32px; }
-    .diag-back {
-      background: none; border: 1px solid var(--border); color: var(--muted);
-      font-family: var(--font); font-size: 14px; font-weight: 500;
-      padding: 10px 20px; border-radius: 12px; cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .diag-back:hover { border-color: var(--text); color: var(--text); }
-    .diag-next {
-      background: var(--accent); color: white;
-      font-family: var(--font); font-size: 14px; font-weight: 600;
-      padding: 10px 24px; border-radius: 12px; border: none; cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .diag-next:hover:not(:disabled) { background: var(--accent-h); transform: translateY(-1px); }
-    .diag-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-
-    /* Paso 4 — formulario */
-    .diag-result-header {
-      background: var(--accent-light); border: 1px solid var(--accent-mid);
-      border-radius: var(--radius); padding: 20px 24px; margin-bottom: 28px;
-    }
-    .diag-result-header p { font-size: 14px; color: var(--accent); font-weight: 500; }
-    .diag-result-header strong { display: block; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .diag-opt { padding: 18px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255, 255, 255, .02); cursor: pointer; transition: border-color .2s, background .2s; }
+    .diag-opt:hover { border-color: rgba(43, 179, 163, .4); }
+    .diag-opt.selected { border-color: var(--teal); background: rgba(43, 179, 163, .12); }
+    .diag-opt.wide { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; }
+    .diag-opt-icon { font-size: 24px; display: block; margin-bottom: 8px; }
+    .diag-opt.wide .diag-opt-icon { margin-bottom: 0; }
+    .diag-opt-title { font-weight: 600; }
+    .diag-opt-desc { color: var(--soft); font-size: 13px; margin-top: 3px; }
+    .diag-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; }
+    .diag-next, .form-submit { background: var(--teal); color: #03201C; border: 0; font: 600 15px 'Outfit', sans-serif; padding: 12px 22px; border-radius: 999px; cursor: pointer; transition: opacity .2s, transform .2s; }
+    .diag-next:disabled { opacity: .35; cursor: not-allowed; }
+    .diag-next:not(:disabled):hover, .form-submit:hover { transform: translateY(-1px); }
+    .diag-back { background: none; border: 0; color: var(--muted); font: 500 14px 'Outfit', sans-serif; cursor: pointer; }
+    .diag-back:hover { color: var(--ink); }
+    .diag-result-header { margin-bottom: 20px; }
+    .diag-result-header strong { font-size: 20px; display: block; }
+    .diag-result-header p { color: var(--muted); margin-top: 6px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
     .form-field { display: flex; flex-direction: column; gap: 6px; }
     .form-field.full { grid-column: 1 / -1; }
-    .form-field label { font-size: 13px; font-weight: 600; color: var(--text); }
-    .form-field input, .form-field textarea, .form-field select {
-      font-family: var(--font); font-size: 14px; color: var(--text);
-      background: var(--bg2); border: 1.5px solid var(--border);
-      border-radius: var(--radius3, 12px); padding: 11px 14px;
-      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-      width: 100%;
-    }
-    .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
-      border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light);
-    }
-    .form-field textarea { min-height: 90px; resize: vertical; }
-    .form-submit {
-      background: var(--accent); color: white;
-      font-family: var(--font); font-size: 15px; font-weight: 700;
-      padding: 14px 32px; border-radius: 14px; border: none; cursor: pointer;
-      width: 100%; margin-top: 6px;
-      transition: background 0.2s, transform 0.15s;
-      box-shadow: 0 8px 24px rgba(0,113,227,0.22);
-    }
-    .form-submit:hover { background: var(--accent-h); transform: translateY(-1px); }
-    .form-submit:disabled { opacity: 0.6; cursor: wait; transform: none; }
-    .form-note { font-size: 12px; color: var(--soft); text-align: center; margin-top: 10px; }
+    .form-field label { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .form-field input, .form-field select, .form-field textarea { font: 400 15px 'Outfit', sans-serif; color: var(--ink); background: rgba(5, 9, 13, .6); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; outline: none; transition: border-color .2s; }
+    .form-field select option { background: #0c121a; }
+    .form-field textarea { min-height: 96px; resize: vertical; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--teal); }
+    .form-submit { width: 100%; margin-top: 18px; padding: 15px; font-size: 16px; }
+    .form-note { text-align: center; color: var(--soft); font-size: 13px; margin-top: 12px; }
+    .diag-success { display: none; text-align: center; padding: 30px 10px; }
+    .success-icon { font-size: 42px; margin-bottom: 10px; }
+    .diag-success p { color: var(--muted); margin-top: 8px; }
+    .diag-fallback { margin-top: 18px; padding: 18px; border-radius: 14px; border: 1px solid rgba(232, 195, 122, .3); background: rgba(232, 195, 122, .08); color: #E9DCC0; line-height: 1.55; }
+    .fallback-wa { display: inline-flex; margin-top: 12px; color: var(--teal-2); font-weight: 600; text-decoration: none; }
 
-    .diag-fallback {
-      margin-top: 18px; padding: 18px 20px; border-radius: 14px;
-      background: rgba(37,211,102,0.08); border: 1px solid rgba(37,211,102,0.28);
-    }
-    .diag-fallback p { font-size: 14px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
-    .fallback-wa {
-      display: inline-block; background: #25D366; color: #fff; text-decoration: none;
-      font-size: 15px; font-weight: 700; padding: 12px 26px; border-radius: 12px;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .fallback-wa:hover { background: #1eb457; transform: translateY(-1px); }
-
-    .diag-success {
-      text-align: center; padding: 40px 20px; display: none;
-    }
-    .diag-success .success-icon { font-size: 52px; margin-bottom: 16px; }
-    .diag-success h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
-    .diag-success p { font-size: 15px; color: var(--muted); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: #1d1d1f; color: rgba(255,255,255,0.7);
-      padding: 52px 0 36px;
-    }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
-    }
-    .footer-brand { display: flex; align-items: center; gap: 10px; }
-    .footer-brand-mark {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: rgba(255,255,255,0.1);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .footer-brand-mark span { font-size: 10px; font-weight: 900; color: white; }
-    .footer-name { font-size: 14px; font-weight: 600; color: white; }
-    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
-    .footer-link { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
-    .footer-link:hover { color: white; }
-    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); width: 100%; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
-
-    /* ── FAQ ── */
-    .faq-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-    .faq-item summary {
-      font-size: 15px; font-weight: 600; color: var(--text);
-      padding: 20px 24px; cursor: pointer; list-style: none;
-      display: flex; justify-content: space-between; align-items: center;
-      transition: background 0.2s;
-    }
-    .faq-item summary:hover { background: var(--bg2); }
-    .faq-item summary::after {
-      content: '+'; font-size: 20px; font-weight: 400;
-      color: var(--accent); flex-shrink: 0; margin-left: 16px;
-      transition: transform 0.25s ease;
-    }
+    /* FAQ */
+    .faq-list { max-width: 760px; margin-top: 44px; display: grid; gap: 12px; }
+    .faq-item { padding: 0; overflow: hidden; }
+    .faq-item summary { list-style: none; cursor: pointer; padding: 20px 24px; font-weight: 600; font-size: 17px; display: flex; justify-content: space-between; gap: 16px; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: "+"; color: var(--teal); font-size: 22px; line-height: 1; transition: transform .3s; }
     .faq-item[open] summary::after { transform: rotate(45deg); }
-    .faq-item p {
-      font-size: 14px; color: var(--muted); line-height: 1.65;
-      padding: 0 24px 20px; margin: 0;
-    }
+    .faq-item p { padding: 0 24px 22px; color: var(--muted); line-height: 1.65; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .productos-grid { grid-template-columns: 1fr; }
-      .sectores-grid { grid-template-columns: repeat(2, 1fr); }
+    /* Footer */
+    footer { padding: 40px 0 32px; border-top: 1px solid var(--line); background: rgba(5, 8, 12, .7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .footer-link { color: var(--muted); text-decoration: none; font-size: 14px; }
+    .footer-link:hover { color: var(--ink); }
+    .footer-copy { color: var(--soft); font-size: 13px; margin-top: 22px; }
+
+    /* ── Story: scroll-driven scenes around the logo (webs, then systems) ── */
+    .story { height: 3545vh; position: relative; }
+    .story-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; pointer-events: none; }
+    .st { position: absolute; opacity: 0; will-change: opacity, transform; }
+    .st-eyebrow { left: max(16px, 6vw); top: clamp(84px, 14vh, 130px); color: var(--teal); font-weight: 600; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; }
+    .st-big { left: max(16px, 6vw); top: 50%; margin-top: -1.1em; font-size: clamp(44px, 6.6vw, 112px); font-weight: 800; letter-spacing: -.045em; line-height: .95; color: #EEF3F2; }
+    .st-side { right: max(16px, 6vw); top: 50%; width: min(22em, 30vw); color: var(--muted); font-size: clamp(15px, 1.15vw, 18px); line-height: 1.55; margin-top: -2em; }
+    .st-client { left: max(16px, 6vw); bottom: clamp(40px, 11vh, 110px); max-width: 24em; }
+    .st-client .tag { display: inline-block; color: var(--teal-2); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
+    .st-client h3 { font-size: clamp(28px, 3vw, 44px); letter-spacing: -.03em; line-height: 1; }
+    .st-client p { color: var(--muted); margin-top: 10px; line-height: 1.5; }
+    .st-cross { left: 0; top: 50%; margin-top: -.55em; white-space: nowrap; font-size: clamp(64px, 11vw, 190px); font-weight: 800; letter-spacing: -.05em; color: #F2F6F5;
+      text-shadow: 0 0 40px rgba(95, 214, 198, .55), 0 0 90px rgba(43, 179, 163, .35); }
+    .st-cross small { display: block; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--teal); text-shadow: none; margin-bottom: 4px; font-weight: 600; }
+    .st-pill { left: 50%; bottom: clamp(24px, 6vh, 60px); margin-left: max(-15em, calc(16px - 50vw)); width: min(30em, calc(100vw - 32px)); text-align: center;
+      padding: 10px 16px; border-radius: 999px; background: rgba(12, 18, 26, .8); border: 1px solid rgba(95, 214, 198, .35); color: var(--muted); font-size: 14px;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .st-pill b { color: var(--teal-2); font-weight: 600; }
+    .st-stat { left: 50%; bottom: clamp(36px, 9vh, 90px); margin-left: max(-20em, calc(16px - 50vw)); width: min(40em, calc(100vw - 32px)); text-align: center; color: var(--muted); font-size: clamp(15px, 1.2vw, 19px); line-height: 1.5; }
+    .st-stat b { color: var(--ink); }
+    .st-step { opacity: 0; position: absolute; left: 0; top: 0; display: flex; gap: 10px; align-items: flex-start; width: 15em; padding: 12px 14px; border-radius: 14px;
+      background: rgba(12, 18, 26, .78); border: 1px solid var(--line); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: 14px; line-height: 1.4; color: #CBD5DC; transition: opacity .35s, border-color .35s; }
+    .st-step b { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #03201C; font-size: 13px; }
+    .st-step.now { border-color: rgba(95, 214, 198, .7); box-shadow: 0 0 30px -6px rgba(43, 179, 163, .7); color: var(--ink); }
+    .story-stage { perspective: 1500px; }
+    .win { position: absolute; left: 50%; top: 50%; opacity: 0; visibility: hidden; border-radius: 12px; overflow: hidden; background: #0d141c;
+      box-shadow: 0 50px 140px -40px rgba(0, 0, 0, .9), 0 0 0 1px rgba(255, 255, 255, .09); will-change: transform, opacity; }
+    .win-bar { height: 30px; display: flex; align-items: center; gap: 7px; padding: 0 12px; }
+    .win-bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+    .win-bar i:nth-child(2) { background: #febc2e; } .win-bar i:nth-child(3) { background: #28c840; }
+    .win-url { margin-left: 14px; font-size: 12px; color: var(--muted); background: rgba(255, 255, 255, .06); padding: 3px 14px; border-radius: 6px; }
+    .win-screen { position: relative; aspect-ratio: 16 / 10; background: #f4f6f7; }
+    .win-screen video, .win-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .app-shot { opacity: 0; transition: opacity .45s ease; }
+    .app-shot.on { opacity: 1; }
+    .steps-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 5px rgba(43, 179, 163, .95)) drop-shadow(0 0 14px rgba(43, 179, 163, .55)); }
+    .steps-path { fill: none; stroke: #4fd8c6; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }   /* no non-scaling-stroke: it would put the dash offset in screen units */
+    .steps-node { fill: #0b1118; stroke: #4fd8c6; stroke-width: 4; vector-effect: non-scaling-stroke; transition: fill .3s; opacity: .25; }
+    .steps-node.on { fill: #4fd8c6; opacity: 1; }
+    .steps-head { fill: #e9fffb; transition: opacity .2s; }
+    .sel-box { position: absolute; left: 0; top: 0; opacity: 0; border: 1px dashed rgba(255, 255, 255, .55); transition: opacity .3s; }
+    .sel-box i { position: absolute; width: 9px; height: 9px; background: #0b1118; border: 1.5px solid #fff; }
+    .sel-box i:nth-child(2) { left: -5px; top: -5px; } .sel-box i:nth-child(3) { right: -5px; top: -5px; }
+    .sel-box i:nth-child(4) { left: -5px; bottom: -5px; } .sel-box i:nth-child(5) { right: -5px; bottom: -5px; }
+    .sel-tag { position: absolute; left: -1px; top: -28px; background: var(--teal); color: #03201C; font: 600 12px 'Outfit', sans-serif; padding: 4px 9px; border-radius: 6px 6px 6px 0; }
+    .edge-glow { position: absolute; inset: 0; opacity: 0; box-shadow: inset 0 0 140px rgba(43, 179, 163, .45); }
+    .edge-glow::before { content: ""; position: absolute; inset: 0; padding: 3px; filter: blur(1.5px);
+      background: conic-gradient(from var(--a, 0deg), #2BB3A3, #2f7cf0, #5FD6C6, #22c55e, #2BB3A3);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+    /* Centred composition (Cobros): headline on top, the logo big in the middle, text underneath */
+    .st-big.st-center { left: 16px; right: 16px; top: calc(clamp(84px, 14vh, 130px) + 34px); margin-top: 0; text-align: center;   /* just under the eyebrow */ font-size: clamp(40px, 5.2vw, 88px); }
+    .st-side.st-under { left: 50%; right: auto; top: auto; bottom: clamp(40px, 9vh, 90px); margin: 0 0 0 max(-19em, calc(16px - 50vw)); width: min(38em, calc(100vw - 32px)); text-align: center; }
+    .story-fallback { display: none; }
+    .no-gl .story { height: auto; }
+    .no-gl .story-stage { position: static; height: auto; pointer-events: auto; padding: 100px 16px; }
+    .no-gl .st, .no-gl .sel-box, .no-gl .edge-glow, .no-gl .st-step { display: none; }
+    .no-gl .story-fallback { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; max-width: 1120px; margin: 0 auto; }
+    .story-fallback img { width: 100%; border-radius: 12px; border: 1px solid var(--line); }
+    @media (max-width: 760px) {
+      .st-big { top: 20%; margin-top: 0; font-size: clamp(40px, 12vw, 64px); }
+      .st-side { top: auto; bottom: 12vh; left: 16px; right: 16px; width: auto; margin-top: 0; }
+      .st-client { bottom: 9vh; right: 16px; }
+      .st-step { width: auto; max-width: calc(100vw - 32px); }
+      .st-big.st-center { font-size: clamp(34px, 10vw, 52px); }
+      #win-intrans .win-screen, #win-loscandiles .win-screen, #win-dysa .win-screen { aspect-ratio: 390 / 844; }   /* phone recordings */
+    }
+    @keyframes wheel { 0%, 100% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(9px); opacity: 0; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 900px) {
+      .web-card, .caso-card { grid-template-columns: 1fr; }
+      .web-card-right { display: none; }
       .steps-grid { grid-template-columns: 1fr; }
-      .caso-card { grid-template-columns: 1fr; }
-      .caso-stats { flex-direction: row; justify-content: center; }
-      .diag-options { grid-template-columns: 1fr; }
-      .diag-options.cols-3 { grid-template-columns: 1fr 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      nav .nav-link { display: none; }
-      .diag-header { flex-direction: column; gap: 16px; align-items: flex-start; }
-      .hero { padding: 120px 0 80px; }
+      .step-connector { display: none; }
+      .sectores-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .nav-link, .brand-name { display: none; }
+      .hero-badge, .proof-div { display: none; }
+      .hero-proof { font-size: 13px; gap: 6px 14px; }
+      .diag-options, .diag-options.cols-3, .form-grid { grid-template-columns: 1fr; }
+      .diag-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .diag-body, .diag-header { padding: 20px; }
+      /* Blur over a live WebGL canvas is costly on phones: denser panels instead */
+      .glass { background: rgba(12, 18, 26, .86); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    }
+    /* Short screens (laptops): tighter hero copy so the logo keeps its size */
+    @media (max-height: 820px) {
+      .hero-badge { display: none; }
+      .hero-title { font-size: clamp(30px, 3.6vw, 46px); }
+      .hero-sub { margin: 10px auto 18px; font-size: 16px; }
+      .hero-proof { margin-top: 14px; }
+      .scroll-hint { margin-top: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal, .intro { transition: none; opacity: 1; transform: none; }
+      .scroll-hint .mouse::after { animation: none; }
     }
   </style>
   <!-- Google Analytics 4 -->
@@ -795,19 +494,49 @@
     gtag('js', new Date());
     gtag('config', 'G-HW3J0Y50KV');
   </script>
+  <script>window.SHOTS = {"app-tablon": "escaparate/app-tablon.webp", "app-examenes": "escaparate/app-examenes.webp", "app-pagos": "escaparate/app-pagos.webp", "app-alertas": "escaparate/app-alertas.webp", "cobros-factura": "escaparate/cobros-factura.webp", "cobros-facturas": "escaparate/cobros-facturas.webp", "cobros-panel": "escaparate/cobros-panel.webp", "cobros-tesoreria": "escaparate/cobros-tesoreria.webp", "intrans": "escaparate/intrans.mp4", "loscandiles": "escaparate/loscandiles.mp4", "dysa": "escaparate/dysa.mp4", "intrans-movil": "escaparate/intrans-movil.mp4", "loscandiles-movil": "escaparate/loscandiles-movil.mp4", "dysa-movil": "escaparate/dysa-movil.mp4"};</script>
+  <script type="importmap">
+  { "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  } }
+  </script>
 </head>
 <body>
+  <template id="logo-3d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="146 669 1748 720">
+<path fill="#FFFFFF" fill-rule="evenodd" d="M 1423.00 737.00 L 1423.00 1339.33 L 1776.67 1339.33 L 1776.33 1197.33 L 1580.33 1197.33 L 1573.67 1196.33 L 1573.67 737.33 Z M 937.00 737.00 L 937.67 1339.67 L 1160.67 1340.00 L 1188.00 1339.33 L 1216.33 1337.00 L 1250.67 1331.33 L 1281.00 1322.67 L 1310.00 1309.67 L 1324.00 1301.00 L 1339.33 1289.33 L 1359.00 1270.67 L 1370.67 1255.33 L 1380.67 1237.00 L 1389.33 1212.67 L 1393.67 1192.33 L 1397.00 1157.33 L 1397.33 1128.00 L 1397.00 1120.00 L 1396.00 1119.33 L 1395.00 1086.33 L 1391.33 1061.00 L 1385.33 1039.00 L 1375.67 1017.33 L 1364.67 1001.00 L 1349.33 986.00 L 1337.67 977.67 L 1324.00 971.00 L 1308.33 965.33 L 1320.00 942.67 L 1326.00 923.33 L 1329.00 904.33 L 1329.00 878.67 L 1326.67 860.00 L 1322.33 843.00 L 1316.00 827.00 L 1307.00 811.00 L 1297.00 798.00 L 1283.67 784.67 L 1270.33 774.33 L 1255.67 765.33 L 1223.33 751.00 L 1188.00 741.67 L 1166.33 738.67 L 1135.00 736.67 Z M 1080.67 1069.33 L 1202.00 1069.00 L 1215.67 1072.33 L 1229.00 1079.67 L 1237.00 1087.00 L 1243.67 1096.00 L 1247.67 1104.33 L 1251.00 1118.00 L 1252.33 1140.67 L 1251.67 1156.00 L 1247.00 1170.33 L 1240.33 1182.00 L 1233.00 1190.00 L 1224.00 1196.67 L 1215.67 1200.67 L 1204.33 1203.67 L 1174.00 1206.33 L 1083.00 1205.67 L 1080.67 1203.67 Z M 1080.33 862.67 L 1111.67 861.00 L 1137.33 861.67 L 1163.33 867.00 L 1178.67 876.00 L 1184.67 882.67 L 1190.00 891.67 L 1195.00 909.33 L 1195.00 921.33 L 1193.00 930.33 L 1187.67 942.67 L 1183.33 949.00 L 1170.67 961.00 L 1160.67 966.33 L 1149.00 970.00 L 1137.33 971.33 L 1079.33 971.00 L 1078.67 877.33 L 1079.33 864.00 Z M 317.00 729.33 L 186.67 1339.67 L 337.00 1339.33 L 376.67 1149.00 L 388.00 1088.00 L 392.67 1070.33 L 394.67 1071.00 L 411.67 1096.00 L 465.67 1183.33 L 469.33 1191.33 L 503.00 1243.67 L 605.67 1244.00 L 609.00 1241.67 L 712.67 1075.00 L 720.00 1065.33 L 721.67 1069.67 L 734.00 1154.00 L 733.00 1155.67 L 736.33 1160.33 L 754.00 1258.67 L 760.67 1305.33 L 764.00 1339.33 L 923.00 1339.33 L 913.33 1298.67 L 890.00 1183.33 L 852.67 1030.33 L 813.00 838.67 L 793.67 730.67 L 791.67 731.33 L 772.00 759.33 L 557.67 1081.00 L 389.67 835.00 L 319.33 730.33 Z"/>
+<path fill="#2BB3A3" d="M 1851.02 709.159 C 1853.02 708.754 1852.01 708.685 1854.06 709.516 C 1854.03 718.202 1827.25 801.011 1823.43 813.059 C 1816.95 804.332 1807.3 786.324 1799.75 775.194 C 1775.11 793.797 1750.51 815.63 1726.75 835.65 C 1692.92 863.935 1658.92 892.003 1624.73 919.852 C 1578.45 957.279 1527.85 992.64 1478.93 1026.39 C 1458.42 1040.55 1437.16 1056.54 1416.67 1070.14 L 1415.72 1073.63 C 1407.2 1105.48 1367.92 1106.97 1361.96 1070.92 C 1352.59 1065.61 1337.5 1059.28 1327.41 1054.76 C 1305.39 1045.1 1283.49 1035.17 1261.72 1024.97 C 1249.66 1031.63 1241.12 1034.07 1228.6 1027.1 C 1217.64 1018.96 1213.35 1005.63 1220.66 993.466 C 1224.38 987.304 1230.42 982.889 1237.42 981.205 C 1255.24 976.88 1265.89 989.524 1269.6 1005.54 C 1301.18 1020.57 1340.09 1036.6 1372.6 1050.8 C 1383.86 1044.15 1394.42 1045.21 1405.03 1052.14 C 1422.85 1043.61 1438.62 1030.38 1454.96 1019.42 C 1571.2 941.441 1675.7 849.151 1783.86 760.704 C 1772.88 751.787 1761.96 742.799 1751.1 733.742 C 1784.48 725.218 1817.53 718.082 1851.02 709.159 z"/>
+<path fill="#2BB3A3" d="M 829.544 1124.99 C 831.803 1126.56 835.552 1133.36 843.187 1138.94 C 773.226 1182.64 700.153 1234.48 631.968 1281.68 C 632.943 1298.34 626.987 1310.94 609.09 1312.36 C 590.647 1313.82 581.335 1299.25 580.997 1282.91 L 540.127 1258.59 C 528.974 1266.55 519.646 1266.19 509.031 1257.99 C 492.907 1266.55 470.054 1281.83 454.164 1291.78 C 428.284 1307.97 400.856 1324.7 375.503 1341.57 C 359.737 1348.51 352.763 1329.68 362.212 1323.39 C 395.332 1301.3 430.295 1280.96 464.569 1260.59 C 475.365 1254.17 488.474 1247.73 497.53 1239.1 C 498.931 1232.07 499.564 1227.32 504.422 1221.51 C 513.606 1210.53 532.21 1209.25 542.415 1219.55 C 548.564 1225.76 549.143 1230.51 549.05 1238.98 C 562.635 1245.52 579.705 1256.11 593.695 1263.54 C 603.579 1261.26 610.113 1261.09 619.531 1264.8 C 651.959 1244.91 682.506 1217.96 714.492 1198.02 C 751.087 1175.21 791.14 1143.97 829.544 1124.99 z"/>
+<path fill="#2BB3A3" d="M 1201.38 1026.75 C 1204.55 1027.76 1211.21 1037.09 1215.98 1041.5 C 1201.97 1056.48 1176.96 1076.01 1160.71 1090.34 L 1058.78 1181.61 C 1059.23 1191.57 1060.12 1198.57 1052.63 1206.67 C 1047.79 1211.81 1041.08 1214.79 1034.02 1214.93 C 1027.2 1215.13 1020.62 1212.45 1015.88 1207.55 C 1009.13 1200.61 1008.02 1193.39 1008.37 1184.23 C 967.752 1163.43 928.751 1146.16 888.095 1123.86 C 879.169 1129.07 876.173 1130.87 866.138 1129.29 C 827.186 1114.81 849.87 1064.52 885.704 1082.88 C 896.487 1087.21 892.387 1102.14 899.977 1106.19 C 939.377 1127.22 981.147 1144.64 1020.54 1165.69 C 1030.66 1162.58 1033.97 1161.87 1043.68 1165.61 C 1064.12 1146.03 1088.17 1125.85 1109.34 1106.75 C 1139.42 1079.61 1169.88 1052.18 1201.38 1026.75 z"/>
+</svg>
+  </template>
+  <template id="logo-flat">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="146 669 1748 720"><path transform="translate(0,0)" fill="#FFFFFF" d="M 317.549 728.538 C 320.137 730.715 335.297 753.968 338.298 758.431 L 387.512 831.441 C 443.695 914.794 502.326 998.227 557.719 1081.88 C 595.641 1025.55 633.079 968.885 670.031 911.908 C 687.304 885.744 705.41 859.296 723.099 833.349 C 746.247 799.396 769.577 762.195 793.578 729.151 C 795.287 743.947 799.286 763.363 802.035 778.3 C 807.042 806.438 812.461 834.501 818.292 862.48 L 858.501 1057.11 C 836.728 1066.08 827.584 1075.46 825.517 1099.5 C 803.991 1116.1 758.661 1143.42 734.681 1158.05 L 720.785 1064.11 C 718.135 1067.71 715.419 1071.79 712.844 1075.49 L 607.855 1243.26 C 596.48 1238.28 582.928 1230.96 571.153 1225.44 C 567.413 1216.93 563.953 1210.47 557.303 1203.86 C 548.059 1194.53 535.407 1189.38 522.273 1189.59 C 504.937 1189.98 494.334 1198.44 483.067 1210.04 C 475.05 1199.36 467.062 1185.63 459.88 1174.19 C 446.131 1152.33 432.508 1130.38 419.011 1108.36 C 411.539 1096.25 401.765 1079.58 392.947 1068.76 C 387.032 1091.33 381.861 1123.01 377.095 1146.79 L 352.274 1266.21 C 347.193 1290.87 343.005 1315.41 337.218 1339.93 C 321.453 1340.7 300.28 1340.07 284.176 1340.04 L 186.484 1340.07 L 317.549 728.538 z"/>
+<path transform="translate(0,0)" fill="#FFFFFF" d="M 937.249 736.844 L 1073.4 736.899 C 1092.35 736.883 1111.44 736.858 1130.38 736.869 C 1232.82 736.934 1336.27 783.304 1329.27 901.532 C 1327.59 934.771 1312.7 965.961 1287.91 988.166 C 1275.17 966.165 1258.57 952.547 1230.89 958.79 C 1215.89 962.172 1207.22 972.015 1199.65 984.729 C 1196.75 991.26 1195.58 995.874 1194.97 1002.95 C 1182.82 1012.31 1169.59 1024.2 1157.64 1034.11 C 1114.54 1069.84 1073.67 1107.85 1031.41 1144.68 C 1022.3 1139.41 1002.35 1131.07 992.052 1126.35 C 973.768 1117.83 955.649 1108.97 937.704 1099.76 L 937.249 736.844 z"/>
+<path transform="translate(0,0)" fill="#1B2430" d="M 1083.37 862.501 C 1112.07 862.045 1163.27 856.11 1183.14 881.252 C 1201.7 904.738 1198.19 938.209 1174.56 957.831 C 1155.65 972.443 1138.7 971.324 1116.24 971.258 L 1079.51 971.086 C 1079.16 959.642 1078.34 868.206 1080.15 863.288 L 1083.37 862.501 z"/>
+<path transform="translate(0,0)" fill="#FFFFFF" d="M 1572.06 988.782 L 1572.86 989.474 C 1574.38 994.735 1573.4 1032.47 1573.43 1039.89 L 1573.95 1197.19 C 1640.92 1198.07 1709.53 1197.34 1776.6 1197.24 C 1775.84 1243.83 1776.71 1293.1 1776.82 1339.91 L 1630.5 1340 L 1423.02 1339.91 L 1423.09 1106.61 C 1430.4 1097.39 1431.65 1096.29 1434.27 1084.97 C 1480.51 1053.12 1526.87 1022.09 1572.06 988.782 z"/>
+<path transform="translate(0,0)" fill="#FFFFFF" d="M 1262.1 1051.18 C 1267.04 1050.72 1332.85 1081.56 1341.22 1085.49 C 1352.18 1109.63 1369.24 1123.61 1397.21 1120.25 L 1397.35 1135.65 C 1397.6 1187.88 1391.1 1240.26 1351.44 1278.8 C 1282.32 1345.94 1190.89 1340.04 1102.77 1340.01 L 968.5 1340.08 L 937.745 1340.2 L 937.005 1173.92 L 987.68 1198.13 C 997.439 1246.04 1057.01 1249.68 1076.87 1206.54 C 1096.02 1205.22 1131.85 1205.16 1152.58 1206.32 C 1205.38 1209.29 1267.15 1190.06 1249.64 1123.03 C 1243.5 1099.53 1229.76 1091.17 1208.64 1079.63 L 1238.25 1055.36 C 1247.86 1054.99 1253.11 1054.32 1262.1 1051.18 z"/>
+<path transform="translate(0,0)" fill="#FFFFFF" d="M 1423.25 736.988 L 1573.93 737.064 L 1573.74 904.915 C 1557 919.785 1531.21 939.753 1513.02 952.176 C 1483.44 973.38 1453.19 992.791 1423.27 1013.48 L 1423.25 736.988 z"/>
+<path transform="translate(0,0)" fill="#FFFFFF" d="M 877.397 1151.5 L 881.058 1151.14 C 881.564 1151.49 882.071 1151.84 882.578 1152.19 C 895.413 1202.41 910.776 1293.56 923.64 1339.96 L 797.5 1339.91 L 764.317 1339.93 C 761.816 1307.82 753.984 1260.74 749.688 1228.14 C 778.344 1205.55 831.324 1172.09 864.119 1152.27 C 865.325 1151.55 875.134 1151.52 877.397 1151.5 z"/>
+<path transform="translate(0,0)" fill="#2BB3A3" d="M 1851.02 709.159 C 1853.02 708.754 1852.01 708.685 1854.06 709.516 C 1854.03 718.202 1827.25 801.011 1823.43 813.059 C 1816.95 804.332 1807.3 786.324 1799.75 775.194 C 1775.11 793.797 1750.51 815.63 1726.75 835.65 C 1692.92 863.935 1658.92 892.003 1624.73 919.852 C 1578.45 957.279 1527.85 992.64 1478.93 1026.39 C 1458.42 1040.55 1437.16 1056.54 1416.67 1070.14 L 1415.72 1073.63 C 1407.2 1105.48 1367.92 1106.97 1361.96 1070.92 C 1352.59 1065.61 1337.5 1059.28 1327.41 1054.76 C 1305.39 1045.1 1283.49 1035.17 1261.72 1024.97 C 1249.66 1031.63 1241.12 1034.07 1228.6 1027.1 C 1217.64 1018.96 1213.35 1005.63 1220.66 993.466 C 1224.38 987.304 1230.42 982.889 1237.42 981.205 C 1255.24 976.88 1265.89 989.524 1269.6 1005.54 C 1301.18 1020.57 1340.09 1036.6 1372.6 1050.8 C 1383.86 1044.15 1394.42 1045.21 1405.03 1052.14 C 1422.85 1043.61 1438.62 1030.38 1454.96 1019.42 C 1571.2 941.441 1675.7 849.151 1783.86 760.704 C 1772.88 751.787 1761.96 742.799 1751.1 733.742 C 1784.48 725.218 1817.53 718.082 1851.02 709.159 z"/>
+<path transform="translate(0,0)" fill="#2BB3A3" d="M 829.544 1124.99 C 831.803 1126.56 835.552 1133.36 843.187 1138.94 C 773.226 1182.64 700.153 1234.48 631.968 1281.68 C 632.943 1298.34 626.987 1310.94 609.09 1312.36 C 590.647 1313.82 581.335 1299.25 580.997 1282.91 L 540.127 1258.59 C 528.974 1266.55 519.646 1266.19 509.031 1257.99 C 492.907 1266.55 470.054 1281.83 454.164 1291.78 C 428.284 1307.97 400.856 1324.7 375.503 1341.57 C 359.737 1348.51 352.763 1329.68 362.212 1323.39 C 395.332 1301.3 430.295 1280.96 464.569 1260.59 C 475.365 1254.17 488.474 1247.73 497.53 1239.1 C 498.931 1232.07 499.564 1227.32 504.422 1221.51 C 513.606 1210.53 532.21 1209.25 542.415 1219.55 C 548.564 1225.76 549.143 1230.51 549.05 1238.98 C 562.635 1245.52 579.705 1256.11 593.695 1263.54 C 603.579 1261.26 610.113 1261.09 619.531 1264.8 C 651.959 1244.91 682.506 1217.96 714.492 1198.02 C 751.087 1175.21 791.14 1143.97 829.544 1124.99 z"/>
+<path transform="translate(0,0)" fill="#2BB3A3" d="M 1201.38 1026.75 C 1204.55 1027.76 1211.21 1037.09 1215.98 1041.5 C 1201.97 1056.48 1176.96 1076.01 1160.71 1090.34 L 1058.78 1181.61 C 1059.23 1191.57 1060.12 1198.57 1052.63 1206.67 C 1047.79 1211.81 1041.08 1214.79 1034.02 1214.93 C 1027.2 1215.13 1020.62 1212.45 1015.88 1207.55 C 1009.13 1200.61 1008.02 1193.39 1008.37 1184.23 C 967.752 1163.43 928.751 1146.16 888.095 1123.86 C 879.169 1129.07 876.173 1130.87 866.138 1129.29 C 827.186 1114.81 849.87 1064.52 885.704 1082.88 C 896.487 1087.21 892.387 1102.14 899.977 1106.19 C 939.377 1127.22 981.147 1144.64 1020.54 1165.69 C 1030.66 1162.58 1033.97 1161.87 1043.68 1165.61 C 1064.12 1146.03 1088.17 1125.85 1109.34 1106.75 C 1139.42 1079.61 1169.88 1052.18 1201.38 1026.75 z"/></svg>
+  </template>
+
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="vignette"></div>
 
   <!-- HEADER -->
-  <header>
+  <header id="top">
     <div class="container">
       <div class="nav-inner">
-        <a class="brand" href="#">
-          <div class="brand-mark"><span>MBL</span></div>
-          <span class="brand-name">MBL Studio</span>
+        <a class="brand" href="#" aria-label="MBL Studio">
+          <span class="brand-logo" data-logo></span>
+          <span class="brand-name">Studio</span>
         </a>
         <nav>
-          <a class="nav-link" href="#productos">Productos</a>
+          <a class="nav-link" href="#escaparate">Trabajos</a>
           <a class="nav-link" href="#como">Cómo funciona</a>
           <a class="nav-link" href="#diagnostico">Diagnóstico</a>
           <a class="nav-link" href="#faq">FAQ</a>
@@ -817,539 +546,295 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content container">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Soluciones digitales para empresas españolas
-      </div>
-      <h1 class="hero-title">
-        Tu empresa, <em>digitalizada</em><br>sin complicaciones
-      </h1>
-      <p class="hero-sub">
-        Desarrollamos aplicaciones web a medida para pequeñas y medianas empresas. 
-        Sin hardware, sin instalaciones complejas. Operativas en 48 horas.
-      </p>
-      <div class="hero-actions">
-        <button class="btn-primary" onclick="scrollToDiag()">
-          Solicitar diagnóstico gratuito →
-        </button>
-        <a class="btn-secondary" href="#productos">
-          Ver soluciones
-        </a>
-      </div>
-      <div class="hero-proof">
-        <div class="proof-item"><span class="proof-icon">✓</span> Sin permanencia mínima</div>
-        <div class="proof-div"></div>
-        <div class="proof-item"><span class="proof-icon">✓</span> Operativo en 48h</div>
-        <div class="proof-div"></div>
-        <div class="proof-item"><span class="proof-icon">✓</span> Soporte directo por WhatsApp</div>
-        <div class="proof-div"></div>
-        <div class="proof-item"><span class="proof-icon">✓</span> Desde 25€/mes</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTOS -->
-  <section class="productos" id="productos">
-    <div class="container">
-      <p class="section-label reveal">Soluciones en desarrollo</p>
-      <h2 class="section-title reveal reveal-delay-1">Dos productos.<br><em>Un mismo objetivo.</em></h2>
-      <p class="section-sub reveal reveal-delay-2">Herramientas construidas desde cero para el día a día real de tu empresa, no adaptaciones genéricas.</p>
-
-      <div class="productos-grid">
-        <div class="producto-card jornada reveal reveal-delay-1">
-          <div class="producto-icon">⏱️</div>
-          <span class="producto-badge badge-live"><span class="badge-dot-sm"></span> En producción</span>
-          <h3>Control de Jornada</h3>
-          <p>Gestiona el registro de jornada laboral de toda tu plantilla desde un panel centralizado. Cumple con el Art. 34.9 del Estatuto de los Trabajadores.</p>
-          <ul class="feature-list">
-            <li>Fichaje GPS desde el móvil (sin app extra)</li>
-            <li>Panel admin en tiempo real</li>
-            <li>Excel oficial para Inspección de Trabajo</li>
-            <li>Firma digital de jornada mensual</li>
-            <li>Cuadrantes de turnos semanales</li>
-            <li>Gestión de ausencias y vacaciones</li>
-          </ul>
-          <a href="#diagnostico" class="producto-link" onclick="scrollToDiag()">Solicitar información →</a>
-          <a href="/control-jornada/" style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:12px;color:var(--soft);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--soft)'">Ver página completa →</a>
-        </div>
-
-        <div class="producto-card agenda reveal reveal-delay-2">
-          <div class="producto-icon">📅</div>
-          <span class="producto-badge badge-dev"><span class="badge-dot-sm"></span> En desarrollo</span>
-          <h3>Agenda Inteligente</h3>
-          <p>Sistema de gestión de reservas y citas para negocios con lógica propia. Tus clientes reservan solos, tú solo confirmas.</p>
-          <ul class="feature-list">
-            <li>Reservas por enlace personal del cliente</li>
-            <li>Calendario inteligente del profesional</li>
-            <li>Recordatorios automáticos por WhatsApp</li>
-            <li>Historial y seguimiento por cliente</li>
-            <li>Lista de espera con posición en cola</li>
-            <li>Sincronización con Google Calendar</li>
-          </ul>
-          <a href="#diagnostico" class="producto-link" onclick="scrollToDiag()">Solicitar información →</a>
-          <a href="/agenda-inteligente/" style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:12px;color:var(--soft);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--soft)'">Ver página completa →</a>
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+      <div class="hero-stage">
+        <div class="fallback" data-logo aria-hidden="true"></div>
+        <div class="hero-copy" id="hero-copy">
+          <div class="hero-badge intro"><span class="badge-dot"></span> Soluciones digitales para empresas españolas</div>
+          <h1 class="hero-title intro i1">Tu empresa, <em>digitalizada</em><br>sin complicaciones</h1>
+          <p class="hero-sub intro i2">Desarrollamos aplicaciones web a medida para pequeñas y medianas empresas. Sin hardware, sin instalaciones complejas. Operativas en 48 horas.</p>
+          <div class="hero-actions intro i3">
+            <button class="btn-primary" onclick="scrollToDiag()">Solicitar diagnóstico gratuito →</button>
+            <a class="btn-secondary" href="#escaparate">Ver trabajos</a>
+          </div>
+          <div class="hero-proof intro i3">
+            <div><span class="proof-icon">✓</span>Sin permanencia mínima</div>
+            <div class="proof-div"></div>
+            <div><span class="proof-icon">✓</span>Operativo en 48h</div>
+            <div class="proof-div"></div>
+            <div><span class="proof-icon">✓</span>Soporte directo por WhatsApp</div>
+            <div class="proof-div"></div>
+            <div><span class="proof-icon">✓</span>Desde 25€/mes</div>
+          </div>
+          <div class="scroll-hint intro i4" id="hint" aria-hidden="true"><span class="mouse"></span>Desliza</div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- WEB A MEDIDA -->
-  <section class="web-medida">
-    <div class="container">
+    <!-- STORY: the logo walks through our work (scroll-driven; data-in/out are points of the 3D timeline "T") -->
+    <section class="story" id="escaparate" aria-label="Trabajos de MBL Studio">
+      <div class="story-stage">
+        <div class="edge-glow" id="edge-glow"></div>
+        <div class="win" id="win-intrans"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">intrans.es</span></div><div class="win-screen"><video muted playsinline preload="none"></video></div></div>
+        <div class="win" id="win-loscandiles"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">loscandiles.es</span></div><div class="win-screen"><video muted playsinline preload="none"></video></div></div>
+        <div class="win" id="win-dysa"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">dysapalencia.es</span></div><div class="win-screen"><video muted playsinline preload="none"></video></div></div>
+        <div class="win" id="win-controll"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">app.controll.es · Autoescuela de prueba</span></div><div class="win-screen">
+          <img class="app-shot on" data-shot="app-tablon" alt="Tablón de alumnos de ControlL" decoding="async">
+          <img class="app-shot" data-shot="app-examenes" alt="Exámenes en ControlL" decoding="async">
+          <img class="app-shot" data-shot="app-pagos" alt="Pagos y bonos en ControlL" decoding="async">
+          <img class="app-shot" data-shot="app-alertas" alt="Alertas de ControlL" decoding="async">
+          <svg class="steps-svg" viewBox="0 0 1000 625" preserveAspectRatio="none" aria-hidden="true">
+            <path class="steps-path" d="M 30 590 L 210 455 L 420 345 L 610 400 L 820 190 L 975 60" />
+            <circle class="steps-node" cx="210" cy="455" r="9" /><circle class="steps-node" cx="420" cy="345" r="9" />
+            <circle class="steps-node" cx="610" cy="400" r="9" /><circle class="steps-node" cx="820" cy="190" r="9" />
+            <circle class="steps-head" cx="30" cy="590" r="14" />
+          </svg>
+        </div></div>
+        <div class="win" id="win-cobros"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">admin.mblcorporacion.es · Empresa de demostración</span></div><div class="win-screen">
+          <img class="app-shot on" data-shot="cobros-factura" alt="Una factura en MBL Cobros" decoding="async">
+          <img class="app-shot" data-shot="cobros-facturas" alt="Listado de facturas en MBL Cobros" decoding="async">
+          <img class="app-shot" data-shot="cobros-panel" alt="Panel de ingresos y gastos en MBL Cobros" decoding="async">
+          <img class="app-shot" data-shot="cobros-tesoreria" alt="Tesorería en MBL Cobros" decoding="async">
+          <svg class="steps-svg" viewBox="0 0 1000 625" preserveAspectRatio="none" aria-hidden="true">
+            <path class="steps-path" d="M 30 600 L 230 470 L 430 505 L 640 300 L 840 235 L 975 70" />
+            <circle class="steps-node" cx="230" cy="470" r="9" /><circle class="steps-node" cx="430" cy="505" r="9" />
+            <circle class="steps-node" cx="640" cy="300" r="9" /><circle class="steps-node" cx="840" cy="235" r="9" />
+            <circle class="steps-head" cx="30" cy="600" r="14" />
+          </svg>
+        </div></div>
+        <div class="sel-box" id="sel-box"><span class="sel-tag" id="sel-tag"></span><i></i><i></i><i></i><i></i></div>
 
-      <!-- CARTA PRINCIPAL -->
-      <div class="web-card reveal">
-        <div class="web-card-left">
-          <div class="web-icon">🌐</div>
-          <span class="producto-badge badge-live" style="margin-bottom:16px"><span class="badge-dot-sm"></span> Disponible</span>
-          <h2 class="web-title">¿Tu empresa necesita<br><em>una web que funcione?</em></h2>
-          <p class="web-sub">Te creamos la web desde cero o mejoramos la que ya tienes. Diseño profesional, rápido y adaptado a móvil. Sin plantillas genéricas.</p>
-          <ul class="web-features">
-            <li>Diseño a medida según tu negocio</li>
-            <li>Publicada y accesible desde el primer día</li>
-            <li>SEO y velocidad optimizados desde el primer día</li>
-            <li>Entregada en menos de dos semanas</li>
-          </ul>
-          <a href="#diagnostico" class="btn-primary" onclick="scrollToDiag()" style="display:inline-flex;margin-top:28px;font-size:14px;padding:12px 24px;">Pedir presupuesto gratis →</a>
-          <a href="/pagina-web/" style="display:inline-flex;align-items:center;gap:5px;margin-top:12px;font-size:12px;color:var(--soft);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--soft)'">Ver página completa →</a>
+        <div class="st st-eyebrow" data-in="1.45" data-out="13.1">Webs a medida</div>
+        <h2 class="st st-big" data-in="1.45" data-out="2.15" data-move="left">No es solo<br><em>una web.</em></h2>
+        <p class="st st-side" data-in="1.55" data-out="2.15" data-move="right">Es el primer sitio donde te busca un cliente. La diseñamos para que llame, reserve o venga, y la mantenemos funcionando.</p>
+
+        <div class="st st-client" data-in="2.74" data-out="3.3" data-move="left"><span class="tag">Transporte a granel · Palencia</span><h3>Intrans</h3><p>Una web con carácter: el camión se monta pieza a pieza al bajar.</p></div>
+        <div class="st st-pill" data-in="3.39" data-out="5.52">Dentro de <b>intrans.es</b> · sigue bajando para recorrerla</div>
+        <div class="st st-client" data-in="6.24" data-out="6.8" data-move="left"><span class="tag">Restaurante · Palencia</span><h3>Los Candiles de Toño</h3><p>Su web y sus redes sociales, cada semana. Con su carta siempre al día.</p></div>
+        <div class="st st-pill" data-in="6.89" data-out="9.02">Dentro de <b>loscandiles.es</b> · sigue bajando para recorrerla</div>
+        <div class="st st-client" data-in="9.74" data-out="10.3" data-move="left"><span class="tag">Correduría de seguros · Palencia</span><h3>Dysa Seguros</h3><p>Presencia profesional para una correduría con más de 25 años en Palencia.</p></div>
+        <div class="st st-pill" data-in="10.39" data-out="12.52">Dentro de <b>dysapalencia.es</b> · sigue bajando para recorrerla</div>
+
+        <div class="st st-cross" data-in="13.0" data-out="14.3" data-cross>es tu mejor comercial.</div>
+
+        <div class="st st-eyebrow" data-in="14.35" data-out="15.4">Sistemas y automatizaciones</div>
+        <h2 class="st st-big" data-in="14.4" data-out="15.1" data-move="left">Sistemas que<br><em>trabajan solos.</em></h2>
+        <p class="st st-side" data-in="14.45" data-out="15.1" data-move="right">Programas a medida que se encargan del trabajo repetitivo. Así funciona ControlL, nuestra app para autoescuelas.</p>
+
+        <div class="st-step" data-sys="controll" data-step="0"><b>1</b><span>Los alumnos nuevos esperan en el tablón hasta tener profesor</span></div>
+        <div class="st-step" data-sys="controll" data-step="1"><b>2</b><span>Exámenes y aprobados, siempre a la vista</span></div>
+        <div class="st-step" data-sys="controll" data-step="2"><b>3</b><span>Los bonos y pagos de cada alumno, al día</span></div>
+        <div class="st-step" data-sys="controll" data-step="3"><b>4</b><span>Avisa sola de quién lleva días sin practicar</span></div>
+
+        <p class="st st-stat" data-in="17.0" data-out="17.5">Una autoescuela real pasó a ControlL en una tarde: <b>34 alumnos y 327 clases</b>, sin perder ninguna práctica.</p>
+        <div class="st st-cross" data-in="17.4" data-out="19.9" data-cross><small>Y lo mejor,</small>mientras trabajas, el sistema también.</div>
+
+        <div class="st st-eyebrow" data-in="19.95" data-out="21.1">MBL Studio Cobros</div>
+        <h2 class="st st-big st-center" data-in="20.0" data-out="20.75">Facturar y cobrar,<br><em>sin perseguir a nadie.</em></h2>
+        <p class="st st-side st-under" data-in="20.05" data-out="20.75">Nuestro programa de facturación: contratos firmados en línea, facturas que salen solas cada mes y cobros por domiciliación. Lo usamos cada día, igual que nuestros clientes.</p>
+
+        <div class="st-step" data-sys="cobros" data-step="0"><b>1</b><span>La factura sale hecha, lista para mandar por email o WhatsApp</span></div>
+        <div class="st-step" data-sys="cobros" data-step="1"><b>2</b><span>Todas tus facturas, y las que quedan por cobrar</span></div>
+        <div class="st-step" data-sys="cobros" data-step="2"><b>3</b><span>Ingresos, gastos y beneficio del año, de un vistazo</span></div>
+        <div class="st-step" data-sys="cobros" data-step="3"><b>4</b><span>La tesorería y tus cuentas, siempre al día</span></div>
+
+        <div class="st st-cross" data-in="23.65" data-out="25.3" data-cross>cobrar ya no te quita el sueño.</div>
+
+        <div class="story-fallback" id="story-fallback"></div>
+      </div>
+    </section>
+
+    <!-- SECTORES -->
+    <section class="block" id="sectores">
+      <div class="container">
+        <p class="section-label reveal">Sectores</p>
+        <h2 class="section-title reveal reveal-delay-1">¿En qué sector<br><em>opera tu empresa?</em></h2>
+        <p class="section-sub reveal reveal-delay-2">Adaptamos cada solución al funcionamiento real de tu sector. Selecciona el tuyo para ver cómo podemos ayudarte.</p>
+        <div class="sectores-grid reveal reveal-delay-2">
+          <div class="sector-card glass" data-sector="limpieza" onclick="selectSector(this)"><span class="sector-emoji">🧹</span><div class="sector-name">Limpieza</div><div class="sector-desc">Control de jornada</div></div>
+          <div class="sector-card glass" data-sector="autoescuelas" onclick="selectSector(this)"><span class="sector-emoji">🚗</span><div class="sector-name">Autoescuelas</div><div class="sector-desc">Agenda de prácticas</div></div>
+          <div class="sector-card glass" data-sector="hosteleria" onclick="selectSector(this)"><span class="sector-emoji">🍽️</span><div class="sector-name">Hostelería</div><div class="sector-desc">Turnos y fichaje</div></div>
+          <div class="sector-card glass" data-sector="seguridad" onclick="selectSector(this)"><span class="sector-emoji">🔒</span><div class="sector-name">Seguridad</div><div class="sector-desc">Rondas y control</div></div>
+          <div class="sector-card glass" data-sector="salud" onclick="selectSector(this)"><span class="sector-emoji">🏥</span><div class="sector-name">Salud / Clínicas</div><div class="sector-desc">Citas y agenda</div></div>
+          <div class="sector-card glass" data-sector="academia" onclick="selectSector(this)"><span class="sector-emoji">📚</span><div class="sector-name">Academias</div><div class="sector-desc">Clases y reservas</div></div>
+          <div class="sector-card glass" data-sector="logistica" onclick="selectSector(this)"><span class="sector-emoji">🚛</span><div class="sector-name">Logística</div><div class="sector-desc">Control de equipo</div></div>
+          <div class="sector-card glass" data-sector="otro" onclick="selectSector(this)"><span class="sector-emoji">💼</span><div class="sector-name">Otro sector</div><div class="sector-desc">Cuéntanos tu caso</div></div>
         </div>
-        <div class="web-card-right">
-          <div class="web-preview">
-            <div class="wp-bar"><span></span><span></span><span></span></div>
-            <div class="wp-hero"></div>
-            <div class="wp-lines">
-              <div class="wp-line" style="width:60%"></div>
-              <div class="wp-line" style="width:40%"></div>
+      </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section class="block" id="como">
+      <div class="container">
+        <p class="section-label reveal">Proceso</p>
+        <h2 class="section-title reveal reveal-delay-1">En marcha en<br><em>menos de 48 horas.</em></h2>
+        <p class="section-sub reveal reveal-delay-2">Sin instalaciones, sin hardware, sin meses de implementación.</p>
+        <div class="steps-grid">
+          <div class="step-card glass reveal reveal-delay-1"><div class="step-num">1</div><h3>Diagnóstico gratuito</h3><p>Cuéntanos qué necesita tu empresa. En menos de 24h te enviamos una propuesta personalizada sin ningún compromiso.</p><div class="step-connector"></div></div>
+          <div class="step-card glass reveal reveal-delay-2"><div class="step-num">2</div><h3>Configuración y alta</h3><p>Configuramos todo el sistema, damos de alta a tu equipo y verificamos que funciona correctamente. Tú no tocas nada.</p><div class="step-connector"></div></div>
+          <div class="step-card glass reveal reveal-delay-3"><div class="step-num">3</div><h3>Operativo y con soporte</h3><p>Tu equipo empieza a usar la app desde el móvil ese mismo día. Soporte directo incluido, sin call centers ni tickets.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASO REAL -->
+    <section class="block" id="caso">
+      <div class="container">
+        <p class="section-label reveal">Caso real</p>
+        <h2 class="section-title reveal reveal-delay-1">Ya <em>funciona</em> en empresas reales.</h2>
+        <div class="caso-card glass reveal reveal-delay-2">
+          <div>
+            <span class="caso-tag">✓ En producción desde 2026</span>
+            <h3>APISA — Empresa de limpieza, Palencia</h3>
+            <p>44 empleadas gestionando su jornada laboral desde el móvil. Fichajes geolocalizados, cuadrantes semanales y Excel mensual para Inspección de Trabajo generado automáticamente. Sin papel, sin desplazamientos, sin complicaciones.</p>
+            <div class="caso-links">
+              <a class="text-link" href="#diagnostico" onclick="scrollToDiag()">Quiero algo similar para mi empresa →</a>
+              <a href="/empresas-limpieza/" class="soft-link">Ver caso completo →</a>
             </div>
-            <div class="wp-cards">
-              <div class="wp-card"></div>
-              <div class="wp-card"></div>
-              <div class="wp-card"></div>
+          </div>
+          <div class="caso-stats">
+            <div class="stat-item"><div class="stat-num">44</div><div class="stat-label">Empleadas activas</div></div>
+            <div class="stat-div"></div>
+            <div class="stat-item"><div class="stat-num">48h</div><div class="stat-label">Tiempo de puesta en marcha</div></div>
+            <div class="stat-div"></div>
+            <div class="stat-item"><div class="stat-num">0€</div><div class="stat-label">Hardware necesario</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAGNÓSTICO INTERACTIVO -->
+    <section class="block" id="diagnostico">
+      <div class="container">
+        <p class="section-label reveal">Diagnóstico gratuito</p>
+        <h2 class="section-title reveal reveal-delay-1">3 preguntas.<br><em>Una propuesta a medida.</em></h2>
+        <p class="section-sub reveal reveal-delay-2">Sin compromiso. Te enviamos una propuesta personalizada en menos de 24 horas.</p>
+
+        <div class="diag-wrapper glass reveal reveal-delay-2">
+          <div class="diag-header">
+            <div class="diag-header-text">
+              <h3>Diagnóstico rápido</h3>
+              <p id="diag-step-label">Paso 1 de 3 — Cuéntanos sobre tu empresa</p>
+            </div>
+            <div class="diag-progress-dots">
+              <div class="dpd active" id="dpd1"></div><div class="dpd" id="dpd2"></div><div class="dpd" id="dpd3"></div><div class="dpd" id="dpd4"></div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- EXTRAS SECUNDARIOS -->
-      <div class="web-extras reveal reveal-delay-1">
-        <div class="web-extras-label">También puedes añadir</div>
-        <div class="web-extras-grid">
-          <div class="web-extra-card">
-            <span class="web-extra-icon">🔍</span>
-            <div class="web-extra-text">
-              <div class="web-extra-title">Auditoría SEO</div>
-              <div class="web-extra-desc">Analizamos tu web y te damos un informe con todo lo que Google no te perdona y cómo corregirlo.</div>
-            </div>
-          </div>
-          <div class="web-extra-card">
-            <span class="web-extra-icon">✍️</span>
-            <div class="web-extra-text">
-              <div class="web-extra-title">Textos y contenido</div>
-              <div class="web-extra-desc">Redactamos los textos de tu web para que convenzan a tus clientes y posicionen en Google.</div>
-            </div>
-          </div>
-          <div class="web-extra-card">
-            <span class="web-extra-icon">📍</span>
-            <div class="web-extra-text">
-              <div class="web-extra-title">Visibilidad local</div>
-              <div class="web-extra-desc">Configuramos Google Business y Google Search Console para que tu empresa aparezca en las búsquedas de tu zona.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- SECTORES -->
-  <section id="sectores">
-    <div class="container">
-      <p class="section-label reveal">Sectores</p>
-      <h2 class="section-title reveal reveal-delay-1">¿En qué sector<br><em>opera tu empresa?</em></h2>
-      <p class="section-sub reveal reveal-delay-2">Adaptamos cada solución al funcionamiento real de tu sector. Selecciona el tuyo para ver cómo podemos ayudarte.</p>
-
-      <div class="sectores-grid reveal reveal-delay-2">
-        <div class="sector-card" data-sector="limpieza" onclick="selectSector(this)">
-          <span class="sector-emoji">🧹</span>
-          <div class="sector-name">Limpieza</div>
-          <div class="sector-desc">Control de jornada</div>
-        </div>
-        <div class="sector-card" data-sector="autoescuelas" onclick="selectSector(this)">
-          <span class="sector-emoji">🚗</span>
-          <div class="sector-name">Autoescuelas</div>
-          <div class="sector-desc">Agenda de prácticas</div>
-        </div>
-        <div class="sector-card" data-sector="hosteleria" onclick="selectSector(this)">
-          <span class="sector-emoji">🍽️</span>
-          <div class="sector-name">Hostelería</div>
-          <div class="sector-desc">Turnos y fichaje</div>
-        </div>
-        <div class="sector-card" data-sector="seguridad" onclick="selectSector(this)">
-          <span class="sector-emoji">🔒</span>
-          <div class="sector-name">Seguridad</div>
-          <div class="sector-desc">Rondas y control</div>
-        </div>
-        <div class="sector-card" data-sector="salud" onclick="selectSector(this)">
-          <span class="sector-emoji">🏥</span>
-          <div class="sector-name">Salud / Clínicas</div>
-          <div class="sector-desc">Citas y agenda</div>
-        </div>
-        <div class="sector-card" data-sector="academia" onclick="selectSector(this)">
-          <span class="sector-emoji">📚</span>
-          <div class="sector-name">Academias</div>
-          <div class="sector-desc">Clases y reservas</div>
-        </div>
-        <div class="sector-card" data-sector="logistica" onclick="selectSector(this)">
-          <span class="sector-emoji">🚛</span>
-          <div class="sector-name">Logística</div>
-          <div class="sector-desc">Control de equipo</div>
-        </div>
-        <div class="sector-card" data-sector="otro" onclick="selectSector(this)">
-          <span class="sector-emoji">💼</span>
-          <div class="sector-name">Otro sector</div>
-          <div class="sector-desc">Cuéntanos tu caso</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CÓMO FUNCIONA -->
-  <section class="como" id="como">
-    <div class="container">
-      <p class="section-label reveal">Proceso</p>
-      <h2 class="section-title reveal reveal-delay-1">En marcha en<br><em>menos de 48 horas.</em></h2>
-      <p class="section-sub reveal reveal-delay-2">Sin instalaciones, sin hardware, sin meses de implementación.</p>
-
-      <div class="steps-grid">
-        <div class="step-card reveal reveal-delay-1">
-          <div class="step-num">1</div>
-          <h3>Diagnóstico gratuito</h3>
-          <p>Cuéntanos qué necesita tu empresa. En menos de 24h te enviamos una propuesta personalizada sin ningún compromiso.</p>
-          <div class="step-connector"></div>
-        </div>
-        <div class="step-card reveal reveal-delay-2">
-          <div class="step-num">2</div>
-          <h3>Configuración y alta</h3>
-          <p>Configuramos todo el sistema, damos de alta a tu equipo y verificamos que funciona correctamente. Tú no tocas nada.</p>
-          <div class="step-connector"></div>
-        </div>
-        <div class="step-card reveal reveal-delay-3">
-          <div class="step-num">3</div>
-          <h3>Operativo y con soporte</h3>
-          <p>Tu equipo empieza a usar la app desde el móvil ese mismo día. Soporte directo incluido, sin call centers ni tickets.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CASO REAL -->
-  <section id="caso">
-    <div class="container">
-      <p class="section-label reveal">Caso real</p>
-      <h2 class="section-title reveal reveal-delay-1">Ya <em>funciona</em> en empresas reales.</h2>
-      <br>
-      <div class="caso-card reveal reveal-delay-2">
-        <div>
-          <span class="caso-tag">✓ En producción desde 2026</span>
-          <h3>APISA — Empresa de limpieza, Palencia</h3>
-          <p>44 empleadas gestionando su jornada laboral desde el móvil. Fichajes geolocalizados, cuadrantes semanales y Excel mensual para Inspección de Trabajo generado automáticamente. Sin papel, sin desplazamientos, sin complicaciones.</p>
-          <a class="producto-link" href="#diagnostico" onclick="scrollToDiag()" style="display:inline-flex; margin-top:18px;">Quiero algo similar para mi empresa →</a>
-          <a href="/empresas-limpieza/" style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:12px;color:var(--soft);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--soft)'">Ver caso completo →</a>
-        </div>
-        <div class="caso-stats">
-          <div class="stat-item">
-            <div class="stat-num">44</div>
-            <div class="stat-label">Empleadas activas</div>
-          </div>
-          <div class="stat-div"></div>
-          <div class="stat-item">
-            <div class="stat-num">48h</div>
-            <div class="stat-label">Tiempo de puesta en marcha</div>
-          </div>
-          <div class="stat-div"></div>
-          <div class="stat-item">
-            <div class="stat-num">0€</div>
-            <div class="stat-label">Hardware necesario</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DIAGNÓSTICO INTERACTIVO -->
-  <section class="diag-section" id="diagnostico">
-    <div class="container">
-      <p class="section-label reveal">Diagnóstico gratuito</p>
-      <h2 class="section-title reveal reveal-delay-1">3 preguntas.<br><em>Una propuesta a medida.</em></h2>
-      <p class="section-sub reveal reveal-delay-2">Sin compromiso. Te enviamos una propuesta personalizada en menos de 24 horas.</p>
-
-      <div class="diag-wrapper reveal reveal-delay-2">
-        <div class="diag-header">
-          <div class="diag-header-text">
-            <h3>Diagnóstico rápido</h3>
-            <p id="diag-step-label">Paso 1 de 3 — Cuéntanos sobre tu empresa</p>
-          </div>
-          <div class="diag-progress-dots">
-            <div class="dpd active" id="dpd1"></div>
-            <div class="dpd" id="dpd2"></div>
-            <div class="dpd" id="dpd3"></div>
-            <div class="dpd" id="dpd4"></div>
-          </div>
-        </div>
-
-        <div class="diag-body">
-
-          <!-- PASO 1 -->
-          <div class="diag-panel active" id="dp1">
-            <div class="diag-question">¿Qué te quita más tiempo en tu empresa?</div>
-            <div class="diag-hint">Selecciona la opción que más se ajuste a tu situación actual.</div>
-            <div class="diag-options">
-              <div class="diag-opt" data-step="1" data-val="control-jornada" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">⏱️</span>
-                <div class="diag-opt-title">Controlar el horario del equipo</div>
-                <div class="diag-opt-desc">Fichajes, turnos, ausencias, horas extras</div>
+          <div class="diag-body">
+            <!-- PASO 1 -->
+            <div class="diag-panel active" id="dp1">
+              <div class="diag-question">¿Qué te quita más tiempo en tu empresa?</div>
+              <div class="diag-hint">Selecciona la opción que más se ajuste a tu situación actual.</div>
+              <div class="diag-options">
+                <div class="diag-opt" data-step="1" data-val="control-jornada" onclick="selectOpt(this)"><span class="diag-opt-icon">⏱️</span><div class="diag-opt-title">Controlar el horario del equipo</div><div class="diag-opt-desc">Fichajes, turnos, ausencias, horas extras</div></div>
+                <div class="diag-opt" data-step="1" data-val="gestion-citas" onclick="selectOpt(this)"><span class="diag-opt-icon">📅</span><div class="diag-opt-title">Gestionar citas o reservas</div><div class="diag-opt-desc">Agenda, confirmaciones, recordatorios</div></div>
+                <div class="diag-opt" data-step="1" data-val="papeles" onclick="selectOpt(this)"><span class="diag-opt-icon">📄</span><div class="diag-opt-title">Papeleo y documentación</div><div class="diag-opt-desc">Firmas, informes, registros oficiales</div></div>
+                <div class="diag-opt" data-step="1" data-val="comunicacion" onclick="selectOpt(this)"><span class="diag-opt-icon">💬</span><div class="diag-opt-title">Comunicación con el equipo</div><div class="diag-opt-desc">Avisos, cambios de turno, incidencias</div></div>
+                <div class="diag-opt wide" data-step="1" data-val="pagina-web" onclick="selectOpt(this)"><span class="diag-opt-icon">🌐</span><div><div class="diag-opt-title">Mejorar o crear la web del negocio</div><div class="diag-opt-desc">SEO, posicionamiento, velocidad o web desde cero</div></div></div>
               </div>
-              <div class="diag-opt" data-step="1" data-val="gestion-citas" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">📅</span>
-                <div class="diag-opt-title">Gestionar citas o reservas</div>
-                <div class="diag-opt-desc">Agenda, confirmaciones, recordatorios</div>
+              <div class="diag-nav"><span></span><button class="diag-next" id="next1" disabled onclick="goStep(2)">Siguiente →</button></div>
+            </div>
+            <!-- PASO 2 -->
+            <div class="diag-panel" id="dp2">
+              <div class="diag-question">¿Cuántas personas trabajan en tu empresa?</div>
+              <div class="diag-hint">Esto nos ayuda a recomendarte el plan más adecuado.</div>
+              <div class="diag-options cols-3">
+                <div class="diag-opt" data-step="2" data-val="1-5" onclick="selectOpt(this)"><span class="diag-opt-icon">👤</span><div class="diag-opt-title">1 a 5</div><div class="diag-opt-desc">Microempresa</div></div>
+                <div class="diag-opt" data-step="2" data-val="6-15" onclick="selectOpt(this)"><span class="diag-opt-icon">👥</span><div class="diag-opt-title">6 a 15</div><div class="diag-opt-desc">Pequeña empresa</div></div>
+                <div class="diag-opt" data-step="2" data-val="16-50" onclick="selectOpt(this)"><span class="diag-opt-icon">🏢</span><div class="diag-opt-title">16 a 50</div><div class="diag-opt-desc">Empresa mediana</div></div>
+                <div class="diag-opt" data-step="2" data-val="50+" onclick="selectOpt(this)"><span class="diag-opt-icon">🏭</span><div class="diag-opt-title">Más de 50</div><div class="diag-opt-desc">Gran empresa</div></div>
+                <div class="diag-opt" data-step="2" data-val="autonomo" onclick="selectOpt(this)"><span class="diag-opt-icon">💼</span><div class="diag-opt-title">Solo yo</div><div class="diag-opt-desc">Autónomo</div></div>
+                <div class="diag-opt" data-step="2" data-val="nosé" onclick="selectOpt(this)"><span class="diag-opt-icon">🤔</span><div class="diag-opt-title">Varía</div><div class="diag-opt-desc">Depende la temporada</div></div>
               </div>
-              <div class="diag-opt" data-step="1" data-val="papeles" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">📄</span>
-                <div class="diag-opt-title">Papeleo y documentación</div>
-                <div class="diag-opt-desc">Firmas, informes, registros oficiales</div>
+              <div class="diag-nav"><button class="diag-back" onclick="goStep(1)">← Atrás</button><button class="diag-next" id="next2" disabled onclick="goStep(3)">Siguiente →</button></div>
+            </div>
+            <!-- PASO 3 -->
+            <div class="diag-panel" id="dp3">
+              <div class="diag-question">¿Qué resultado quieres conseguir?</div>
+              <div class="diag-hint">¿Cuál es el principal objetivo que buscas con una solución digital?</div>
+              <div class="diag-options">
+                <div class="diag-opt" data-step="3" data-val="ahorrar-tiempo" onclick="selectOpt(this)"><span class="diag-opt-icon">⚡</span><div class="diag-opt-title">Ahorrar tiempo en gestión</div><div class="diag-opt-desc">Automatizar tareas repetitivas</div></div>
+                <div class="diag-opt" data-step="3" data-val="cumplir-legal" onclick="selectOpt(this)"><span class="diag-opt-icon">⚖️</span><div class="diag-opt-title">Cumplir con la normativa</div><div class="diag-opt-desc">Inspección de Trabajo, RGPD</div></div>
+                <div class="diag-opt" data-step="3" data-val="mejorar-servicio" onclick="selectOpt(this)"><span class="diag-opt-icon">⭐</span><div class="diag-opt-title">Mejorar el servicio al cliente</div><div class="diag-opt-desc">Reservas, confirmaciones, comunicación</div></div>
+                <div class="diag-opt" data-step="3" data-val="control-equipo" onclick="selectOpt(this)"><span class="diag-opt-icon">📊</span><div class="diag-opt-title">Tener más control del equipo</div><div class="diag-opt-desc">Visibilidad en tiempo real</div></div>
               </div>
-              <div class="diag-opt" data-step="1" data-val="comunicacion" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">💬</span>
-                <div class="diag-opt-title">Comunicación con el equipo</div>
-                <div class="diag-opt-desc">Avisos, cambios de turno, incidencias</div>
+              <div class="diag-nav"><button class="diag-back" onclick="goStep(2)">← Atrás</button><button class="diag-next" id="next3" disabled onclick="goStep(4)">Ver propuesta →</button></div>
+            </div>
+            <!-- PASO 4 — FORMULARIO -->
+            <div class="diag-panel" id="dp4">
+              <div class="diag-result-header">
+                <strong id="result-title">Perfecto, tenemos una solución para ti</strong>
+                <p id="result-desc">Déjanos tus datos y te enviamos una propuesta personalizada en menos de 24 horas.</p>
               </div>
-              <div class="diag-opt" data-step="1" data-val="pagina-web" onclick="selectOpt(this)" style="grid-column: 1 / -1; display:flex; flex-direction:row; align-items:center; gap:14px; text-align:left;">
-                <span class="diag-opt-icon" style="margin-bottom:0; font-size:26px; flex-shrink:0;">🌐</span>
-                <div>
-                  <div class="diag-opt-title">Mejorar o crear la web del negocio</div>
-                  <div class="diag-opt-desc">SEO, posicionamiento, velocidad o web desde cero</div>
+              <form id="diag-form" onsubmit="submitDiag(event)">
+                <!-- Honeypot: invisible para personas, los bots lo rellenan y descartamos el envío -->
+                <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" />
+                <input type="hidden" name="q1" id="h_q1" />
+                <input type="hidden" name="q2" id="h_q2" />
+                <input type="hidden" name="q3" id="h_q3" />
+                <input type="hidden" name="sector" id="h_sector" />
+                <div class="form-grid">
+                  <div class="form-field"><label>Nombre *</label><input type="text" name="nombre" placeholder="Tu nombre" required /></div>
+                  <div class="form-field"><label>Empresa *</label><input type="text" name="empresa" placeholder="Nombre de tu empresa" required /></div>
+                  <div class="form-field"><label>Teléfono *</label><input type="tel" name="telefono" placeholder="600 000 000" required /></div>
+                  <div class="form-field"><label>Email</label><input type="email" name="email" placeholder="tu@empresa.com" /></div>
+                  <div class="form-field"><label>Sector</label>
+                    <select name="sector_form">
+                      <option value="">Selecciona tu sector</option><option value="limpieza">Limpieza</option><option value="autoescuela">Autoescuela</option><option value="hosteleria">Hostelería</option><option value="seguridad">Seguridad</option><option value="salud">Salud / Clínicas</option><option value="academia">Academia / Formación</option><option value="logistica">Logística</option><option value="otro">Otro</option>
+                    </select>
+                  </div>
+                  <div class="form-field"><label>Preferencia de contacto</label>
+                    <select name="preferencia">
+                      <option value="whatsapp">WhatsApp</option><option value="llamada">Llamada telefónica</option><option value="email">Email</option><option value="videollamada">Videollamada</option>
+                    </select>
+                  </div>
+                  <div class="form-field full"><label>¿Algo más que quieras contarnos? (opcional)</label><textarea name="extra" placeholder="Cuéntanos tu situación actual, qué usas ahora, qué te gustaría mejorar..."></textarea></div>
                 </div>
+                <button class="form-submit" type="submit">Enviar y recibir propuesta gratuita</button>
+                <p class="form-note">Sin compromiso · Respuesta en menos de 24h · desarrollo@mblcorporacion.es</p>
+              </form>
+              <div class="diag-fallback" id="diag-fallback" style="display:none">
+                <p><strong>No hemos podido enviar el formulario.</strong> Escríbenos por WhatsApp y llegas directo — el mensaje va ya escrito con tus respuestas.</p>
+                <a class="fallback-wa" href="#" target="_blank" rel="noopener">Continuar por WhatsApp →</a>
               </div>
-            </div>
-            <div class="diag-nav">
-              <span></span>
-              <button class="diag-next" id="next1" disabled onclick="goStep(2)">Siguiente →</button>
-            </div>
-          </div>
-
-          <!-- PASO 2 -->
-          <div class="diag-panel" id="dp2">
-            <div class="diag-question">¿Cuántas personas trabajan en tu empresa?</div>
-            <div class="diag-hint">Esto nos ayuda a recomendarte el plan más adecuado.</div>
-            <div class="diag-options cols-3">
-              <div class="diag-opt" data-step="2" data-val="1-5" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">👤</span>
-                <div class="diag-opt-title">1 a 5</div>
-                <div class="diag-opt-desc">Microempresa</div>
+              <div class="diag-success" id="diag-success">
+                <div class="success-icon">✅</div>
+                <h3>¡Solicitud recibida!</h3>
+                <p>Nos ponemos en contacto contigo en menos de 24 horas con una propuesta personalizada para tu empresa.</p>
               </div>
-              <div class="diag-opt" data-step="2" data-val="6-15" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">👥</span>
-                <div class="diag-opt-title">6 a 15</div>
-                <div class="diag-opt-desc">Pequeña empresa</div>
-              </div>
-              <div class="diag-opt" data-step="2" data-val="16-50" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">🏢</span>
-                <div class="diag-opt-title">16 a 50</div>
-                <div class="diag-opt-desc">Empresa mediana</div>
-              </div>
-              <div class="diag-opt" data-step="2" data-val="50+" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">🏭</span>
-                <div class="diag-opt-title">Más de 50</div>
-                <div class="diag-opt-desc">Gran empresa</div>
-              </div>
-              <div class="diag-opt" data-step="2" data-val="autonomo" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">💼</span>
-                <div class="diag-opt-title">Solo yo</div>
-                <div class="diag-opt-desc">Autónomo</div>
-              </div>
-              <div class="diag-opt" data-step="2" data-val="nosé" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">🤔</span>
-                <div class="diag-opt-title">Varía</div>
-                <div class="diag-opt-desc">Depende la temporada</div>
-              </div>
-            </div>
-            <div class="diag-nav">
-              <button class="diag-back" onclick="goStep(1)">← Atrás</button>
-              <button class="diag-next" id="next2" disabled onclick="goStep(3)">Siguiente →</button>
+              <div class="diag-nav" style="margin-top:16px"><button class="diag-back" onclick="goStep(3)">← Atrás</button><span></span></div>
             </div>
           </div>
-
-          <!-- PASO 3 -->
-          <div class="diag-panel" id="dp3">
-            <div class="diag-question">¿Qué resultado quieres conseguir?</div>
-            <div class="diag-hint">¿Cuál es el principal objetivo que buscas con una solución digital?</div>
-            <div class="diag-options">
-              <div class="diag-opt" data-step="3" data-val="ahorrar-tiempo" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">⚡</span>
-                <div class="diag-opt-title">Ahorrar tiempo en gestión</div>
-                <div class="diag-opt-desc">Automatizar tareas repetitivas</div>
-              </div>
-              <div class="diag-opt" data-step="3" data-val="cumplir-legal" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">⚖️</span>
-                <div class="diag-opt-title">Cumplir con la normativa</div>
-                <div class="diag-opt-desc">Inspección de Trabajo, RGPD</div>
-              </div>
-              <div class="diag-opt" data-step="3" data-val="mejorar-servicio" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">⭐</span>
-                <div class="diag-opt-title">Mejorar el servicio al cliente</div>
-                <div class="diag-opt-desc">Reservas, confirmaciones, comunicación</div>
-              </div>
-              <div class="diag-opt" data-step="3" data-val="control-equipo" onclick="selectOpt(this)">
-                <span class="diag-opt-icon">📊</span>
-                <div class="diag-opt-title">Tener más control del equipo</div>
-                <div class="diag-opt-desc">Visibilidad en tiempo real</div>
-              </div>
-            </div>
-            <div class="diag-nav">
-              <button class="diag-back" onclick="goStep(2)">← Atrás</button>
-              <button class="diag-next" id="next3" disabled onclick="goStep(4)">Ver propuesta →</button>
-            </div>
-          </div>
-
-          <!-- PASO 4 — FORMULARIO -->
-          <div class="diag-panel" id="dp4">
-            <div class="diag-result-header">
-              <strong id="result-title">Perfecto, tenemos una solución para ti</strong>
-              <p id="result-desc">Déjanos tus datos y te enviamos una propuesta personalizada en menos de 24 horas.</p>
-            </div>
-            <form id="diag-form" onsubmit="submitDiag(event)">
-              <!-- Honeypot: invisible para personas, los bots lo rellenan y descartamos el envío -->
-              <input type="text" name="website" tabindex="-1" autocomplete="off"
-                     aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" />
-              <input type="hidden" name="q1" id="h_q1" />
-              <input type="hidden" name="q2" id="h_q2" />
-              <input type="hidden" name="q3" id="h_q3" />
-              <input type="hidden" name="sector" id="h_sector" />
-              <div class="form-grid">
-                <div class="form-field">
-                  <label>Nombre *</label>
-                  <input type="text" name="nombre" placeholder="Tu nombre" required />
-                </div>
-                <div class="form-field">
-                  <label>Empresa *</label>
-                  <input type="text" name="empresa" placeholder="Nombre de tu empresa" required />
-                </div>
-                <div class="form-field">
-                  <label>Teléfono *</label>
-                  <input type="tel" name="telefono" placeholder="600 000 000" required />
-                </div>
-                <div class="form-field">
-                  <label>Email</label>
-                  <input type="email" name="email" placeholder="tu@empresa.com" />
-                </div>
-                <div class="form-field">
-                  <label>Sector</label>
-                  <select name="sector_form">
-                    <option value="">Selecciona tu sector</option>
-                    <option value="limpieza">Limpieza</option>
-                    <option value="autoescuela">Autoescuela</option>
-                    <option value="hosteleria">Hostelería</option>
-                    <option value="seguridad">Seguridad</option>
-                    <option value="salud">Salud / Clínicas</option>
-                    <option value="academia">Academia / Formación</option>
-                    <option value="logistica">Logística</option>
-                    <option value="otro">Otro</option>
-                  </select>
-                </div>
-                <div class="form-field">
-                  <label>Preferencia de contacto</label>
-                  <select name="preferencia">
-                    <option value="whatsapp">WhatsApp</option>
-                    <option value="llamada">Llamada telefónica</option>
-                    <option value="email">Email</option>
-                    <option value="videollamada">Videollamada</option>
-                  </select>
-                </div>
-                <div class="form-field full">
-                  <label>¿Algo más que quieras contarnos? (opcional)</label>
-                  <textarea name="extra" placeholder="Cuéntanos tu situación actual, qué usas ahora, qué te gustaría mejorar..."></textarea>
-                </div>
-              </div>
-              <button class="form-submit" type="submit">Enviar y recibir propuesta gratuita</button>
-              <p class="form-note">Sin compromiso · Respuesta en menos de 24h · desarrollo@mblcorporacion.es</p>
-            </form>
-            <div class="diag-fallback" id="diag-fallback" style="display:none">
-              <p><strong>No hemos podido enviar el formulario.</strong> Escríbenos por WhatsApp y llegas directo —
-                 el mensaje va ya escrito con tus respuestas.</p>
-              <a class="fallback-wa" href="#" target="_blank" rel="noopener">Continuar por WhatsApp →</a>
-            </div>
-            <div class="diag-success" id="diag-success">
-              <div class="success-icon">✅</div>
-              <h3>¡Solicitud recibida!</h3>
-              <p>Nos ponemos en contacto contigo en menos de 24 horas con una propuesta personalizada para tu empresa.</p>
-            </div>
-            <div class="diag-nav" style="margin-top:16px">
-              <button class="diag-back" onclick="goStep(3)">← Atrás</button>
-              <span></span>
-            </div>
-          </div>
-
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FAQ -->
-  <section id="faq" style="padding: 90px 0;">
-    <div class="container">
-      <p class="section-label reveal">Preguntas frecuentes</p>
-      <h2 class="section-title reveal reveal-delay-1">Lo que nos suelen<br><em>preguntar.</em></h2>
-
-      <div style="max-width: 720px; margin-top: 48px; display: flex; flex-direction: column; gap: 12px;">
-
-        <details class="faq-item reveal reveal-delay-1">
-          <summary>¿Cuánto cuesta digitalizar mi empresa?</summary>
-          <p>El alta parte desde 149€ y la mensualidad depende del tamaño del equipo: desde 25€/mes para hasta 10 empleados, hasta 69€/mes para hasta 50. Sin costes ocultos ni hardware adicional.</p>
-        </details>
-
-        <details class="faq-item reveal reveal-delay-2">
-          <summary>¿Ofrecéis soporte presencial o solo online?</summary>
-          <p>Trabajamos con empresas de toda España, con presencia especial en Palencia y Castilla y León. Para clientes en la zona, ofrecemos formación presencial opcional (150€). El soporte del día a día es por WhatsApp directo.</p>
-        </details>
-
-        <details class="faq-item reveal reveal-delay-3">
-          <summary>¿Qué incluye el diagnóstico gratuito?</summary>
-          <p>Analizamos la situación de tu empresa, qué procesos te quitan más tiempo y qué solución encaja mejor. Te enviamos una propuesta personalizada con precio cerrado en menos de 24 horas, sin compromiso.</p>
-        </details>
-
-        <details class="faq-item reveal reveal-delay-1">
-          <summary>¿Cuánto tiempo tarda en estar operativo?</summary>
-          <p>Normalmente 48 horas desde que confirmas el alta. Configuramos todo el sistema y damos de alta a tu equipo. No necesitas instalar nada ni tener conocimientos técnicos.</p>
-        </details>
-
-        <details class="faq-item reveal reveal-delay-2">
-          <summary>¿Funciona para empresas muy pequeñas o autónomos?</summary>
-          <p>Sí. Tenemos clientes desde 1 empleado hasta más de 50. El sistema escala contigo: pagas según el tamaño real de tu equipo y puedes cambiar de plan en cualquier momento.</p>
-        </details>
-
-        <details class="faq-item reveal reveal-delay-3">
-          <summary>¿Hay permanencia mínima?</summary>
-          <p>No. Puedes cancelar cuando quieras. No pedimos contratos de largo plazo porque creemos que si el producto es bueno, no hacen falta.</p>
-        </details>
-
+    <!-- FAQ -->
+    <section class="block" id="faq">
+      <div class="container">
+        <p class="section-label reveal">Preguntas frecuentes</p>
+        <h2 class="section-title reveal reveal-delay-1">Lo que nos suelen<br><em>preguntar.</em></h2>
+        <div class="faq-list">
+          <details class="faq-item glass reveal reveal-delay-1"><summary>¿Cuánto cuesta digitalizar mi empresa?</summary><p>El alta parte desde 149€ y la mensualidad depende del tamaño del equipo: desde 25€/mes para hasta 10 empleados, hasta 69€/mes para hasta 50. Sin costes ocultos ni hardware adicional.</p></details>
+          <details class="faq-item glass reveal reveal-delay-2"><summary>¿Ofrecéis soporte presencial o solo online?</summary><p>Trabajamos con empresas de toda España, con presencia especial en Palencia y Castilla y León. Para clientes en la zona, ofrecemos formación presencial opcional (150€). El soporte del día a día es por WhatsApp directo.</p></details>
+          <details class="faq-item glass reveal reveal-delay-3"><summary>¿Qué incluye el diagnóstico gratuito?</summary><p>Analizamos la situación de tu empresa, qué procesos te quitan más tiempo y qué solución encaja mejor. Te enviamos una propuesta personalizada con precio cerrado en menos de 24 horas, sin compromiso.</p></details>
+          <details class="faq-item glass reveal reveal-delay-1"><summary>¿Cuánto tiempo tarda en estar operativo?</summary><p>Normalmente 48 horas desde que confirmas el alta. Configuramos todo el sistema y damos de alta a tu equipo. No necesitas instalar nada ni tener conocimientos técnicos.</p></details>
+          <details class="faq-item glass reveal reveal-delay-2"><summary>¿Funciona para empresas muy pequeñas o autónomos?</summary><p>Sí. Tenemos clientes desde 1 empleado hasta más de 50. El sistema escala contigo: pagas según el tamaño real de tu equipo y puedes cambiar de plan en cualquier momento.</p></details>
+          <details class="faq-item glass reveal reveal-delay-3"><summary>¿Hay permanencia mínima?</summary><p>No. Puedes cancelar cuando quieras. No pedimos contratos de largo plazo porque creemos que si el producto es bueno, no hacen falta.</p></details>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-brand">
-          <div class="footer-brand-mark"><span>MBL</span></div>
-          <span class="footer-name">MBL Studio</span>
-        </div>
+        <a class="brand" href="#" aria-label="MBL Studio"><span class="brand-logo" data-logo></span><span class="brand-name">Studio</span></a>
         <div class="footer-links">
-          <a class="footer-link" href="#productos">Productos</a>
+          <a class="footer-link" href="#escaparate">Trabajos</a>
           <a class="footer-link" href="#sectores">Sectores</a>
           <a class="footer-link" href="#como">Cómo funciona</a>
           <a class="footer-link" href="#diagnostico">Diagnóstico</a>
@@ -1362,8 +847,16 @@
   </footer>
 
   <script>
+    // Flat logo (nav, footer, no-WebGL fallback)
+    const flatLogo = document.getElementById('logo-flat').innerHTML;
+    document.querySelectorAll('[data-logo]').forEach(el => { el.innerHTML = flatLogo; });
+
     // Año
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Header glass once the page moves
+    const headerEl = document.getElementById('top');
+    addEventListener('scroll', () => headerEl.classList.toggle('scrolled', scrollY > 40), { passive: true });
 
     // Scroll reveal
     const revealEls = document.querySelectorAll('.reveal');
@@ -1403,17 +896,13 @@
     function goStep(n) {
       document.querySelectorAll('.diag-panel').forEach(p => p.classList.remove('active'));
       document.getElementById('dp' + n).classList.add('active');
-
-      // dots
       for (let i = 1; i <= 4; i++) {
         const d = document.getElementById('dpd' + i);
         if (i < n) { d.classList.remove('active'); d.classList.add('done'); }
         else if (i === n) { d.classList.add('active'); d.classList.remove('done'); }
         else { d.classList.remove('active', 'done'); }
       }
-
       document.getElementById('diag-step-label').textContent = stepLabels[n];
-
       if (n === 4) {
         document.getElementById('h_q1').value = answers.q1;
         document.getElementById('h_q2').value = answers.q2;
@@ -1497,6 +986,506 @@ Soy ${nombre} de ${empresa}. Mi teléfono: ${tel}${extra ? '\n\n' + extra : ''}`
       aviso.style.display = 'block';
       aviso.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+  </script>
+
+  <script type="module">
+import * as THREE from 'three';
+import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
+
+const body = document.body;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const small = () => innerWidth < 760;
+const svgText = document.getElementById('logo-3d').innerHTML;
+const SHOTS = window.SHOTS || {};
+
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gl'), antialias: true, powerPreference: 'high-performance' });
+} catch (e) {
+  body.classList.add('no-gl', 'ready');
+  document.getElementById('story-fallback').innerHTML =
+    ['app-tablon', 'app-examenes', 'app-pagos', 'app-alertas'].map(k => SHOTS[k] ? `<img src="${SHOTS[k]}" alt="">` : '').join('');
+}
+if (renderer) start();
+setTimeout(() => body.classList.add('ready'), 4500);
+
+function start() {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, small() ? 1.25 : 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.localClippingEnabled = true;
+
+  const BG = 0x070B10;
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(BG);
+  scene.fog = new THREE.Fog(BG, 30, 80);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 600);
+
+  scene.add(new THREE.HemisphereLight(0xbfd4e0, 0x070b10, 0.45));
+  const key = new THREE.DirectionalLight(0xffffff, 1.1); key.position.set(-6, 8, 12); scene.add(key);
+  const rim = new THREE.PointLight(0x2BB3A3, 60, 40, 1.6); rim.position.set(6, 2, -6); scene.add(rim);
+  const tipLight = new THREE.PointLight(0x2BB3A3, 0, 12, 1.5); scene.add(tipLight);
+
+  // ── Space: soft round points shared by the galaxy and the far stars ──
+  const starMat = new THREE.ShaderMaterial({
+    uniforms: { uPR: { value: renderer.getPixelRatio() }, uTime: { value: 0 } },
+    vertexShader: `
+      attribute float size; attribute vec3 color; attribute float phase;
+      uniform float uPR; uniform float uTime; varying vec3 vColor; varying float vTw;
+      void main() {
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        gl_Position = projectionMatrix * mv;
+        gl_PointSize = size * uPR * (220.0 / -mv.z);
+        vColor = color;
+        vTw = 0.75 + 0.25 * sin(uTime * 1.3 + phase);
+      }`,
+    fragmentShader: `
+      varying vec3 vColor; varying float vTw;
+      void main() {
+        float d = length(gl_PointCoord - 0.5);
+        float a = pow(smoothstep(0.5, 0.0, d), 1.7) * vTw;
+        gl_FragColor = vec4(vColor * a, a);
+      }`,
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  });
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  function pointCloud(n, place) {
+    const pos = new Float32Array(n * 3), col = new Float32Array(n * 3), size = new Float32Array(n), phase = new Float32Array(n);
+    const c = new THREE.Color();
+    for (let i = 0; i < n; i++) {
+      const s = place(i, c);
+      pos.set(s.p, i * 3); col.set([c.r, c.g, c.b], i * 3); size[i] = s.size * (small() ? 1.7 : 1); phase[i] = Math.random() * 6.28;   // phones get fewer, bigger points
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    g.setAttribute('size', new THREE.BufferAttribute(size, 1));
+    g.setAttribute('phase', new THREE.BufferAttribute(phase, 1));
+    return new THREE.Points(g, starMat);
+  }
+
+  // Spiral galaxy in the XZ plane: three arms in the brand teal, soft core, deep blue rim
+  const GR = 70, ARMS = 3;
+  const core = new THREE.Color(0x9fe6da), mid = new THREE.Color(0x2BB3A3), edge = new THREE.Color(0x123f66);
+  const galaxy = pointCloud(small() ? 4500 : 12000, (i, c) => {
+    const r = Math.pow(Math.random(), 1.6) * GR;
+    const arm = (i % ARMS) / ARMS * Math.PI * 2;
+    const ang = arm + r * 0.055;
+    const spread = (1 - r / GR * 0.5) * 0.45 * r;
+    const off = () => Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * spread;
+    const t = r / GR;
+    c.copy(t < 0.35 ? core.clone().lerp(mid, t / 0.35) : mid.clone().lerp(edge, (t - 0.35) / 0.65)).multiplyScalar(t < 0.1 ? 0.35 : 0.7);   // dim core: a soft glow, not a spotlight
+    if (Math.random() < 0.06 && t > 0.15) c.setRGB(0.9, 0.95, 1);
+    return { p: [Math.cos(ang) * r + off(), off() * 0.18, Math.sin(ang) * r + off()], size: rand(1.2, 3.2) };
+  });
+  const galaxySpin = new THREE.Group(); galaxySpin.add(galaxy);
+  const galaxyTilt = new THREE.Group(); galaxyTilt.add(galaxySpin);
+  const galaxyHome = { x: 58, y: 22 };          // set per screen width in resize()
+  galaxyTilt.position.z = -150;
+  galaxyTilt.rotation.set(0.95, 0, 0.35);
+  scene.add(galaxyTilt);
+
+  const stars = pointCloud(small() ? 900 : 2200, (i, c) => {
+    const v = new THREE.Vector3(rand(-1, 1), rand(-1, 1), rand(-1, 1)).normalize().multiplyScalar(rand(150, 320));
+    c.setRGB(0.85, 0.92, 1).multiplyScalar(rand(0.5, 1));
+    if (Math.random() < 0.2) c.set(0x7fe3d6);
+    return { p: [v.x, v.y, v.z - 60], size: rand(1.5, 4) };
+  });
+  scene.add(stars);
+
+  // ── Logo from the SVG: groove-free letters (counters as holes) + the teal growth line ──
+  const data = new SVGLoader().parse(svgText);
+  const letterShapes = [], lineShapes = [];
+  for (const p of data.paths) {
+    const shapes = SVGLoader.createShapes(p);
+    (p.color.getHexString() === 'ffffff' ? letterShapes : lineShapes).push(...shapes);
+  }
+  const bboxOf = (shape) => new THREE.Box2().setFromPoints(shape.getPoints());
+
+  const CX = 1020, CY = 1029;          // centre of the SVG viewBox (146 669 1748 720)
+  const LETTER_DEPTH = 110, LINE_Z = 55, LINE_DEPTH = 80;
+
+  // Satin metal: no clearcoat, whose sharp highlights were picked up by the bloom
+  const faceMat = new THREE.MeshPhysicalMaterial({ color: 0xA9B2B9, metalness: 0.6, roughness: 0.45, envMapIntensity: 0.5 });
+  const sideMat = new THREE.MeshPhysicalMaterial({ color: 0x24303C, metalness: 0.85, roughness: 0.4, envMapIntensity: 0.6 });
+  const revealPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), -1000);
+  const lineMat = new THREE.MeshStandardMaterial({ color: 0x2BB3A3, emissive: 0x2BB3A3, emissiveIntensity: 2.4, metalness: 0.2, roughness: 0.35, clippingPlanes: [revealPlane] });
+  const haloMat = new THREE.MeshStandardMaterial({ color: 0x0B1118, metalness: 0.3, roughness: 0.6, clippingPlanes: [revealPlane] });
+
+  const rig = new THREE.Group();       // the logo's journey: hero, story, background
+  const logo = new THREE.Group();      // SVG space: y flipped, scaled to world units
+  const S = 0.01;
+  logo.scale.set(S, -S, S);
+  logo.position.z = -LETTER_DEPTH / 2 * S;
+  rig.add(logo); scene.add(rig);
+
+  const pieces = letterShapes.map(shape => {
+    // Smooth shading across gentle bends, sharp at real corners...
+    const geo = toCreasedNormals(new THREE.ExtrudeGeometry(shape, { depth: LETTER_DEPTH, bevelEnabled: true, bevelThickness: 7, bevelSize: 3, bevelSegments: 4, curveSegments: 12 }), THREE.MathUtils.degToRad(32));
+    // ...but the caps stay perfectly flat, or the bevel's averaged normals streak across their long triangles
+    const cap = geo.groups.find(g => g.materialIndex === 0), nrm = geo.attributes.normal, zs = geo.attributes.position;
+    for (let v = cap.start; v < cap.start + cap.count; v++) nrm.setXYZ(v, 0, 0, zs.getZ(v) > LETTER_DEPTH / 2 ? 1 : -1);
+    geo.computeBoundingBox();
+    const c = geo.boundingBox.getCenter(new THREE.Vector3());
+    geo.translate(-c.x, -c.y, 0);
+    const mesh = new THREE.Mesh(geo, [faceMat, sideMat]);
+    mesh.userData = { final: new THREE.Vector3(c.x - CX, c.y - CY, 0) };
+    logo.add(mesh);
+    return mesh;
+  }).sort((a, b) => a.userData.final.x - b.userData.final.x);
+
+  pieces.forEach((m, i) => {
+    const u = m.userData;
+    u.delay = 0.35 + i * 0.14;
+    u.start = u.final.clone().add(new THREE.Vector3(rand(-500, 500), rand(-400, 400), rand(-3200, -2200)));
+    u.rot = new THREE.Vector3(rand(-1.4, 1.4), rand(-1.8, 1.8), rand(-0.8, 0.8));
+  });
+
+  const lineBox = new THREE.Box2();
+  for (const shape of lineShapes) {
+    lineBox.union(bboxOf(shape));
+    const geo = new THREE.ExtrudeGeometry(shape, { depth: LINE_DEPTH, bevelEnabled: true, bevelThickness: 4, bevelSize: 2, bevelSegments: 3, curveSegments: 16 });
+    geo.translate(-CX, -CY, LINE_Z);
+    logo.add(new THREE.Mesh(geo, lineMat));
+    // Dark outline just above the letter face, like the gap around the line in the flat logo
+    const halo = new THREE.ExtrudeGeometry(shape, { depth: 4, bevelEnabled: true, bevelThickness: 2, bevelSize: 18, bevelSegments: 1, curveSegments: 16 });
+    halo.translate(-CX, -CY, LETTER_DEPTH + 8);
+    logo.add(new THREE.Mesh(halo, haloMat));
+  }
+
+  const sparkTex = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 128;
+    const g = c.getContext('2d'), grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grd.addColorStop(0, 'rgba(255,255,255,1)'); grd.addColorStop(0.25, 'rgba(120,240,225,.85)'); grd.addColorStop(1, 'rgba(43,179,163,0)');
+    g.fillStyle = grd; g.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  })();
+  const spark = new THREE.Sprite(new THREE.SpriteMaterial({ map: sparkTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+  spark.visible = false; scene.add(spark);
+
+  // ── Story screens are plain DOM over the canvas: the browser paints video and images at full sharpness ──
+  // A blob is always seekable; a plain URL only when the server answers byte ranges. Loaded when the scene nears.
+  function lazyVideo(v, src) {
+    let asked = false;
+    return () => {
+      if (asked || !src) return; asked = true;
+      fetch(src).then(r => r.blob()).then(bl => { v.src = URL.createObjectURL(bl); }).catch(() => { v.src = src; });
+    };
+  }
+  // Scroll-driven playback: seek only when the browser is free, so fast scrolling never queues up seeks
+  function scrub(v, time) {
+    if (v.readyState >= 2 && !v.seeking && Math.abs(v.currentTime - time) > 0.04) v.currentTime = time;
+  }
+  const WEBS = [['intrans', 'intrans.es'], ['loscandiles', 'loscandiles.es'], ['dysa', 'dysapalencia.es']];
+  const webs = WEBS.map(([k], i) => {
+    const el = document.getElementById('win-' + k), v = el.querySelector('video');
+    return { el, v, load: lazyVideo(v, (small() && SHOTS[k + '-movil']) || SHOTS[k]) };   // phones get the site as it looks on a phone
+  });
+  // Systems windows: real screens switched by a glowing line as it reaches each step.
+  // tIn/tOut: window on screen; sp0/spLen: the line's run; glowAt: edge glow when the line finishes
+  const SYS = [
+    { id: 'controll', tIn: 15.35, tOut: 17.85, sp0: 15.8, spLen: 1.6, glowAt: 17.35 },
+    { id: 'cobros', tIn: 21.05, tOut: 23.6, sp0: 21.5, spLen: 1.6, glowAt: 23.05 },
+  ].map(s => {
+    const el = document.getElementById('win-' + s.id);
+    const shots = [...el.querySelectorAll('.app-shot')];
+    shots.forEach(img => { const k = img.dataset.shot; if (SHOTS[k]) img.src = SHOTS[k]; });
+    const path = el.querySelector('.steps-path'), head = el.querySelector('.steps-head');
+    const nodes = [...el.querySelectorAll('.steps-node')];
+    const pts = nodes.map(n => [+n.getAttribute('cx'), +n.getAttribute('cy')]);   // viewBox 1000 × 625
+    const len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    // how far along the path each node sits, so the screen changes exactly when the line reaches it
+    const nodeAt = pts.map(([x, y]) => {
+      let best = 0, bd = 1e9;
+      for (let q = 0; q <= len; q += 2) { const p = path.getPointAtLength(q), dd = (p.x - x) ** 2 + (p.y - y) ** 2; if (dd < bd) { bd = dd; best = q; } }
+      return best / len;
+    });
+    const labels = [...document.querySelectorAll(`.st-step[data-sys="${s.id}"]`)];
+    return { ...s, el, shots, path, head, nodes, pts, len, nodeAt, labels, screen: el.querySelector('.win-screen'), cur: -1 };
+  });
+  const winCss = (el, x, y, z, ry, s, o) => {
+    el.style.transform = `translate(-50%, -50%) translate3d(${x}px, ${y}px, ${z}px) rotateY(${ry}deg) scale(${s})`;
+    el.style.opacity = o;
+    el.style.visibility = o > 0.01 ? 'visible' : 'hidden';
+  };
+
+  let composer = null, bloom = null;
+  if (!small()) {
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.45, 0.55, 1.0);   // high threshold: only the teal lines glow, not the metal
+    composer.addPass(bloom);
+    composer.addPass(new OutputPass());
+  }
+
+  const hero = document.getElementById('inicio'), copy = document.getElementById('hero-copy'), hint = document.getElementById('hint');
+  const storyEl = document.getElementById('escaparate');
+  let baseY = 0, dist = 30, tanV = 0.29, fullPx = 1200, webPx = 1200, webY = 34, KEYS = [];
+  const PHONE = 390 / 844;                                       // aspect of the phone recordings
+
+  // Logo poses along the timeline T: hero 0–1, hand-over 1–1.3, story 1.3–11.3, background after.
+  // Facing front means ry is a whole number of turns; every move to a new spot adds one.
+  function buildKeys() {
+    const h0 = tanV * dist, w0 = h0 * camera.aspect;
+    const hBack = tanV * (dist + 14), wBack = hBack * camera.aspect;
+    const TURN = Math.PI * 2;
+    const hero0 = { x: 0, y: baseY, z: 0, ry: 0, rx: 0, s: 1 };
+    const centre1 = { ...gapPose(0), ry: TURN, rx: 0 };                                      // fills the gap between headline and text
+    const hB = tanV * (dist - 2), wB = hB * camera.aspect;
+    const badge = { x: wB * (small() ? 0.55 : 0.72), y: hB * (small() ? 0.58 : 0.56), z: 2, ry: 2 * TURN, rx: 0, s: small() ? 0.26 : 0.36 };
+    const centre2 = { ...gapPose(1), ry: 3 * TURN, rx: 0 };
+    const corner = { x: (small() ? 0.62 : 0.8) * w0, y: -0.68 * h0, z: 0, ry: 4 * TURN, rx: 0, s: small() ? 0.16 : 0.22 };
+    const centre3 = { ...gapPose(2), ry: 5 * TURN, rx: 0 };
+    const corner2 = { ...corner, ry: 5 * TURN };
+    const bg = { x: 0, y: 0.6, z: -26, ry: 5 * TURN, rx: 0.12, s: 1 };
+    KEYS = [[0, hero0], [1, hero0], [1.3, centre1], [2.05, centre1], [2.45, badge],
+      [13.9, badge], [14.4, centre2], [15.1, centre2], [15.4, corner], [19.8, corner], [20.2, centre3], [20.8, centre3], [21.1, corner2], [25.2, corner2], [25.45, bg]];
+  }
+  // Centre of the free space between a story headline and its side text, measured on the real layout
+  function gapPose(i) {
+    const z = -4, hz = tanV * (dist - z), wz = hz * camera.aspect;
+    const big = document.querySelectorAll('.story .st-big')[i], side = document.querySelectorAll('.story .st-side')[i];
+    if (small() || !big || !side) return { x: 0, y: small() ? 0 : 0, z, s: 0.55 };
+    if (big.classList.contains('st-center')) {       // stacked layout: the logo fills the band between headline and text
+      const y0 = big.offsetTop + big.offsetHeight, y1 = side.offsetTop;
+      const bandH = Math.max(0, y1 - y0) / innerHeight * 2 * hz;
+      return { x: 0, y: -(((y0 + y1) / 2) / innerHeight * 2 - 1) * hz, z, s: Math.min(1.1, bandH * 0.78 / 7.2, wz * 2 * 0.62 / 17.5) };
+    }
+    const x0 = big.offsetLeft + big.offsetWidth, x1 = side.offsetLeft;
+    const cx = (x0 + x1) / 2, cy = big.offsetTop + big.offsetHeight / 2;
+    const gapW = Math.max(0, x1 - x0) / innerWidth * 2 * wz;
+    return { x: (cx / innerWidth * 2 - 1) * wz, y: -(cy / innerHeight * 2 - 1) * hz, z, s: Math.min(0.75, gapW * 0.78 / 17.5) };
+  }
+  function poseAt(T) {
+    if (T <= KEYS[0][0]) return KEYS[0][1];
+    for (let i = 0; i < KEYS.length - 1; i++) {
+      const [t0, a] = KEYS[i], [t1, b] = KEYS[i + 1];
+      if (T <= t1) {
+        const e = smooth((T - t0) / (t1 - t0));
+        const out = {};
+        for (const k in a) out[k] = a[k] + (b[k] - a[k]) * e;
+        return out;
+      }
+    }
+    return KEYS[KEYS.length - 1][1];
+  }
+
+  function resize() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false);
+    composer?.setSize(w, h);
+    camera.aspect = w / h;
+    tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    // The logo lives in the free band between the header and the hero copy, whatever the screen height
+    const top = 76, bottom = Math.max(top + 120, copy.offsetTop - 16);
+    const band = bottom - top;
+    const fw = small() ? 0.84 : 0.5;
+    dist = Math.max(17.5 / (2 * tanV * camera.aspect * fw), 7.2 / (2 * tanV * (band * 0.8 / h)));
+    camera.position.set(0, 0, dist);
+    camera.updateProjectionMatrix();
+    baseY = (1 - 2 * (top + band / 2) / h) * tanV * dist;
+    scene.fog.near = dist + 4; scene.fog.far = dist + 46;
+    Object.assign(galaxyHome, small() ? { x: 4, y: 34 } : { x: 58, y: 22 });   // narrow screens: keep it in view
+    galaxyTilt.position.x = galaxyHome.x;
+    // "inside" a site the window fills the screen under the header; the bar on top is 30px
+    fullPx = Math.min(w * (small() ? 0.96 : 0.92), (h - 68 - 40 - 30) * 1.6);
+    // phones: the sites are tall phone windows filling the space between the header and the pill under them
+    const pillSpace = Math.min(60, Math.max(24, h * 0.06)) + 52;
+    webPx = small() ? Math.min(w * 0.9, (h - 68 - pillSpace - 24 - 30) * PHONE) : fullPx;
+    webY = small() ? (68 - pillSpace) / 2 : 34;
+    for (const x of webs) x.el.style.width = webPx + 'px';
+    for (const s of SYS) s.el.style.width = fullPx + 'px';
+    buildKeys();
+  }
+  addEventListener('resize', resize); resize();
+  document.fonts?.ready.then(resize);
+
+  const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+  addEventListener('pointermove', e => { pointer.tx = e.clientX / innerWidth * 2 - 1; pointer.ty = e.clientY / innerHeight * 2 - 1; });
+
+  // ── DOM bits of the story, driven by the same timeline ──
+  const stEls = [...document.querySelectorAll('.story .st')].map(el => ({
+    el, tin: +el.dataset.in, tout: +el.dataset.out, move: el.dataset.move, cross: 'cross' in el.dataset, eyebrow: el.classList.contains('st-eyebrow'),
+  }));
+  const stepEls = [...document.querySelectorAll('.st-step')];
+  const selBox = document.getElementById('sel-box'), selTag = document.getElementById('sel-tag'), glow = document.getElementById('edge-glow');
+
+  const clamp01 = x => Math.min(1, Math.max(0, x));
+  const smooth = x => { x = clamp01(x); return x * x * (3 - 2 * x); };
+  const outExpo = x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
+  const window01 = (T, a, b, f) => Math.min(smooth((T - a) / f), smooth((b - T) / f));   // 0 → 1 → 0 across [a, b]
+  const bump = (T, c, w) => Math.max(0, 1 - Math.abs(T - c) / w);
+  const READY_AT = pieces[pieces.length - 1].userData.delay + 1.1;
+  const HERO_DRAW_END = 0.7;
+  const WEB_START = 2.6, WEB_LEN = 3.5;            // each site: fly in, enter, browse, leave
+
+  let sy = scrollY, sPage = 0, flash = 0, wasDrawn = null, spin = 0, readyFired = false;
+  const xAxis = new THREE.Vector3(), tip = new THREE.Vector3();
+  const clock = new THREE.Clock();
+
+  function frame() {
+    requestAnimationFrame(frame);
+    if (document.hidden) return;
+    const dt = Math.min(clock.getDelta(), 0.05);
+    const now = clock.elapsedTime;
+    const t = reduce ? 99 : now;
+    starMat.uniforms.uTime.value = now;
+
+    for (const m of pieces) {
+      const u = m.userData, e = outExpo(clamp01((t - u.delay) / 1.5));
+      m.visible = t > u.delay;
+      m.position.lerpVectors(u.start, u.final, e);
+      m.rotation.set(u.rot.x * (1 - e), u.rot.y * (1 - e), u.rot.z * (1 - e));
+      m.scale.setScalar(0.4 + 0.6 * e);
+    }
+
+    // Scroll, smoothed once, turned into the story timeline T
+    sy += (scrollY - sy) * (reduce ? 1 : 0.09);
+    if (Math.abs(scrollY - sy) < 0.5) sy = scrollY;      // land exactly, or the smoothing never quite gets there
+    const vh = innerHeight;
+    const heroRange = hero.offsetHeight - vh, storyTop = storyEl.offsetTop, storyRange = storyEl.offsetHeight - vh;
+    const T = clamp01(sy / heroRange) + 0.3 * clamp01((sy - heroRange) / vh) + 24.4 * clamp01((sy - storyTop) / storyRange)
+      + (sy > storyTop + storyRange ? 0.2 : 0);
+    sPage = clamp01(sy / Math.max(1, document.documentElement.scrollHeight - vh));
+
+    // ── Logo ──
+    const pose = poseAt(T);
+    const heroW = 1 - clamp01((T - 1) / 0.3);
+    const cornerW = window01(T, 15.4, 19.8, 0.15) + window01(T, 21.1, 25.2, 0.15);
+    const bgW = clamp01((T - 25.4) / 0.05);
+    if (!reduce) spin += dt * 0.8 * bgW;
+    const front = Math.round(spin / (Math.PI * 2)) * Math.PI * 2;
+    spin += (front - spin) * Math.min(1, (1 - bgW) * 0.12);          // back in the story or hero it settles facing front
+    pointer.x += (pointer.tx - pointer.x) * 0.05; pointer.y += (pointer.ty - pointer.y) * 0.05;
+    const sway = reduce ? 0 : Math.sin(now * 0.5) * (small() ? 0.08 : 0.03);
+    const osc = reduce ? 0 : Math.sin(now * 0.9) * 0.4 * cornerW;
+    const floatW = heroW + window01(T, 1.3, 2.05, 0.1) + window01(T, 14.4, 15.1, 0.1) + window01(T, 20.2, 20.8, 0.1);   // gentle float whenever it rests in the centre
+    rig.position.set(pose.x, pose.y + (reduce ? 0 : Math.sin(now * 0.8) * 0.07) * floatW, pose.z);
+    rig.rotation.set(pose.rx + pointer.y * 0.12 * heroW, pose.ry + (pointer.x * 0.22 + sway) * floatW + spin + osc, 0);
+    rig.scale.setScalar(pose.s);
+    hint.classList.toggle('gone', T > 0.03);
+
+    // The galaxy turns on its own and drifts as the page scrolls
+    galaxySpin.rotation.y += reduce ? 0 : dt * 0.025;
+    galaxyTilt.rotation.x = 0.95 - sPage * 0.35 + pointer.y * 0.03;
+    galaxyTilt.rotation.y = pointer.x * 0.05;
+    galaxyTilt.position.y = galaxyHome.y - sPage * 30;
+    stars.rotation.y = sPage * 0.25 + now * 0.004;
+
+    // Growth line climbs during the hero, spark at its tip, flash when it reaches the arrow
+    const le = clamp01(T / HERO_DRAW_END);
+    const drawn = le >= 1;
+    if (wasDrawn === null) wasDrawn = drawn;          // no flash when the page opens already scrolled
+    if (drawn && !wasDrawn) flash = 1;
+    wasDrawn = drawn;
+    flash *= 0.95;
+    rig.updateMatrixWorld(true);
+    // Read the axis straight from the matrix: the logo's negative Y scale makes a decomposed quaternion flip X
+    xAxis.setFromMatrixColumn(logo.matrixWorld, 0).normalize();
+    const lx = THREE.MathUtils.lerp(lineBox.min.x - 40, lineBox.max.x + 40, le);
+    const ly = THREE.MathUtils.lerp(lineBox.max.y, lineBox.min.y, clamp01((lx - lineBox.min.x) / (lineBox.max.x - lineBox.min.x)));
+    tip.set(lx - CX, ly - CY, LINE_Z + LINE_DEPTH + 10);
+    logo.localToWorld(tip);
+    if (le < 1) revealPlane.setFromNormalAndCoplanarPoint(xAxis.clone().negate(), tip);
+    else revealPlane.set(new THREE.Vector3(-1, 0, 0), 1e4);
+    const drawing = le > 0.015 && le < 1;           // the spark only shows once the line has really started
+    spark.visible = drawing || flash > 0.03;
+    spark.position.copy(tip);
+    spark.scale.setScalar(drawing ? 1.7 + Math.sin(now * 12) * 0.15 : flash * 6);
+    tipLight.position.copy(tip);
+    tipLight.intensity = drawing ? 40 : 70 * flash;
+
+    // ── Webs: each site flies in, the window grows to fill the screen and its recording plays with the scroll ──
+    const W = innerWidth, H = innerHeight, baseS = small() ? 0.72 : Math.min(0.6, 900 / fullPx);
+    const yMid = 34;                                             // centre of the area under the 68px header
+    let selFor = -1, glowW = 0, webVis = 0;
+    webs.forEach(({ el, v, load }, i) => {
+      const u = (T - WEB_START - i * WEB_LEN) / WEB_LEN;
+      if (u > -0.6) load();
+      if (u < -0.01 || u > 1.01) { winCss(el, 0, 0, 0, 0, 1, 0); return; }
+      const inA = smooth(u / 0.11), enter = smooth((u - 0.2) / 0.08), exit = smooth((u - 0.9) / 0.1);
+      const grown = enter * (1 - exit);
+      winCss(el, (1 - inA) * W * 0.55 - exit * W * 0.55, webY - (1 - grown) * H * 0.07, -(1 - inA) * 400 - exit * 400,
+        -(1 - inA) * 26 + exit * 26, THREE.MathUtils.lerp(baseS, 1, grown), inA * (1 - exit));
+      if (v.duration) scrub(v, clamp01((u - 0.3) / 0.58) * (v.duration - 0.05));
+      webVis = Math.max(webVis, inA * (1 - exit));
+      if (u > 0.09 && u < 0.19) selFor = i;
+      glowW = Math.max(glowW, bump(u, 0.26, 0.08));
+    });
+    // designer's selection box around the window before you step inside it
+    if (selFor >= 0) {
+      const r = webs[selFor].el.getBoundingClientRect();
+      selBox.style.transform = `translate(${r.left - 8}px, ${r.top - 8}px)`;
+      selBox.style.width = `${r.width + 16}px`; selBox.style.height = `${r.height + 16}px`;
+      selTag.textContent = WEBS[selFor][1];
+    }
+    selBox.style.opacity = selFor >= 0 ? 1 : 0;
+
+    // ── Systems: real screens, switched by the glowing line as it reaches each step ──
+    let sysGlow = 0;
+    for (const s of SYS) {
+      const inV = smooth((T - s.tIn) / 0.3) * (1 - smooth((T - s.tOut) / 0.25));
+      winCss(s.el, 0, yMid - H * 0.04, -(1 - inV) * 400, (1 - inV) * -20, small() ? 1 : 0.84, inV);
+      sysGlow = Math.max(sysGlow, bump(T, s.glowAt, 0.25));
+      if (inV <= 0.01) { s.labels.forEach(el => { el.style.opacity = 0; }); continue; }
+      const sp = clamp01((T - s.sp0) / s.spLen);
+      s.path.style.strokeDashoffset = s.len * (1 - sp);
+      const hp = s.path.getPointAtLength(s.len * sp);
+      s.head.setAttribute('cx', hp.x); s.head.setAttribute('cy', hp.y);
+      s.head.style.opacity = sp > 0.01 && sp < 0.995 ? 1 : 0;
+      const reached = s.nodeAt.filter(a => sp >= a).length;
+      s.nodes.forEach((n, i) => n.classList.toggle('on', i < reached));
+      const step = Math.max(0, reached - 1);
+      if (step !== s.cur) { s.cur = step; s.shots.forEach((img, i) => img.classList.toggle('on', i === step)); }
+      const sr = s.screen.getBoundingClientRect();
+      s.labels.forEach((el, i) => {
+        const on = inV > 0.5 && i < reached, isNow = on && i === reached - 1;
+        el.classList.toggle('now', isNow);
+        if (small()) {          // phones: only the current step, under the screen
+          el.style.opacity = isNow ? 1 : 0;
+          el.style.transform = `translate(16px, ${sr.bottom + 12}px)`;
+        } else {
+          el.style.opacity = on ? 1 : 0;
+          el.style.transform = `translate(${sr.left + s.pts[i][0] / 1000 * sr.width - 20}px, ${sr.top + s.pts[i][1] / 625 * sr.height + 18}px)`;
+        }
+      });
+    }
+
+    const firstCross = stEls.find(s => s.cross);
+    const crossSpeed = firstCross ? (innerWidth + firstCross.el.offsetWidth) / (firstCross.tout - firstCross.tin) : 1;
+    // DOM headlines in and out with the timeline; giant lines cross the screen in front of everything
+    for (const s of stEls) {
+      if (s.cross) {          // every giant line crosses at the same speed, set by the first one
+        const x = innerWidth - (T - s.tin) * crossSpeed;
+        const inside = T > s.tin && x > -s.el.offsetWidth;
+        s.el.style.opacity = inside ? Math.min(1, (T - s.tin) * 6, (x + s.el.offsetWidth) / innerWidth * 6) : 0;
+        if (inside) s.el.style.transform = `translateX(${x}px)`;
+        continue;
+      }
+      const v = window01(T, s.tin, s.tout, 0.12);
+      s.el.style.opacity = small() && s.eyebrow ? v * (1 - webVis) : v;   // phones: the tall site windows reach the eyebrow
+      const off = (1 - v) * 70;
+      s.el.style.transform = s.move === 'left' ? `translateX(${-off}px)` : s.move === 'right' ? `translateX(${off}px)` : `translateY(${off * 0.5}px)`;
+    }
+    glow.style.opacity = Math.max(glowW * 0.8, sysGlow);
+    glow.style.setProperty('--a', `${(now * 60) % 360}deg`);
+
+    if (bloom) bloom.strength = 0.45 * (1 - bgW * 0.4) + (drawing ? 0.15 : 0) + flash * 0.7;
+    if (!readyFired && t >= READY_AT) { readyFired = true; body.classList.add('ready'); }
+    composer ? composer.render() : renderer.render(scene, camera);
+  }
+  frame();
+}
+
   </script>
 </body>
 </html>
