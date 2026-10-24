@@ -577,9 +577,9 @@
     <section class="story" id="escaparate" aria-label="Trabajos de MBL Studio">
       <div class="story-stage">
         <div class="edge-glow" id="edge-glow"></div>
-        <div class="win" id="win-intrans"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">intrans.es</span></div><div class="win-screen"><video muted playsinline preload="none"></video></div></div>
-        <div class="win" id="win-loscandiles"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">loscandiles.es</span></div><div class="win-screen"><video muted playsinline preload="none"></video></div></div>
-        <div class="win" id="win-dysa"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">dysapalencia.es</span></div><div class="win-screen"><video muted playsinline preload="none"></video></div></div>
+        <div class="win" id="win-intrans"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">intrans.es</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
+        <div class="win" id="win-loscandiles"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">loscandiles.es</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
+        <div class="win" id="win-dysa"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">dysapalencia.es</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
         <div class="win" id="win-controll"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">app.controll.es · Autoescuela de prueba</span></div><div class="win-screen">
           <img class="app-shot on" data-shot="app-tablon" alt="Tablón de alumnos de ControlL" decoding="async">
           <img class="app-shot" data-shot="app-examenes" alt="Exámenes en ControlL" decoding="async">
@@ -1177,12 +1177,18 @@ function start() {
     let asked = false;
     return () => {
       if (asked || !src) return; asked = true;
-      fetch(src).then(r => r.blob()).then(bl => { v.src = URL.createObjectURL(bl); }).catch(() => { v.src = src; });
+      // iPhone Safari keeps a never-played video at metadata only and paints no frame when it seeks:
+      // a muted play() + pause() right after loading unlocks decoding (muted inline play needs no tap)
+      v.muted = true;
+      v.addEventListener('loadedmetadata', () => { v.play().then(() => v.pause()).catch(() => {}); }, { once: true });
+      const set = (url) => { v.preload = 'auto'; v.src = url; v.load(); };
+      fetch(src).then(r => r.blob()).then(bl => set(URL.createObjectURL(bl))).catch(() => set(src));
     };
   }
-  // Scroll-driven playback: seek only when the browser is free, so fast scrolling never queues up seeks
+  // Scroll-driven playback: seek only when the browser is free, so fast scrolling never queues up seeks.
+  // readyState 1 is enough: Safari only fetches the frame it is asked for
   function scrub(v, time) {
-    if (v.readyState >= 2 && !v.seeking && Math.abs(v.currentTime - time) > 0.04) v.currentTime = time;
+    if (v.readyState >= 1 && !v.seeking && Math.abs(v.currentTime - time) > 0.04) v.currentTime = time;
   }
   const WEBS = [['intrans', 'intrans.es'], ['loscandiles', 'loscandiles.es'], ['dysa', 'dysapalencia.es']];
   const webs = WEBS.map(([k], i) => {
