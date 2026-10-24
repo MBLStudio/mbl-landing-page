@@ -1182,6 +1182,10 @@ function start() {
       v.muted = true;
       v.addEventListener('loadedmetadata', () => { v.play().then(() => v.pause()).catch(() => {}); }, { once: true });
       const set = (url) => { v.preload = 'auto'; v.src = url; v.load(); };
+      // WebKit (Safari, and every browser on iPhone) fails a video loaded from a blob URL with
+      // MEDIA_ERR_SRC_NOT_SUPPORTED: give it the file itself (Vercel answers byte ranges, so it seeks)
+      const ua = navigator.userAgent;
+      if (/AppleWebKit/.test(ua) && !/Chrome|Chromium|Edg|OPR/.test(ua)) return set(src);
       fetch(src).then(r => r.blob()).then(bl => set(URL.createObjectURL(bl))).catch(() => set(src));
     };
   }
