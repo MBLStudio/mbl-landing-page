@@ -1,4 +1,5 @@
 {
+  "trailingSlash": true,
   "redirects": [
     {
       "source": "/:path*",
@@ -9,17 +10,17 @@
     {
       "source": "/",
       "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
-      "destination": "/diagnostico/",
-      "permanent": false
+      "destination": "https://mblcorporacion.es/",
+      "permanent": true
     },
     {
-      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web)",
+      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)",
       "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
       "destination": "https://mblcorporacion.es/:page/",
       "permanent": true
     },
     {
-      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web)/",
+      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)/",
       "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
       "destination": "https://mblcorporacion.es/:page/",
       "permanent": true
