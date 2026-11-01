@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MBL Studio — Software para Empresas | Palencia y España</title>
   <meta name="description" content="Software a medida para empresas: control de jornada y agenda inteligente. Operativo en 48 h, desde 25€/mes. Sin hardware ni instalaciones." />
-  <link rel="canonical" href="https://landing.mblcorporacion.es/" />
+  <link rel="canonical" href="https://mblcorporacion.es/" />
   <link rel="icon" type="image/png" href="/og-image.png" />
   <meta name="google-site-verification" content="dIcSsqe95RccHodtzSvBa58dPFnUY37hGkOKSDxS81E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,26 +13,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://landing.mblcorporacion.es/" />
+  <meta property="og:url" content="https://mblcorporacion.es/" />
   <meta property="og:title" content="MBL Studio — Software para Empresas | Palencia y España" />
   <meta property="og:description" content="Aplicaciones web a medida para pequeñas y medianas empresas. Control de jornada laboral, agenda inteligente. Operativo en 48h. Desde 25€/mes." />
-  <meta property="og:image" content="https://landing.mblcorporacion.es/og-image.png" />
+  <meta property="og:image" content="https://mblcorporacion.es/og-image.png" />
   <meta property="og:locale" content="es_ES" />
   <meta property="og:site_name" content="MBL Studio" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="MBL Studio — Software para Empresas" />
   <meta name="twitter:description" content="Aplicaciones web a medida para empresas. Desde 25€/mes. Operativo en 48h." />
-  <meta name="twitter:image" content="https://landing.mblcorporacion.es/og-image.png" />
+  <meta name="twitter:image" content="https://mblcorporacion.es/og-image.png" />
   <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "@id": "https://landing.mblcorporacion.es/#organizacion",
+    "@id": "https://mblcorporacion.es/#organizacion",
     "name": "MBL Studio",
     "legalName": "MBL Corporación 2024 S.L.",
-    "url": "https://landing.mblcorporacion.es",
+    "url": "https://mblcorporacion.es",
     "email": "desarrollo@mblcorporacion.es",
     "description": "Software a medida para pequeñas y medianas empresas: control de jornada laboral, agenda inteligente y páginas web. Operativo en 48 horas, sin hardware ni instalaciones.",
     "slogan": "Digitaliza tu empresa en 48 horas",
@@ -67,8 +67,8 @@
       "availableLanguage": ["Spanish", "Italian"],
       "areaServed": ["ES", "IT"]
     },
-    "image": "https://landing.mblcorporacion.es/og-image.png",
-    "logo": "https://landing.mblcorporacion.es/og-image.png",
+    "image": "https://mblcorporacion.es/og-image.png",
+    "logo": "https://mblcorporacion.es/og-image.png",
     "openingHoursSpecification": [{
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -83,7 +83,7 @@
           "@type": "Offer",
           "name": "Control de jornada laboral",
           "description": "Registro horario legal para empleados, con informes automáticos y sin hardware. Cumple con la normativa española de control horario.",
-          "url": "https://landing.mblcorporacion.es/control-jornada/",
+          "url": "https://mblcorporacion.es/control-jornada/",
           "priceSpecification": {
             "@type": "UnitPriceSpecification",
             "price": "25.00",
@@ -98,7 +98,7 @@
           "@type": "Offer",
           "name": "Agenda inteligente",
           "description": "Gestión de citas y reservas online con avisos automáticos a clientes.",
-          "url": "https://landing.mblcorporacion.es/agenda-inteligente/",
+          "url": "https://mblcorporacion.es/agenda-inteligente/",
           "priceSpecification": {
             "@type": "UnitPriceSpecification",
             "price": "25.00",
@@ -113,13 +113,13 @@
           "@type": "Offer",
           "name": "Página web profesional",
           "description": "Diseño y desarrollo de página web para empresas, optimizada para móvil y buscadores.",
-          "url": "https://landing.mblcorporacion.es/pagina-web/"
+          "url": "https://mblcorporacion.es/pagina-web/"
         },
         {
           "@type": "Offer",
           "name": "Software para empresas de limpieza",
           "description": "Gestión de partes de trabajo, cuadrantes y control de personal para empresas de limpieza.",
-          "url": "https://landing.mblcorporacion.es/empresas-limpieza/"
+          "url": "https://mblcorporacion.es/empresas-limpieza/"
         },
         {
           "@type": "Offer",
@@ -944,7 +944,7 @@
         q1: answers.q1, q2: answers.q2, q3: answers.q3,
         sector: selectedSector,
         website: form.querySelector('[name=website]').value, // honeypot antispam
-        origen: window.location.pathname + window.location.search
+        origen: window.location.host + window.location.pathname + window.location.search
       };
 
       const btn = form.querySelector('.form-submit');
@@ -960,6 +960,7 @@
         if (!r.ok) throw new Error('respuesta ' + r.status);
         form.style.display = 'none';
         document.getElementById('diag-success').style.display = 'block';
+        if (window.gtag) gtag('event', 'generate_lead', { form_name: 'diagnostico', page: 'web', need: answers.q1 });
       }).catch(() => {
         // Solo si el envío falla de verdad ofrecemos WhatsApp como salida.
         btn.disabled = false;

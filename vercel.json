@@ -1,4 +1,30 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.mblcorporacion.es" }],
+      "destination": "https://mblcorporacion.es/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
+      "destination": "/diagnostico/",
+      "permanent": false
+    },
+    {
+      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web)",
+      "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
+      "destination": "https://mblcorporacion.es/:page/",
+      "permanent": true
+    },
+    {
+      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web)/",
+      "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
+      "destination": "https://mblcorporacion.es/:page/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/escaparate/(.*)",

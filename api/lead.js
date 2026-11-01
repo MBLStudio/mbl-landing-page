@@ -89,7 +89,7 @@ async function enviarEmail(lead) {
       html:
         `<div style="font-family:system-ui,sans-serif;max-width:600px">` +
         `<h2 style="margin:0 0 4px">Nuevo lead del diagnóstico</h2>` +
-        `<p style="color:#666;margin:0 0 20px">Recibido desde landing.mblcorporacion.es</p>` +
+        `<p style="color:#666;margin:0 0 20px">Recibido desde la web de MBL Studio</p>` +
         `<table style="width:100%;border-collapse:collapse;font-size:14px">${filas}</table>` +
         `</div>`,
     }),
