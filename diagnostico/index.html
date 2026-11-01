@@ -68,10 +68,21 @@
     .lp-final-links .btn-wa { margin-top: 0; }
     .works-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 44px; }
     .work-card { overflow: hidden; padding: 0; }
-    .work-shot { aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); background: #f4f6f7; }
-    .work-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
-    .work-card:hover .work-shot img { transform: scale(1.03); }
+    .work-shot { display: block; text-decoration: none; border-bottom: 1px solid var(--line); }
+    .work-bar { height: 30px; display: flex; align-items: center; gap: 7px; padding: 0 12px; background: #0d141c; }
+    .work-bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+    .work-bar i:nth-child(2) { background: #febc2e; } .work-bar i:nth-child(3) { background: #28c840; }
+    .work-bar span { margin-left: 12px; font-size: 12px; color: var(--muted); background: rgba(255, 255, 255, .06); padding: 3px 14px; border-radius: 6px; }
+    /* each card browses its screens: the next one scrolls in from below, like going down the page */
+    .work-screen { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #f4f6f7; }
+    .work-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
+      transform: translateY(100%); transition: transform 1s cubic-bezier(.65, 0, .35, 1); }
+    .work-screen img.on { transform: none; }
+    .work-screen img.up { transform: translateY(-100%); }
+    a.work-shot:hover .work-bar span { color: var(--ink); }
     .work-body { padding: 22px 24px 26px; }
+    .work-link { display: inline-flex; margin-top: 14px; color: var(--teal-2); font-weight: 600; font-size: 14px; text-decoration: none; }
+    .work-link:hover { text-decoration: underline; }
     .work-tag { color: var(--teal-2); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
     .work-body h3 { font-size: 22px; letter-spacing: -.02em; margin: 8px 0 6px; }
     .work-body p { color: var(--muted); line-height: 1.6; font-size: 15px; }
@@ -444,20 +455,32 @@
         <p class="section-sub reveal reveal-delay-2">Software y webs que negocios reales usan cada día.</p>
         <div class="works-grid">
           <article class="work-card glass reveal reveal-delay-1">
-            <div class="work-shot"><img src="img/controll.webp" width="960" height="600" loading="lazy" alt="ControlL: tablón de alumnos de una autoescuela"></div>
-            <div class="work-body"><span class="work-tag">Software · Autoescuelas</span><h3>ControlL</h3><p>Alumnos, prácticas, exámenes y pagos al día, desde el móvil del profesor y de la oficina.</p></div>
+            <a class="work-shot" href="https://controll.es" target="_blank" rel="noopener" data-work="controll">
+              <div class="work-bar"><i></i><i></i><i></i><span>app.controll.es</span></div>
+              <div class="work-screen"><img class="on" src="img/controll-1.webp" width="800" height="500" loading="lazy" alt="ControlL: tablón de alumnos de una autoescuela"><img data-src="img/controll-2.webp" alt=""><img data-src="img/controll-3.webp" alt=""></div>
+            </a>
+            <div class="work-body"><span class="work-tag">Software · Autoescuelas</span><h3>ControlL</h3><p>Alumnos, prácticas, exámenes y pagos al día, desde el móvil del profesor y de la oficina.</p><a class="work-link" href="https://controll.es" target="_blank" rel="noopener" data-work="controll">Visitar controll.es ↗</a></div>
           </article>
           <article class="work-card glass reveal reveal-delay-2">
-            <div class="work-shot"><img src="img/cobros.webp" width="960" height="600" loading="lazy" alt="MBL Studio Cobros: panel de ingresos y gastos"></div>
-            <div class="work-body"><span class="work-tag">Software · Facturación</span><h3>MBL Studio Cobros</h3><p>Contratos firmados en línea, facturas que salen solas cada mes y cobros por domiciliación.</p></div>
+            <div class="work-shot" >
+              <div class="work-bar"><i></i><i></i><i></i><span>MBL Studio Cobros</span></div>
+              <div class="work-screen"><img class="on" src="img/cobros-1.webp" width="800" height="500" loading="lazy" alt="MBL Studio Cobros: panel de ingresos y gastos"><img data-src="img/cobros-2.webp" alt=""><img data-src="img/cobros-3.webp" alt=""></div>
+            </div>
+            <div class="work-body"><span class="work-tag">Software · Facturación</span><h3>MBL Studio Cobros</h3><p>Contratos firmados en línea, facturas que salen solas cada mes y cobros por domiciliación. Lo usamos cada día.</p></div>
           </article>
           <article class="work-card glass reveal reveal-delay-1">
-            <div class="work-shot"><img src="img/intrans.webp" width="960" height="600" loading="lazy" alt="Portada de la web de Intrans"></div>
-            <div class="work-body"><span class="work-tag">Web a medida · Transporte</span><h3>Intrans</h3><p>Una web con carácter: el camión se monta pieza a pieza al bajar.</p></div>
+            <a class="work-shot" href="https://intrans.es" target="_blank" rel="noopener" data-work="intrans">
+              <div class="work-bar"><i></i><i></i><i></i><span>intrans.es</span></div>
+              <div class="work-screen"><img class="on" src="img/intrans-1.webp" width="800" height="500" loading="lazy" alt="Portada de la web de Intrans"><img data-src="img/intrans-2.webp" alt=""><img data-src="img/intrans-3.webp" alt=""></div>
+            </a>
+            <div class="work-body"><span class="work-tag">Web a medida · Transporte</span><h3>Intrans</h3><p>Una web con carácter: el camión se monta pieza a pieza al bajar.</p><a class="work-link" href="https://intrans.es" target="_blank" rel="noopener" data-work="intrans">Visitar intrans.es ↗</a></div>
           </article>
           <article class="work-card glass reveal reveal-delay-2">
-            <div class="work-shot"><img src="img/loscandiles.webp" width="960" height="600" loading="lazy" alt="Portada de la web de Los Candiles de Toño"></div>
-            <div class="work-body"><span class="work-tag">Web y redes · Restaurante</span><h3>Los Candiles de Toño</h3><p>Su web y sus redes sociales cada semana, con la carta siempre al día.</p></div>
+            <a class="work-shot" href="https://www.loscandiles.es" target="_blank" rel="noopener" data-work="loscandiles">
+              <div class="work-bar"><i></i><i></i><i></i><span>loscandiles.es</span></div>
+              <div class="work-screen"><img class="on" src="img/loscandiles-1.webp" width="800" height="500" loading="lazy" alt="Portada de la web de Los Candiles de Toño"><img data-src="img/loscandiles-2.webp" alt=""><img data-src="img/loscandiles-3.webp" alt=""></div>
+            </a>
+            <div class="work-body"><span class="work-tag">Web y redes · Restaurante</span><h3>Los Candiles de Toño</h3><p>Su web y sus redes sociales cada semana, con la carta siempre al día.</p><a class="work-link" href="https://www.loscandiles.es" target="_blank" rel="noopener" data-work="loscandiles">Visitar loscandiles.es ↗</a></div>
           </article>
         </div>
         <div class="works-cta reveal">
@@ -689,6 +712,33 @@ Soy ${nombre} de ${empresa}. Mi teléfono: ${tel}${extra ? '\n\n' + extra : ''}`
       aviso.style.display = 'block';
       aviso.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+
+    // Work cards browse their screens while they are on screen; the other screens load only then
+    const stillMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const workIO = new IntersectionObserver(entries => entries.forEach(e => {
+      const el = e.target;
+      if (e.isIntersecting) {
+        el.querySelectorAll('img[data-src]').forEach(img => { img.src = img.dataset.src; img.removeAttribute('data-src'); });
+        if (!stillMotion && !el.timer) el.timer = setInterval(() => nextShot(el), 2800);
+      } else { clearInterval(el.timer); el.timer = null; }
+    }), { threshold: 0.4 });
+    document.querySelectorAll('.work-screen').forEach(el => {
+      workIO.observe(el);
+      // a screen that left through the top goes back under the frame without crossing it
+      el.querySelectorAll('img').forEach(img => img.addEventListener('transitionend', () => {
+        if (!img.classList.contains('up')) return;
+        img.style.transition = 'none'; img.classList.remove('up'); void img.offsetHeight; img.style.transition = '';
+      }));
+    });
+    function nextShot(el) {
+      const imgs = [...el.querySelectorAll('img')], cur = imgs.find(img => img.classList.contains('on'));
+      const next = imgs[(imgs.indexOf(cur) + 1) % imgs.length];
+      if (!next.complete || !next.naturalWidth) return;   // wait until it has loaded
+      cur.classList.replace('on', 'up'); next.classList.add('on');
+    }
+    document.querySelectorAll('[data-work]').forEach(a => a.addEventListener('click', () => {
+      if (window.gtag) gtag('event', 'select_content', { content_type: 'work', item_id: a.dataset.work, page: 'landing' });
+    }));
 
     // WhatsApp taps count as contacts in Analytics
     document.querySelectorAll('[data-wa]').forEach(a => a.addEventListener('click', () => {
