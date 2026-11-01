@@ -37,10 +37,10 @@
     "description": "Software a medida y páginas web para pequeñas y medianas empresas: control de jornada laboral, agendas, facturación y webs. Propuesta en 24 horas y presupuesto a medida, sin hardware ni instalaciones.",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Calle Valentín Calderón 10, 3º B",
+      "streetAddress": "C/ Cervera 6, Ático A",
       "addressLocality": "Palencia",
       "addressRegion": "Castilla y León",
-      "postalCode": "34001",
+      "postalCode": "34003",
       "addressCountry": "ES"
     },
     "geo": {
@@ -297,6 +297,8 @@
     .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--teal); }
     .form-submit { width: 100%; margin-top: 18px; padding: 15px; font-size: 16px; }
     .form-note { text-align: center; color: var(--soft); font-size: 13px; margin-top: 12px; }
+    .form-privacy { color: var(--muted); font-size: 13px; line-height: 1.5; margin-top: 16px; }
+    .form-privacy a { color: var(--teal-2); }
     .diag-success { display: none; text-align: center; padding: 30px 10px; }
     .success-icon { font-size: 42px; margin-bottom: 10px; }
     .diag-success p { color: var(--muted); margin-top: 8px; }
@@ -313,13 +315,15 @@
     .faq-item p { padding: 0 24px 22px; color: var(--muted); line-height: 1.65; }
 
     /* Footer */
-    footer { padding: 40px 0 32px; border-top: 1px solid var(--line); background: rgba(5, 8, 12, .7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
-    .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
-    .footer-link { color: var(--muted); text-decoration: none; font-size: 14px; }
-    .footer-link:hover { color: var(--ink); }
-    .footer-copy { color: var(--soft); font-size: 13px; margin-top: 22px; }
-    .footer-copy a { color: inherit; text-decoration: none; }
+    footer { padding: 48px 0 32px; border-top: 1px solid var(--line); background: rgba(5, 8, 12, .7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; }
+    .footer-nap { font-style: normal; color: var(--muted); font-size: 14px; line-height: 1.7; margin-top: 16px; }
+    .footer-nap a, .footer-col a { color: var(--muted); text-decoration: none; }
+    .footer-title { color: var(--ink); font-weight: 600; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; }
+    .footer-col a { display: block; font-size: 14px; padding: 4px 0; }
+    .footer-nap a:hover, .footer-col a:hover { color: var(--ink); }
+    .footer-copy { color: var(--soft); font-size: 13px; margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); }
+    @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-about { grid-column: 1 / -1; } }
 
     /* ── Story: scroll-driven scenes around the logo (webs, then systems) ── */
     .story { height: 3545vh; position: relative; }
@@ -721,6 +725,7 @@
                   </div>
                   <div class="form-field full"><label>¿Algo más que quieras contarnos? (opcional)</label><textarea name="extra" placeholder="Cuéntanos tu situación actual, qué usas ahora, qué te gustaría mejorar..."></textarea></div>
                 </div>
+                <p class="form-privacy">Usaremos tus datos solo para responder a tu solicitud. Más información en la <a href="https://mblcorporacion.es/privacidad/">política de privacidad</a>.</p>
                 <button class="form-submit" type="submit">Enviar y recibir propuesta gratuita</button>
                 <p class="form-note">Sin compromiso · Respuesta en menos de 24h · desarrollo@mblcorporacion.es</p>
               </form>
@@ -760,19 +765,33 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="footer-inner">
-        <a class="brand" href="#" aria-label="MBL Studio"><span class="brand-logo" data-logo></span><span class="brand-name">Studio</span></a>
-        <div class="footer-links">
-          <a class="footer-link" href="#escaparate">Trabajos</a>
-          <a class="footer-link" href="#sectores">Sectores</a>
-          <a class="footer-link" href="#como">Cómo funciona</a>
-          <a class="footer-link" href="#diagnostico">Diagnóstico</a>
-          <a class="footer-link" href="#faq">FAQ</a>
-          <a class="footer-link" href="mailto:desarrollo@mblcorporacion.es">Contacto</a>
-          <a class="footer-link" href="https://share.google/ra83VbyMqOb64w9Xh" target="_blank" rel="noopener">Opiniones en Google</a>
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="/" aria-label="MBL Studio"><span class="brand-logo" data-logo></span><span class="brand-name">Studio</span></a>
+          <address class="footer-nap">MBL Studio · Palencia (España)<br><a href="tel:+34686579082">686 57 90 82</a> · <a href="mailto:desarrollo@mblcorporacion.es">desarrollo@mblcorporacion.es</a></address>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">Servicios</p>
+          <a href="/control-jornada/">Control de jornada</a>
+          <a href="/empresas-limpieza/">Software para limpieza</a>
+          <a href="/agenda-inteligente/">Agenda inteligente</a>
+          <a href="/pagina-web/">Páginas web</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">MBL Studio</p>
+          <a href="/">Inicio</a>
+          <a href="/contacto/">Contacto</a>
+          <a href="https://share.google/ra83VbyMqOb64w9Xh" target="_blank" rel="noopener">Opiniones en Google</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">Legal</p>
+          <a href="/aviso-legal/">Aviso legal</a>
+          <a href="/privacidad/">Privacidad</a>
+          <a href="/cookies/">Cookies</a>
+          <a href="#" data-consent-open>Configurar cookies</a>
         </div>
       </div>
-      <p class="footer-copy">© <span id="year"></span> MBL Studio · Palencia · <a href="tel:+34686579082">686 57 90 82</a> · desarrollo@mblcorporacion.es · mblcorporacion.es · Todos los derechos reservados.</p>
+      <p class="footer-copy">© <span id="year"></span> MBLCORPORACION 2024, S.L. · MBL Studio es su marca comercial.</p>
     </div>
   </footer>
 

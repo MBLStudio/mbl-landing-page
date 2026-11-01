@@ -238,12 +238,15 @@
     .btn-ghost:hover { background: rgba(255,255,255,.18); transform: translateY(-2px); }
 
     /* FOOTER */
-    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 32px 0; }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .footer-copy { font-size: 13px; color: var(--soft); }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
-    .footer-links a:hover { color: var(--accent); }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; }
+    .footer-nap { font-style: normal; font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+    .footer-nap a { color: var(--muted); text-decoration: none; }
+    .footer-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text); margin-bottom: 10px; }
+    .footer-col a { display: block; font-size: 13px; color: var(--muted); text-decoration: none; padding: 4px 0; }
+    .footer-col a:hover, .footer-nap a:hover { color: var(--accent); }
+    .footer-bottom { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 12px; color: var(--soft); }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-about { grid-column: 1 / -1; } }
 
     @media (max-width: 768px) {
       .funciones-grid { grid-template-columns: 1fr; }
@@ -514,14 +517,33 @@
 
 <footer>
   <div class="container">
-    <div class="footer-inner">
-      <div class="footer-copy">© 2026 MBL Studio — Palencia, España</div>
-      <div class="footer-links">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a class="brand" href="/"><div class="brand-mark"><span>MBL</span></div><span class="brand-name">MBL Studio</span></a>
+        <address class="footer-nap">MBL Studio · Palencia (España)<br><a href="tel:+34686579082">686 57 90 82</a> · <a href="mailto:desarrollo@mblcorporacion.es">desarrollo@mblcorporacion.es</a></address>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">Servicios</p>
+        <a href="/control-jornada/">Control de jornada</a>
+        <a href="/empresas-limpieza/">Software para limpieza</a>
+        <a href="/agenda-inteligente/">Agenda inteligente</a>
+        <a href="/pagina-web/">Páginas web</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">MBL Studio</p>
         <a href="/">Inicio</a>
-        <a href="/control-jornada/">Control de Jornada</a>
-        <a href="/diagnostico/">Contacto</a>
+        <a href="/contacto/">Contacto</a>
+        <a href="https://share.google/ra83VbyMqOb64w9Xh" target="_blank" rel="noopener">Opiniones en Google</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">Legal</p>
+        <a href="/aviso-legal/">Aviso legal</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/cookies/">Cookies</a>
+        <a href="#" data-consent-open>Configurar cookies</a>
       </div>
     </div>
+    <p class="footer-bottom">© 2026 MBLCORPORACION 2024, S.L. · MBL Studio es su marca comercial.</p>
   </div>
 </footer>
 
