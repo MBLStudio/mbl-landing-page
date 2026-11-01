@@ -66,7 +66,18 @@
     .lp-final .section-sub { margin: 16px auto 28px; }
     .lp-final-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .lp-final-links .btn-wa { margin-top: 0; }
+    .works-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 44px; }
+    .work-card { overflow: hidden; padding: 0; }
+    .work-shot { aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); background: #f4f6f7; }
+    .work-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+    .work-card:hover .work-shot img { transform: scale(1.03); }
+    .work-body { padding: 22px 24px 26px; }
+    .work-tag { color: var(--teal-2); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+    .work-body h3 { font-size: 22px; letter-spacing: -.02em; margin: 8px 0 6px; }
+    .work-body p { color: var(--muted); line-height: 1.6; font-size: 15px; }
+    .works-cta { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 36px; }
     @media (max-width: 900px) {
+      .works-grid { grid-template-columns: 1fr; }
       .lp-grid { grid-template-columns: 1fr; gap: 28px; }
       .lp-hero { padding: 92px 0 40px; }
       .lp-copy { padding-top: 0; }
@@ -299,7 +310,7 @@
         </a>
         <nav>
           <a class="nav-link" href="#como">Cómo funciona</a>
-          <a class="nav-link" href="#caso">Caso real</a>
+          <a class="nav-link" href="#trabajos">Trabajos</a>
           <a class="nav-link" href="#faq">FAQ</a>
           <button class="nav-cta" onclick="scrollToDiag()">Empezar diagnóstico</button>
         </nav>
@@ -425,28 +436,33 @@
       </div>
     </section>
 
-    <!-- CASO REAL -->
-    <section class="block" id="caso">
+    <!-- TRABAJOS -->
+    <section class="block" id="trabajos">
       <div class="container">
-        <p class="section-label reveal">Caso real</p>
-        <h2 class="section-title reveal reveal-delay-1">Ya <em>funciona</em> en empresas reales.</h2>
-        <div class="caso-card glass reveal reveal-delay-2">
-          <div>
-            <span class="caso-tag">✓ En producción desde 2026</span>
-            <h3>APISA — Empresa de limpieza, Palencia</h3>
-            <p>44 empleadas gestionando su jornada laboral desde el móvil. Fichajes geolocalizados, cuadrantes semanales y Excel mensual para Inspección de Trabajo generado automáticamente. Sin papel, sin desplazamientos, sin complicaciones.</p>
-            <div class="caso-links">
-              <a class="text-link" href="#diagnostico">Quiero algo similar para mi empresa →</a>
-              <a href="https://mblcorporacion.es/empresas-limpieza/" class="soft-link">Ver caso completo →</a>
-            </div>
-          </div>
-          <div class="caso-stats">
-            <div class="stat-item"><div class="stat-num">44</div><div class="stat-label">Empleadas activas</div></div>
-            <div class="stat-div"></div>
-            <div class="stat-item"><div class="stat-num">48h</div><div class="stat-label">Tiempo de puesta en marcha</div></div>
-            <div class="stat-div"></div>
-            <div class="stat-item"><div class="stat-num">0€</div><div class="stat-label">Hardware necesario</div></div>
-          </div>
+        <p class="section-label reveal">Nuestro trabajo</p>
+        <h2 class="section-title reveal reveal-delay-1">Hecho para empresas<br><em>como la tuya.</em></h2>
+        <p class="section-sub reveal reveal-delay-2">Software y webs que negocios reales usan cada día.</p>
+        <div class="works-grid">
+          <article class="work-card glass reveal reveal-delay-1">
+            <div class="work-shot"><img src="img/controll.webp" width="960" height="600" loading="lazy" alt="ControlL: tablón de alumnos de una autoescuela"></div>
+            <div class="work-body"><span class="work-tag">Software · Autoescuelas</span><h3>ControlL</h3><p>Alumnos, prácticas, exámenes y pagos al día, desde el móvil del profesor y de la oficina.</p></div>
+          </article>
+          <article class="work-card glass reveal reveal-delay-2">
+            <div class="work-shot"><img src="img/cobros.webp" width="960" height="600" loading="lazy" alt="MBL Studio Cobros: panel de ingresos y gastos"></div>
+            <div class="work-body"><span class="work-tag">Software · Facturación</span><h3>MBL Studio Cobros</h3><p>Contratos firmados en línea, facturas que salen solas cada mes y cobros por domiciliación.</p></div>
+          </article>
+          <article class="work-card glass reveal reveal-delay-1">
+            <div class="work-shot"><img src="img/intrans.webp" width="960" height="600" loading="lazy" alt="Portada de la web de Intrans"></div>
+            <div class="work-body"><span class="work-tag">Web a medida · Transporte</span><h3>Intrans</h3><p>Una web con carácter: el camión se monta pieza a pieza al bajar.</p></div>
+          </article>
+          <article class="work-card glass reveal reveal-delay-2">
+            <div class="work-shot"><img src="img/loscandiles.webp" width="960" height="600" loading="lazy" alt="Portada de la web de Los Candiles de Toño"></div>
+            <div class="work-body"><span class="work-tag">Web y redes · Restaurante</span><h3>Los Candiles de Toño</h3><p>Su web y sus redes sociales cada semana, con la carta siempre al día.</p></div>
+          </article>
+        </div>
+        <div class="works-cta reveal">
+          <button class="btn-primary" onclick="scrollToDiag()">Quiero algo así para mi empresa →</button>
+          <a class="soft-link" href="https://mblcorporacion.es/">Ver todos nuestros trabajos →</a>
         </div>
       </div>
     </section>
