@@ -1,33 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://landing.mblcorporacion.es/</loc>
-    <lastmod>2026-06-13</lastmod>
+    <loc>https://mblcorporacion.es/</loc>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://landing.mblcorporacion.es/control-jornada/</loc>
-    <lastmod>2026-06-13</lastmod>
+    <loc>https://mblcorporacion.es/control-jornada/</loc>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://landing.mblcorporacion.es/agenda-inteligente/</loc>
-    <lastmod>2026-06-13</lastmod>
+    <loc>https://mblcorporacion.es/agenda-inteligente/</loc>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://landing.mblcorporacion.es/empresas-limpieza/</loc>
-    <lastmod>2026-06-13</lastmod>
+    <loc>https://mblcorporacion.es/empresas-limpieza/</loc>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://landing.mblcorporacion.es/pagina-web/</loc>
-    <lastmod>2026-06-13</lastmod>
+    <loc>https://mblcorporacion.es/pagina-web/</loc>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mblcorporacion.es/contacto/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mblcorporacion.es/aviso-legal/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://mblcorporacion.es/privacidad/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://mblcorporacion.es/cookies/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
 </urlset>

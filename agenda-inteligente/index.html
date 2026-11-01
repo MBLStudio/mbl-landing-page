@@ -5,52 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agenda Inteligente para Empresas | MBL Studio</title>
   <meta name="description" content="Software de agenda de citas para empresas: reservas online 24/7, recordatorios automáticos, sin llamadas ni papel. Acceso anticipado disponible. MBL Studio." />
-  <link rel="canonical" href="https://landing.mblcorporacion.es/agenda-inteligente/" />
+  <link rel="canonical" href="https://mblcorporacion.es/agenda-inteligente/" />
   <link rel="icon" type="image/png" href="/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://landing.mblcorporacion.es/agenda-inteligente/" />
+  <meta property="og:url" content="https://mblcorporacion.es/agenda-inteligente/" />
   <meta property="og:title" content="Agenda Inteligente para Empresas | MBL Studio" />
   <meta property="og:description" content="Reservas online 24/7, recordatorios automáticos, sin llamadas ni papel. Acceso anticipado disponible." />
-  <meta property="og:image" content="https://landing.mblcorporacion.es/og-image.png" />
+  <meta property="og:image" content="https://mblcorporacion.es/og-image.png" />
   <meta property="og:locale" content="es_ES" />
   <meta property="og:site_name" content="MBL Studio" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Agenda Inteligente | MBL Studio" />
   <meta name="twitter:description" content="Reservas online 24/7 para tu negocio. Sin llamadas ni papel." />
-  <meta name="twitter:image" content="https://landing.mblcorporacion.es/og-image.png" />
+  <meta name="twitter:image" content="https://mblcorporacion.es/og-image.png" />
   <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": "Service",
     "name": "Agenda Inteligente MBL Studio",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web",
     "description": "Software de gestión de citas y reservas online para pequeñas y medianas empresas. Reservas 24/7, recordatorios automáticos, gestión de empleados y horarios.",
-    "offers": {
-      "@type": "Offer",
-      "price": "25",
-      "priceCurrency": "EUR",
-      "priceSpecification": { "@type": "UnitPriceSpecification", "unitText": "MONTH" }
-    },
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MBL Studio",
-      "url": "https://landing.mblcorporacion.es",
-      "telephone": "+34686579082",
-      "email": "desarrollo@mblcorporacion.es",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Palencia",
-        "addressRegion": "Castilla y León",
-        "addressCountry": "ES"
-      }
-    }
+    "provider": { "@id": "https://mblcorporacion.es/#organizacion", "name": "MBL Studio" },
+    "areaServed": { "@type": "Country", "name": "España" }
   }
   </script>
   <script type="application/ld+json">
@@ -58,8 +39,8 @@
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "MBL Studio", "item": "https://landing.mblcorporacion.es/" },
-      { "@type": "ListItem", "position": 2, "name": "Agenda Inteligente", "item": "https://landing.mblcorporacion.es/agenda-inteligente/" }
+      { "@type": "ListItem", "position": 1, "name": "MBL Studio", "item": "https://mblcorporacion.es/" },
+      { "@type": "ListItem", "position": 2, "name": "Agenda Inteligente", "item": "https://mblcorporacion.es/agenda-inteligente/" }
     ]
   }
   </script>
@@ -86,19 +67,13 @@
       {
         "@type": "Question",
         "name": "¿Cuándo estará disponible?",
-        "acceptedAnswer": { "@type": "Answer", "text": "La Agenda Inteligente está en desarrollo activo. Los negocios que se apunten ahora a la lista de acceso anticipado tendrán precio especial de lanzamiento y acceso antes que nadie." }
+        "acceptedAnswer": { "@type": "Answer", "text": "La Agenda Inteligente está en desarrollo activo. Los negocios que se apunten ahora a la lista de acceso anticipado tendrán condiciones especiales de lanzamiento y acceso antes que nadie." }
       }
     ]
   }
   </script>
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HW3J0Y50KV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-HW3J0Y50KV');
-  </script>
+  <!-- Cookie consent: loads Google Analytics only after the visitor accepts -->
+  <script src="/assets/consent.js" defer></script>
   <style>
     :root {
       --bg: #f0efe9; --bg2: #f7f6f2; --surface: #ffffff;
@@ -218,12 +193,16 @@
     .btn-ghost { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); color: white; font-family: var(--font); font-weight: 600; font-size: 15px; padding: 14px 28px; border-radius: 14px; border: 1px solid rgba(255,255,255,.2); text-decoration: none; transition: background .2s, transform .15s; }
     .btn-ghost:hover { background: rgba(255,255,255,.18); transform: translateY(-2px); }
 
-    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 32px 0; }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .footer-copy { font-size: 13px; color: var(--soft); }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
-    .footer-links a:hover { color: var(--green2); }
+    /* FOOTER */
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; }
+    .footer-nap { font-style: normal; font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+    .footer-nap a { color: var(--muted); text-decoration: none; }
+    .footer-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text); margin-bottom: 10px; }
+    .footer-col a { display: block; font-size: 13px; color: var(--muted); text-decoration: none; padding: 4px 0; }
+    .footer-col a:hover, .footer-nap a:hover { color: var(--accent); }
+    .footer-bottom { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 12px; color: var(--soft); }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-about { grid-column: 1 / -1; } }
 
     @media (max-width: 768px) {
       .funciones-grid, .steps-grid { grid-template-columns: 1fr; }
@@ -243,10 +222,10 @@
         <span class="brand-name">MBL Studio</span>
       </a>
       <nav>
-        <a class="nav-link" href="/#productos">Productos</a>
+        <a class="nav-link" href="/#sectores">Sectores</a>
         <a class="nav-link" href="/#como">Cómo funciona</a>
         <a class="nav-link" href="/#faq">FAQ</a>
-        <a class="nav-cta" href="/#diagnostico">Diagnóstico gratis</a>
+        <a class="nav-cta" href="/diagnostico/">Diagnóstico gratis</a>
       </nav>
     </div>
   </div>
@@ -276,15 +255,15 @@
         Tus clientes reservan solos a cualquier hora. Tú recibes la cita confirmada, ellos reciben el recordatorio. Sin llamadas, sin papel, sin no-shows.
       </p>
       <div class="hero-actions">
-        <a class="btn-primary" href="/#diagnostico">Apuntarme al acceso anticipado →</a>
-        <a class="btn-secondary" href="/#productos">Ver todos los productos</a>
+        <a class="btn-primary" href="/diagnostico/">Apuntarme al acceso anticipado →</a>
+        <a class="btn-secondary" href="/#sectores">Ver otros sectores</a>
       </div>
       <div class="hero-proof">
         <div class="proof-item">✓ Reservas 24/7 sin intervención</div>
         <div class="proof-div"></div>
         <div class="proof-item">✓ Recordatorios automáticos</div>
         <div class="proof-div"></div>
-        <div class="proof-item">✓ Precio especial de lanzamiento</div>
+        <div class="proof-item">✓ Acceso anticipado</div>
       </div>
     </div>
   </div>
@@ -297,8 +276,8 @@
       <div class="early-left">
         <div class="early-icon">🎯</div>
         <div class="early-text">
-          <h3>Apúntate ahora — precio especial de lanzamiento</h3>
-          <p>La Agenda Inteligente está en desarrollo activo. Los negocios que se registren ahora tendrán <strong>precio de lanzamiento bloqueado</strong> y acceso antes que nadie. Sin compromiso — si cuando salga no te convence, cancelas.</p>
+          <h3>Apúntate ahora al acceso anticipado</h3>
+          <p>La Agenda Inteligente está en desarrollo activo. Los negocios que se registren ahora tendrán <strong>condiciones especiales de lanzamiento</strong> y acceso antes que nadie. Sin compromiso — si cuando salga no te convence, cancelas.</p>
         </div>
       </div>
       <div class="early-pill">
@@ -384,8 +363,8 @@
 <section class="como">
   <div class="container">
     <div class="section-label">Proceso</div>
-    <h2 class="section-title">Operativo en <em>menos de 48 horas.</em></h2>
-    <p class="section-sub">Sin formación técnica. Nosotros lo configuramos todo.</p>
+    <h2 class="section-title">Así será <em>ponerla en marcha.</em></h2>
+    <p class="section-sub">Sin formación técnica. Nosotros lo configuramos todo y el plazo te lo damos cerrado en la propuesta.</p>
     <div class="steps-grid">
       <div class="step-card reveal">
         <div class="step-connector"></div>
@@ -397,7 +376,7 @@
         <div class="step-connector"></div>
         <div class="step-num">2</div>
         <h3>Configuramos todo nosotros</h3>
-        <p>En menos de 48 horas tu página de reservas está lista, personalizada con el nombre y colores de tu negocio.</p>
+        <p>Preparamos tu página de reservas con el nombre y los colores de tu negocio, en el plazo que te indicamos en la propuesta.</p>
       </div>
       <div class="step-card reveal reveal-delay-2">
         <div class="step-num">3</div>
@@ -440,7 +419,7 @@
           <h3>¿Cuándo estará disponible?</h3>
           <span class="faq-chevron">▼</span>
         </div>
-        <div class="faq-a">La Agenda Inteligente está en desarrollo activo. Los negocios que se apunten ahora tendrán precio especial de lanzamiento y acceso antes que nadie.</div>
+        <div class="faq-a">La Agenda Inteligente está en desarrollo activo. Los negocios que se apunten ahora tendrán condiciones especiales de lanzamiento y acceso antes que nadie.</div>
       </div>
     </div>
   </div>
@@ -450,9 +429,9 @@
 <div class="cta-final">
   <div class="container">
     <h2 class="reveal">¿Tu agenda aún depende del teléfono?</h2>
-    <p class="reveal reveal-delay-1">Apúntate al acceso anticipado. Sin compromiso. Precio de lanzamiento bloqueado para los primeros negocios.</p>
+    <p class="reveal reveal-delay-1">Apúntate al acceso anticipado. Sin compromiso. Condiciones especiales para los primeros negocios.</p>
     <div class="cta-row reveal reveal-delay-2">
-      <a class="btn-white" href="/#diagnostico">Quiero acceso anticipado →</a>
+      <a class="btn-white" href="/diagnostico/">Quiero acceso anticipado →</a>
       <a class="btn-ghost" href="mailto:desarrollo@mblcorporacion.es">desarrollo@mblcorporacion.es</a>
     </div>
   </div>
@@ -460,15 +439,33 @@
 
 <footer>
   <div class="container">
-    <div class="footer-inner">
-      <div class="footer-copy">© 2026 MBL Studio — Palencia, España</div>
-      <div class="footer-links">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a class="brand" href="/"><div class="brand-mark"><span>MBL</span></div><span class="brand-name">MBL Studio</span></a>
+        <address class="footer-nap">MBL Studio · Palencia (España)<br><a href="tel:+34686579082">686 57 90 82</a> · <a href="mailto:desarrollo@mblcorporacion.es">desarrollo@mblcorporacion.es</a></address>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">Servicios</p>
+        <a href="/control-jornada/">Control de jornada</a>
+        <a href="/empresas-limpieza/">Software para limpieza</a>
+        <a href="/agenda-inteligente/">Agenda inteligente</a>
+        <a href="/pagina-web/">Páginas web</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">MBL Studio</p>
         <a href="/">Inicio</a>
-        <a href="/control-jornada/">Control de Jornada</a>
-        <a href="/agenda-inteligente/">Agenda Inteligente</a>
-        <a href="/#diagnostico">Contacto</a>
+        <a href="/contacto/">Contacto</a>
+        <a href="https://share.google/ra83VbyMqOb64w9Xh" target="_blank" rel="noopener">Opiniones en Google</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">Legal</p>
+        <a href="/aviso-legal/">Aviso legal</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/cookies/">Cookies</a>
+        <a href="#" data-consent-open>Configurar cookies</a>
       </div>
     </div>
+    <p class="footer-bottom">© 2026 MBLCORPORACION 2024, S.L. · MBL Studio es su marca comercial.</p>
   </div>
 </footer>
 

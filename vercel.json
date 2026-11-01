@@ -1,7 +1,33 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.mblcorporacion.es" }],
+      "destination": "https://mblcorporacion.es/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
+      "destination": "https://mblcorporacion.es/",
+      "permanent": true
+    },
+    {
+      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)",
+      "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
+      "destination": "https://mblcorporacion.es/:page/",
+      "permanent": true
+    },
+    {
+      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)/",
+      "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
+      "destination": "https://mblcorporacion.es/:page/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
-      "source": "/escaparate/(.*)",
+      "source": "/:dir(escaparate|diagnostico/img)/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }]
     }
   ]

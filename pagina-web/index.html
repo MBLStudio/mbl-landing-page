@@ -5,24 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Creación y Mejora de Páginas Web para Empresas | MBL Studio</title>
   <meta name="description" content="Diseñamos tu web desde cero o mejoramos la que ya tienes. Responsive, rápida y optimizada para Google. Entregada en menos de 2 semanas. Presupuesto sin compromiso." />
-  <link rel="canonical" href="https://landing.mblcorporacion.es/pagina-web/" />
+  <link rel="canonical" href="https://mblcorporacion.es/pagina-web/" />
   <link rel="icon" type="image/png" href="/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://landing.mblcorporacion.es/pagina-web/" />
+  <meta property="og:url" content="https://mblcorporacion.es/pagina-web/" />
   <meta property="og:title" content="Creación y Mejora de Páginas Web para Empresas | MBL Studio" />
   <meta property="og:description" content="Tu web diseñada a medida, entregada en 2 semanas. Sin plantillas genéricas. Optimizada para Google desde el primer día." />
-  <meta property="og:image" content="https://landing.mblcorporacion.es/og-image.png" />
+  <meta property="og:image" content="https://mblcorporacion.es/og-image.png" />
   <meta property="og:locale" content="es_ES" />
   <meta property="og:site_name" content="MBL Studio" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Webs para Empresas | MBL Studio" />
   <meta name="twitter:description" content="Diseñamos tu web desde cero o mejoramos la que tienes. Entregada en 2 semanas." />
-  <meta name="twitter:image" content="https://landing.mblcorporacion.es/og-image.png" />
+  <meta name="twitter:image" content="https://mblcorporacion.es/og-image.png" />
   <!-- Schema.org -->
   <script type="application/ld+json">
   {
@@ -30,19 +30,7 @@
     "@type": "Service",
     "name": "Creación y mejora de páginas web — MBL Studio",
     "description": "Diseño de páginas web a medida para empresas y pymes. Web desde cero o mejora de web existente. Responsive, optimizada para SEO y entregada en menos de 2 semanas.",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MBL Studio",
-      "url": "https://landing.mblcorporacion.es",
-      "telephone": "+34686579082",
-      "email": "desarrollo@mblcorporacion.es",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Palencia",
-        "addressRegion": "Castilla y León",
-        "addressCountry": "ES"
-      }
-    },
+    "provider": { "@id": "https://mblcorporacion.es/#organizacion", "name": "MBL Studio" },
     "areaServed": { "@type": "Country", "name": "España" }
   }
   </script>
@@ -51,8 +39,8 @@
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "MBL Studio", "item": "https://landing.mblcorporacion.es/" },
-      { "@type": "ListItem", "position": 2, "name": "Creación de webs", "item": "https://landing.mblcorporacion.es/pagina-web/" }
+      { "@type": "ListItem", "position": 1, "name": "MBL Studio", "item": "https://mblcorporacion.es/" },
+      { "@type": "ListItem", "position": 2, "name": "Creación de webs", "item": "https://mblcorporacion.es/pagina-web/" }
     ]
   }
   </script>
@@ -69,7 +57,7 @@
       {
         "@type": "Question",
         "name": "¿Necesito tener un dominio ya comprado?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No es necesario. Podemos ayudarte a elegir y comprar el dominio si aún no lo tienes. Suele costar entre 10 y 15€ al año." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No es necesario. Podemos ayudarte a elegir y comprar el dominio si aún no lo tienes. Su coste es anual y bajo, y te lo detallamos en el presupuesto." }
       },
       {
         "@type": "Question",
@@ -84,14 +72,8 @@
     ]
   }
   </script>
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HW3J0Y50KV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-HW3J0Y50KV');
-  </script>
+  <!-- Cookie consent: loads Google Analytics only after the visitor accepts -->
+  <script src="/assets/consent.js" defer></script>
   <style>
     :root {
       --bg: #f0efe9;
@@ -240,12 +222,15 @@
     .btn-ghost:hover { background: rgba(255,255,255,.18); transform: translateY(-2px); }
 
     /* FOOTER */
-    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 32px 0; }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .footer-copy { font-size: 13px; color: var(--soft); }
-    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
-    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
-    .footer-links a:hover { color: var(--accent); }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; }
+    .footer-nap { font-style: normal; font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+    .footer-nap a { color: var(--muted); text-decoration: none; }
+    .footer-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text); margin-bottom: 10px; }
+    .footer-col a { display: block; font-size: 13px; color: var(--muted); text-decoration: none; padding: 4px 0; }
+    .footer-col a:hover, .footer-nap a:hover { color: var(--accent); }
+    .footer-bottom { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 12px; color: var(--soft); }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-about { grid-column: 1 / -1; } }
 
     @media (max-width: 768px) {
       .caminos-grid { grid-template-columns: 1fr; }
@@ -267,10 +252,10 @@
         <span class="brand-name">MBL Studio</span>
       </a>
       <nav>
-        <a class="nav-link" href="/#productos">Productos</a>
+        <a class="nav-link" href="/#escaparate">Trabajos</a>
         <a class="nav-link" href="/#sectores">Sectores</a>
         <a class="nav-link" href="/#faq">FAQ</a>
-        <a class="nav-cta" href="/#diagnostico">Presupuesto gratis</a>
+        <a class="nav-cta" href="/diagnostico/">Presupuesto gratis</a>
       </nav>
     </div>
   </div>
@@ -302,8 +287,8 @@
         La creamos desde cero o mejoramos la que ya tienes. Diseño profesional, rápida, adaptada a móvil y optimizada para aparecer en Google desde el primer día.
       </p>
       <div class="hero-actions">
-        <a class="btn-primary" href="/#diagnostico">Pedir presupuesto gratis →</a>
-        <a class="btn-secondary" href="/#productos">Ver todos los servicios</a>
+        <a class="btn-primary" href="/diagnostico/">Pedir presupuesto gratis →</a>
+        <a class="btn-secondary" href="/#escaparate">Ver webs que hemos hecho</a>
       </div>
       <div class="hero-proof">
         <div class="proof-item">✓ Entregada en menos de 2 semanas</div>
@@ -478,7 +463,7 @@
           <h3>¿Necesito tener un dominio ya comprado?</h3>
           <span class="faq-chevron">▼</span>
         </div>
-        <div class="faq-a">No. Si todavía no tienes dominio, te ayudamos a elegirlo y comprarlo. Suele costar entre 10 y 15€ al año según la extensión (.es, .com, etc.).</div>
+        <div class="faq-a">No. Si todavía no tienes dominio, te ayudamos a elegirlo y comprarlo. Su coste es anual, depende de la extensión (.es, .com, etc.) y te lo detallamos en el presupuesto.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
@@ -499,7 +484,7 @@
           <h3>¿Cuánto cuesta?</h3>
           <span class="faq-chevron">▼</span>
         </div>
-        <div class="faq-a">Cada proyecto es distinto, así que no hay un precio fijo. Cuéntanos qué necesitas y te enviamos un presupuesto cerrado sin compromiso en menos de 24 horas. Sin letra pequeña.</div>
+        <div class="faq-a">Cada proyecto es distinto, así que no hay un precio fijo. Cuéntanos qué necesitas y en menos de 24 horas te enviamos una propuesta con precio y plazo cerrados, sin compromiso. Sin letra pequeña.</div>
       </div>
     </div>
   </div>
@@ -511,7 +496,7 @@
     <h2 class="reveal">¿Lista para tener la web<br>que tu negocio merece?</h2>
     <p class="reveal reveal-delay-1">Cuéntanos en qué punto estás y te enviamos presupuesto en menos de 24 horas, sin compromiso y sin letra pequeña.</p>
     <div class="cta-row reveal reveal-delay-2">
-      <a class="btn-white" href="/#diagnostico">Pedir presupuesto gratis →</a>
+      <a class="btn-white" href="/diagnostico/">Pedir presupuesto gratis →</a>
       <a class="btn-ghost" href="mailto:desarrollo@mblcorporacion.es">desarrollo@mblcorporacion.es</a>
     </div>
   </div>
@@ -519,16 +504,33 @@
 
 <footer>
   <div class="container">
-    <div class="footer-inner">
-      <div class="footer-copy">© 2026 MBL Studio — Palencia, España</div>
-      <div class="footer-links">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a class="brand" href="/"><div class="brand-mark"><span>MBL</span></div><span class="brand-name">MBL Studio</span></a>
+        <address class="footer-nap">MBL Studio · Palencia (España)<br><a href="tel:+34686579082">686 57 90 82</a> · <a href="mailto:desarrollo@mblcorporacion.es">desarrollo@mblcorporacion.es</a></address>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">Servicios</p>
+        <a href="/control-jornada/">Control de jornada</a>
+        <a href="/empresas-limpieza/">Software para limpieza</a>
+        <a href="/agenda-inteligente/">Agenda inteligente</a>
+        <a href="/pagina-web/">Páginas web</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">MBL Studio</p>
         <a href="/">Inicio</a>
-        <a href="/control-jornada/">Control de Jornada</a>
-        <a href="/agenda-inteligente/">Agenda Inteligente</a>
-        <a href="/empresas-limpieza/">Empresas de Limpieza</a>
-        <a href="/pagina-web/">Webs</a>
+        <a href="/contacto/">Contacto</a>
+        <a href="https://share.google/ra83VbyMqOb64w9Xh" target="_blank" rel="noopener">Opiniones en Google</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-title">Legal</p>
+        <a href="/aviso-legal/">Aviso legal</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/cookies/">Cookies</a>
+        <a href="#" data-consent-open>Configurar cookies</a>
       </div>
     </div>
+    <p class="footer-bottom">© 2026 MBLCORPORACION 2024, S.L. · MBL Studio es su marca comercial.</p>
   </div>
 </footer>
 
