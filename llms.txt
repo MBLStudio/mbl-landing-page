@@ -1,0 +1,24 @@
+# MBL Studio
+
+> MBL Studio is a software and web development studio based in Palencia (Castilla y León, Spain). It builds custom software and websites for small and medium-sized businesses: work-hour tracking, appointment scheduling, invoicing and payments, management software for driving schools, and business websites. Legal name: MBLCORPORACION 2024, S.L. (founded 2024). Website: https://mblcorporacion.es/
+
+Key facts:
+
+- Serves businesses across Spain, with a local team in Palencia for clients in Castilla y León.
+- Every project is built to measure; there is no hardware to install. A first proposal is sent within 24 hours of a free diagnosis.
+- Contact: +34 686 57 90 82 (phone and WhatsApp), desarrollo@mblcorporacion.es.
+- The site is in Spanish.
+
+## Services
+
+- [Custom software development in Palencia](https://mblcorporacion.es/software-a-medida-palencia/): custom management software for SMEs, how the studio works and frequently asked questions.
+- [Work-hour tracking (control de jornada)](https://mblcorporacion.es/control-jornada/): time tracking for Spanish companies that complies with Real Decreto-ley 8/2019, without paper.
+- [Smart appointment scheduling (agenda inteligente)](https://mblcorporacion.es/agenda-inteligente/): online bookings 24/7 with automatic reminders.
+- [Software for cleaning companies](https://mblcorporacion.es/empresas-limpieza/): GPS time tracking, shift rosters and work reports.
+- [Business websites](https://mblcorporacion.es/pagina-web/): new websites or improvements to existing ones, fast and ready for Google.
+
+## Company
+
+- [Home](https://mblcorporacion.es/): overview of services and work.
+- [Contact](https://mblcorporacion.es/contacto/): phone, WhatsApp, email and free diagnosis.
+- [Legal notice](https://mblcorporacion.es/aviso-legal/): company details of MBLCORPORACION 2024, S.L.
