@@ -56,7 +56,7 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: r
 .page h3 { font-size: 16px; font-weight: 700; margin: 22px 0 6px; }
 .page p, .page li { font-size: 16px; line-height: 1.7; color: var(--body); }
 .page p + p { margin-top: 12px; }
-.page ul { padding-left: 22px; margin: 10px 0; }
+.page ul, .page ol { padding-left: 22px; margin: 10px 0; }
 .page li + li { margin-top: 6px; }
 .page a { color: var(--accent); text-underline-offset: 2px; }
 .page strong { color: var(--text); }
