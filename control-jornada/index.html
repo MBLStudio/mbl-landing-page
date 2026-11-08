@@ -256,6 +256,16 @@
       .precios-grid { grid-template-columns: 1fr; max-width: 400px; }
       nav { display: none; }
     }
+    /* DEMO: real app screens */
+    .demo-stage { position: relative; max-width: 980px; padding-right: 130px; }
+    .demo-desk { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); background: var(--surface); }
+    .demo-phone { position: absolute; right: 0; bottom: -36px; width: 230px; height: auto; border-radius: 30px; border: 8px solid #1d1d1f; box-shadow: var(--shadow-lg); background: var(--surface); }
+    .demo-points { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 980px; margin-top: 72px; }
+    .demo-points p { font-size: 16px; color: var(--muted); line-height: 1.6; }
+    .demo-points strong { color: var(--text); }
+    .demo-more { margin-top: 20px; font-size: 15px; }
+    .demo-more a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    @media (max-width: 768px) { .demo-stage { padding-right: 56px; } .demo-phone { width: 118px; border-width: 5px; border-radius: 18px; bottom: -24px; } .demo-points { grid-template-columns: 1fr; margin-top: 48px; } }
   </style>
 </head>
 <body>
@@ -341,6 +351,24 @@
         <a class="legal-promo-badge" href="/diagnostico/" style="text-decoration:none">Diagnóstico gratuito →</a>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- DEMO: real app screens (test data) -->
+<section class="demo">
+  <div class="container">
+    <div class="section-label">Así se ve</div>
+    <h2 class="section-title">La aplicación, <em>por dentro.</em></h2>
+    <p class="section-sub">Pantallas reales de la app de fichaje que usa a diario APISA, una empresa de limpieza de Palencia con 44 empleadas. Con datos de prueba y los nombres difuminados.</p>
+    <div class="demo-stage reveal">
+      <img class="demo-desk" src="/control-jornada/img/panel-del-dia.webp" alt="Panel de control de la app de fichaje: empleadas en jornada, en pausa, terminadas y sin fichar, con las horas acumuladas del día" width="1440" height="900" loading="lazy">
+      <img class="demo-phone" src="/control-jornada/img/fichar-movil.webp" alt="Pantalla del móvil de una empleada con el botón Fichar entrada y sus servicios del día" width="780" height="1688" loading="lazy">
+    </div>
+    <div class="demo-points">
+      <p><strong>La empresa</strong> ve en tiempo real quién está en jornada, quién está en pausa y quién no ha fichado, con las horas acumuladas del día.</p>
+      <p><strong>Cada empleada</strong> ficha con un botón desde su móvil, ve sus servicios del día y firma su jornada al final de cada mes.</p>
+    </div>
+    <p class="demo-more"><a href="/casos/#apisa">Ver el caso completo de APISA →</a></p>
   </div>
 </section>
 
