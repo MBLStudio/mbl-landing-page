@@ -110,3 +110,8 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-about { grid-column: 1 / -1; }
 }
+
+/* CASE STUDIES: screenshots with caption */
+.page figure { margin: 18px 0 8px; }
+.page figure img { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); background: var(--surface); }
+.page figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
