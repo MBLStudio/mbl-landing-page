@@ -6,7 +6,9 @@
   <title>MBL Studio — Software para Empresas | Palencia y España</title>
   <meta name="description" content="Software a medida y páginas web para empresas en Palencia y toda España: control de jornada, agendas, facturación y webs. Propuesta en 24 horas y presupuesto a medida, sin compromiso." />
   <link rel="canonical" href="https://mblcorporacion.es/" />
-  <link rel="icon" type="image/png" href="/og-image.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="google-site-verification" content="dIcSsqe95RccHodtzSvBa58dPFnUY37hGkOKSDxS81E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,6 +168,8 @@
     .ready .scroll-hint.gone { opacity: 0; }
     .intro { opacity: 0; transform: translateY(16px); transition: opacity 1s cubic-bezier(.2, .7, .2, 1), transform 1s cubic-bezier(.2, .7, .2, 1); }
     .ready .intro { opacity: 1; transform: none; }
+    /* phones: hero text visible from the first paint, without waiting for the 3D logo */
+    @media (max-width: 759px) { .intro { opacity: 1; transform: none; transition: none; } }
     .ready .i1 { transition-delay: .1s; } .ready .i2 { transition-delay: .2s; } .ready .i3 { transition-delay: .3s; } .ready .i4 { transition-delay: .5s; }
 
     /* ── Sections ── */
@@ -846,6 +850,8 @@
 
     // Safety net: show the hero text even if the 3D scene never starts (same 4.5 s as the 3D module)
     setTimeout(() => document.body.classList.add('ready'), 4500);
+    // Phones: the hero text fades in straight away instead of waiting for the 3D logo to assemble
+    if (innerWidth < 760) requestAnimationFrame(() => document.body.classList.add('ready'));
     // Called by the 3D module's onerror when three.js cannot be loaded: static logo and screenshots instead
     function mblNo3d() {
       document.body.classList.add('no-gl', 'ready');
