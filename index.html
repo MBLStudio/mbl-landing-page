@@ -319,7 +319,7 @@
     @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-about { grid-column: 1 / -1; } }
 
     /* ── Story: scroll-driven scenes around the logo (webs, then systems) ── */
-    .story { height: 3545vh; position: relative; }
+    .story { height: 3915vh; position: relative; }
     .story-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; pointer-events: none; }
     .st { position: absolute; opacity: 0; will-change: opacity, transform; }
     .st-eyebrow { left: max(16px, 6vw); top: clamp(84px, 14vh, 130px); color: var(--teal); font-weight: 600; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; }
@@ -421,7 +421,7 @@
   <!-- Cookie consent: loads Google Analytics only after the visitor accepts -->
   <script src="/assets/consent.js" defer></script>
   <noscript><style>.intro, .reveal { opacity: 1 !important; transform: none !important; } .story { display: none; }</style></noscript>
-  <script>window.SHOTS = {"app-tablon": "escaparate/app-tablon.webp", "app-examenes": "escaparate/app-examenes.webp", "app-pagos": "escaparate/app-pagos.webp", "app-alertas": "escaparate/app-alertas.webp", "cobros-factura": "escaparate/cobros-factura.webp", "cobros-facturas": "escaparate/cobros-facturas.webp", "cobros-panel": "escaparate/cobros-panel.webp", "cobros-tesoreria": "escaparate/cobros-tesoreria.webp", "intrans": "escaparate/intrans.mp4", "loscandiles": "escaparate/loscandiles.mp4", "dysa": "escaparate/dysa.mp4", "intrans-movil": "escaparate/intrans-movil.mp4", "loscandiles-movil": "escaparate/loscandiles-movil.mp4", "dysa-movil": "escaparate/dysa-movil.mp4"};</script>
+  <script>window.SHOTS = {"apisa-movil": "escaparate/apisa-movil.webp", "apisa-panel": "escaparate/apisa-panel.webp", "apisa-cuadrante": "escaparate/apisa-cuadrante.webp", "apisa-excel": "escaparate/apisa-excel.webp", "app-tablon": "escaparate/app-tablon.webp", "app-examenes": "escaparate/app-examenes.webp", "app-pagos": "escaparate/app-pagos.webp", "app-alertas": "escaparate/app-alertas.webp", "cobros-factura": "escaparate/cobros-factura.webp", "cobros-facturas": "escaparate/cobros-facturas.webp", "cobros-panel": "escaparate/cobros-panel.webp", "cobros-tesoreria": "escaparate/cobros-tesoreria.webp", "intrans": "escaparate/intrans.mp4", "loscandiles": "escaparate/loscandiles.mp4", "dysa": "escaparate/dysa.mp4", "intrans-movil": "escaparate/intrans-movil.mp4", "loscandiles-movil": "escaparate/loscandiles-movil.mp4", "dysa-movil": "escaparate/dysa-movil.mp4"};</script>
   <script type="importmap">
   { "imports": {
     "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -504,14 +504,26 @@
     <section class="story" id="escaparate" aria-label="Trabajos de MBL Studio">
       <div class="story-stage">
         <div class="edge-glow" id="edge-glow"></div>
-        <div class="win" id="win-intrans"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">intrans.es</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
+        <div class="win" id="win-intrans"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">Intrans · web a medida</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
         <div class="win" id="win-loscandiles"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">loscandiles.es</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
         <div class="win" id="win-dysa"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">dysapalencia.es</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
-        <div class="win" id="win-controll"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">app.controll.es · Autoescuela de prueba</span></div><div class="win-screen">
-          <img class="app-shot on" data-shot="app-tablon" alt="Tablón de alumnos de ControlL" decoding="async">
-          <img class="app-shot" data-shot="app-examenes" alt="Exámenes en ControlL" decoding="async">
-          <img class="app-shot" data-shot="app-pagos" alt="Pagos y bonos en ControlL" decoding="async">
-          <img class="app-shot" data-shot="app-alertas" alt="Alertas de ControlL" decoding="async">
+        <div class="win" id="win-apisa"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">APISA App · datos de prueba</span></div><div class="win-screen">
+          <img class="app-shot on" data-shot="apisa-movil" alt="Pantalla de fichar en el móvil de una empleada de APISA" decoding="async">
+          <img class="app-shot" data-shot="apisa-panel" alt="Panel del día de la app de fichaje de APISA" decoding="async">
+          <img class="app-shot" data-shot="apisa-cuadrante" alt="Cuadrante semanal de la app de fichaje de APISA" decoding="async">
+          <img class="app-shot" data-shot="apisa-excel" alt="Exportación del Excel oficial para la Inspección de Trabajo" decoding="async">
+          <svg class="steps-svg" viewBox="0 0 1000 625" preserveAspectRatio="none" aria-hidden="true">
+            <path class="steps-path" d="M 30 595 L 220 455 L 425 350 L 630 405 L 830 195 L 975 65" />
+            <circle class="steps-node" cx="220" cy="455" r="9" /><circle class="steps-node" cx="425" cy="350" r="9" />
+            <circle class="steps-node" cx="630" cy="405" r="9" /><circle class="steps-node" cx="830" cy="195" r="9" />
+            <circle class="steps-head" cx="30" cy="595" r="14" />
+          </svg>
+        </div></div>
+        <div class="win" id="win-controll"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">AutoEs · Autoescuela de prueba</span></div><div class="win-screen">
+          <img class="app-shot on" data-shot="app-tablon" alt="Tablón de alumnos de AutoEs" decoding="async">
+          <img class="app-shot" data-shot="app-examenes" alt="Exámenes en AutoEs" decoding="async">
+          <img class="app-shot" data-shot="app-pagos" alt="Pagos y bonos en AutoEs" decoding="async">
+          <img class="app-shot" data-shot="app-alertas" alt="Alertas de AutoEs" decoding="async">
           <svg class="steps-svg" viewBox="0 0 1000 625" preserveAspectRatio="none" aria-hidden="true">
             <path class="steps-path" d="M 30 590 L 210 455 L 420 345 L 610 400 L 820 190 L 975 60" />
             <circle class="steps-node" cx="210" cy="455" r="9" /><circle class="steps-node" cx="420" cy="345" r="9" />
@@ -533,41 +545,48 @@
         </div></div>
         <div class="sel-box" id="sel-box"><span class="sel-tag" id="sel-tag"></span><i></i><i></i><i></i><i></i></div>
 
-        <div class="st st-eyebrow" data-in="1.45" data-out="13.1">Webs a medida</div>
-        <h2 class="st st-big" data-in="1.45" data-out="2.15" data-move="left">No es solo<br><em>una web.</em></h2>
-        <p class="st st-side" data-in="1.55" data-out="2.15" data-move="right">Es el primer sitio donde te busca un cliente. La diseñamos para que llame, reserve o venga, y la mantenemos funcionando.</p>
+        <div class="st st-eyebrow" data-in="1.45" data-out="2.45">Sistemas y automatizaciones</div>
+        <h2 class="st st-big" data-in="1.45" data-out="2.15" data-move="left">Sistemas que<br><em>trabajan solos.</em></h2>
+        <p class="st st-side" data-in="1.55" data-out="2.15" data-move="right">Programas a medida que se encargan del trabajo repetitivo. Como el fichaje de APISA o AutoEs, nuestra app para autoescuelas.</p>
 
-        <div class="st st-client" data-in="2.74" data-out="3.3" data-move="left"><span class="tag">Transporte a granel · Palencia</span><h3>Intrans</h3><p>Una web con carácter: el camión se monta pieza a pieza al bajar.</p></div>
-        <div class="st st-pill" data-in="3.39" data-out="5.52">Dentro de <b>intrans.es</b> · sigue bajando para recorrerla</div>
-        <div class="st st-client" data-in="6.24" data-out="6.8" data-move="left"><span class="tag">Restaurante · Palencia</span><h3>Los Candiles de Toño</h3><p>Su web y sus redes sociales, cada semana. Con su carta siempre al día.</p></div>
-        <div class="st st-pill" data-in="6.89" data-out="9.02">Dentro de <b>loscandiles.es</b> · sigue bajando para recorrerla</div>
-        <div class="st st-client" data-in="9.74" data-out="10.3" data-move="left"><span class="tag">Correduría de seguros · Palencia</span><h3>Dysa Seguros</h3><p>Presencia profesional para una correduría con más de 25 años en Palencia.</p></div>
-        <div class="st st-pill" data-in="10.39" data-out="12.52">Dentro de <b>dysapalencia.es</b> · sigue bajando para recorrerla</div>
+        <div class="st-step" data-sys="apisa" data-step="0"><b>1</b><span>Cada empleada ficha desde su móvil, con un botón</span></div>
+        <div class="st-step" data-sys="apisa" data-step="1"><b>2</b><span>La empresa ve quién está trabajando, en tiempo real</span></div>
+        <div class="st-step" data-sys="apisa" data-step="2"><b>3</b><span>Los cuadrantes de la semana, con turnos y vacaciones</span></div>
+        <div class="st-step" data-sys="apisa" data-step="3"><b>4</b><span>El Excel para la Inspección de Trabajo, en un clic</span></div>
 
-        <div class="st st-cross" data-in="13.0" data-out="14.3" data-cross>es tu mejor comercial.</div>
-
-        <div class="st st-eyebrow" data-in="14.35" data-out="15.4">Sistemas y automatizaciones</div>
-        <h2 class="st st-big" data-in="14.4" data-out="15.1" data-move="left">Sistemas que<br><em>trabajan solos.</em></h2>
-        <p class="st st-side" data-in="14.45" data-out="15.1" data-move="right">Programas a medida que se encargan del trabajo repetitivo. Así funciona ControlL, nuestra app para autoescuelas.</p>
+        <p class="st st-stat" data-in="4.0" data-out="4.5">APISA, empresa de limpieza de Palencia: <b>44 empleadas</b> fichan así cada día, sin papel ni aparatos.</p>
 
         <div class="st-step" data-sys="controll" data-step="0"><b>1</b><span>Los alumnos nuevos esperan en el tablón hasta tener profesor</span></div>
         <div class="st-step" data-sys="controll" data-step="1"><b>2</b><span>Exámenes y aprobados, siempre a la vista</span></div>
         <div class="st-step" data-sys="controll" data-step="2"><b>3</b><span>Los bonos y pagos de cada alumno, al día</span></div>
         <div class="st-step" data-sys="controll" data-step="3"><b>4</b><span>Avisa sola de quién lleva días sin practicar</span></div>
 
-        <p class="st st-stat" data-in="17.0" data-out="17.5">Una autoescuela real pasó a ControlL en una tarde: <b>34 alumnos y 327 clases</b>, sin perder ninguna práctica.</p>
-        <div class="st st-cross" data-in="17.4" data-out="19.9" data-cross><small>Y lo mejor,</small>mientras trabajas, el sistema también.</div>
+        <p class="st st-stat" data-in="6.75" data-out="7.25">Una autoescuela real pasó a AutoEs en una tarde: <b>34 alumnos y 327 clases</b>, sin perder ninguna práctica.</p>
+        <div class="st st-cross" data-in="7.15" data-out="9.65" data-cross><small>Y lo mejor,</small>mientras trabajas, el sistema también.</div>
 
-        <div class="st st-eyebrow" data-in="19.95" data-out="21.1">MBL Studio Cobros</div>
-        <h2 class="st st-big st-center" data-in="20.0" data-out="20.75">Facturar y cobrar,<br><em>sin perseguir a nadie.</em></h2>
-        <p class="st st-side st-under" data-in="20.05" data-out="20.75">Nuestro programa de facturación: contratos firmados en línea, facturas que salen solas cada mes y cobros por domiciliación. Lo usamos cada día, igual que nuestros clientes.</p>
+        <div class="st st-eyebrow" data-in="9.7" data-out="10.85">MBL Studio Cobros</div>
+        <h2 class="st st-big st-center" data-in="9.75" data-out="10.5">Facturar y cobrar,<br><em>sin perseguir a nadie.</em></h2>
+        <p class="st st-side st-under" data-in="9.8" data-out="10.5">Nuestro programa de facturación: contratos firmados en línea, facturas que salen solas cada mes y cobros por domiciliación. Lo usamos cada día, igual que nuestros clientes.</p>
 
         <div class="st-step" data-sys="cobros" data-step="0"><b>1</b><span>La factura sale hecha, lista para mandar por email o WhatsApp</span></div>
         <div class="st-step" data-sys="cobros" data-step="1"><b>2</b><span>Todas tus facturas, y las que quedan por cobrar</span></div>
         <div class="st-step" data-sys="cobros" data-step="2"><b>3</b><span>Ingresos, gastos y beneficio del año, de un vistazo</span></div>
         <div class="st-step" data-sys="cobros" data-step="3"><b>4</b><span>La tesorería y tus cuentas, siempre al día</span></div>
 
-        <div class="st st-cross" data-in="23.65" data-out="25.3" data-cross>cobrar ya no te quita el sueño.</div>
+        <div class="st st-cross" data-in="13.4" data-out="15.05" data-cross>cobrar ya no te quita el sueño.</div>
+
+        <div class="st st-eyebrow" data-in="15.15" data-out="26.95">Webs a medida</div>
+        <h2 class="st st-big" data-in="15.15" data-out="15.85" data-move="left">No es solo<br><em>una web.</em></h2>
+        <p class="st st-side" data-in="15.25" data-out="15.85" data-move="right">Es el primer sitio donde te busca un cliente. La diseñamos para que llame, reserve o venga, y la mantenemos funcionando.</p>
+
+        <div class="st st-client" data-in="16.44" data-out="17.0" data-move="left"><span class="tag">Restaurante · Palencia</span><h3>Los Candiles de Toño</h3><p>Su web y sus redes sociales, cada semana. Con su carta siempre al día.</p></div>
+        <div class="st st-pill" data-in="17.09" data-out="19.22">Dentro de <b>loscandiles.es</b> · sigue bajando para recorrerla</div>
+        <div class="st st-client" data-in="19.94" data-out="20.5" data-move="left"><span class="tag">Correduría de seguros · Palencia</span><h3>Dysa Seguros</h3><p>Presencia profesional para una correduría con más de 25 años en Palencia.</p></div>
+        <div class="st st-pill" data-in="20.59" data-out="22.72">Dentro de <b>dysapalencia.es</b> · sigue bajando para recorrerla</div>
+        <div class="st st-client" data-in="23.44" data-out="24.0" data-move="left"><span class="tag">Transporte a granel · Palencia</span><h3>Intrans</h3><p>Una web con carácter: el camión se monta pieza a pieza al bajar.</p></div>
+        <div class="st st-pill" data-in="24.09" data-out="26.22">Así es la web de <b>Intrans</b> · sigue bajando</div>
+
+        <div class="st st-cross" data-in="26.75" data-out="28.05" data-cross data-speed-ref>es tu mejor comercial.</div>
 
         <div class="story-fallback" id="story-fallback"></div>
       </div>
@@ -618,7 +637,7 @@
             <p>44 empleadas gestionando su jornada laboral desde el móvil. Fichajes geolocalizados, cuadrantes semanales y Excel mensual para Inspección de Trabajo generado automáticamente. Sin papel, sin desplazamientos, sin complicaciones.</p>
             <div class="caso-links">
               <a class="text-link" href="#diagnostico" onclick="scrollToDiag()">Quiero algo similar para mi empresa →</a>
-              <a href="/empresas-limpieza/" class="soft-link">Ver caso completo →</a>
+              <a href="/casos/#apisa" class="soft-link">Ver caso completo →</a>
             </div>
           </div>
           <div class="caso-stats">
@@ -1150,7 +1169,7 @@ function start() {
   function scrub(v, time) {
     if (v.readyState >= 1 && !v.seeking && Math.abs(v.currentTime - time) > 0.04) v.currentTime = time;
   }
-  const WEBS = [['intrans', 'intrans.es'], ['loscandiles', 'loscandiles.es'], ['dysa', 'dysapalencia.es']];
+  const WEBS = [['loscandiles', 'loscandiles.es'], ['dysa', 'dysapalencia.es'], ['intrans', 'Intrans · web a medida']];
   const webs = WEBS.map(([k], i) => {
     const el = document.getElementById('win-' + k), v = el.querySelector('video');
     return { el, v, load: lazyVideo(v, (small() && SHOTS[k + '-movil']) || SHOTS[k]) };   // phones get the site as it looks on a phone
@@ -1158,8 +1177,9 @@ function start() {
   // Systems windows: real screens switched by a glowing line as it reaches each step.
   // tIn/tOut: window on screen; sp0/spLen: the line's run; glowAt: edge glow when the line finishes
   const SYS = [
-    { id: 'controll', tIn: 15.35, tOut: 17.85, sp0: 15.8, spLen: 1.6, glowAt: 17.35 },
-    { id: 'cobros', tIn: 21.05, tOut: 23.6, sp0: 21.5, spLen: 1.6, glowAt: 23.05 },
+    { id: 'apisa', tIn: 2.35, tOut: 4.85, sp0: 2.8, spLen: 1.6, glowAt: 4.35 },
+    { id: 'controll', tIn: 5.1, tOut: 7.6, sp0: 5.55, spLen: 1.6, glowAt: 7.1 },
+    { id: 'cobros', tIn: 10.8, tOut: 13.35, sp0: 11.25, spLen: 1.6, glowAt: 12.8 },
   ].map(s => {
     const el = document.getElementById('win-' + s.id);
     const shots = [...el.querySelectorAll('.app-shot')];
@@ -1208,13 +1228,15 @@ function start() {
     const centre1 = { ...gapPose(0), ry: TURN, rx: 0 };                                      // fills the gap between headline and text
     const hB = tanV * (dist - 2), wB = hB * camera.aspect;
     const badge = { x: wB * (small() ? 0.55 : 0.72), y: hB * (small() ? 0.58 : 0.56), z: 2, ry: 2 * TURN, rx: 0, s: small() ? 0.26 : 0.36 };
+    const corner = { x: (small() ? 0.62 : 0.8) * w0, y: -0.68 * h0, z: 0, ry: 2 * TURN, rx: 0, s: small() ? 0.16 : 0.22 };
     const centre2 = { ...gapPose(1), ry: 3 * TURN, rx: 0 };
-    const corner = { x: (small() ? 0.62 : 0.8) * w0, y: -0.68 * h0, z: 0, ry: 4 * TURN, rx: 0, s: small() ? 0.16 : 0.22 };
+    const corner2 = { ...corner, ry: 4 * TURN };
     const centre3 = { ...gapPose(2), ry: 5 * TURN, rx: 0 };
-    const corner2 = { ...corner, ry: 5 * TURN };
-    const bg = { x: 0, y: 0.6, z: -26, ry: 5 * TURN, rx: 0.12, s: 1 };
-    KEYS = [[0, hero0], [1, hero0], [1.3, centre1], [2.05, centre1], [2.45, badge],
-      [13.9, badge], [14.4, centre2], [15.1, centre2], [15.4, corner], [19.8, corner], [20.2, centre3], [20.8, centre3], [21.1, corner2], [25.2, corner2], [25.45, bg]];
+    const badge6 = { ...badge, ry: 6 * TURN };
+    const bg = { x: 0, y: 0.6, z: -26, ry: 6 * TURN, rx: 0.12, s: 1 };
+    KEYS = [[0, hero0], [1, hero0], [1.3, centre1], [2.05, centre1], [2.4, corner],
+      [9.55, corner], [9.95, centre2], [10.55, centre2], [10.85, corner2], [14.95, corner2], [15.3, centre3], [15.85, centre3], [16.25, badge6],
+      [27.7, badge6], [27.95, bg]];
   }
   // Centre of the free space between a story headline and its side text, measured on the real layout
   function gapPose(i) {
@@ -1292,7 +1314,7 @@ function start() {
   const bump = (T, c, w) => Math.max(0, 1 - Math.abs(T - c) / w);
   const READY_AT = pieces[pieces.length - 1].userData.delay + 1.1;
   const HERO_DRAW_END = 0.7;
-  const WEB_START = 2.6, WEB_LEN = 3.5;            // each site: fly in, enter, browse, leave
+  const WEB_START = 16.3, WEB_LEN = 3.5;            // each site: fly in, enter, browse, leave
 
   let sy = scrollY, sPage = 0, flash = 0, wasDrawn = null, spin = 0, readyFired = false;
   const xAxis = new THREE.Vector3(), tip = new THREE.Vector3();
@@ -1319,22 +1341,22 @@ function start() {
     if (Math.abs(scrollY - sy) < 0.5) sy = scrollY;      // land exactly, or the smoothing never quite gets there
     const vh = innerHeight;
     const heroRange = hero.offsetHeight - vh, storyTop = storyEl.offsetTop, storyRange = storyEl.offsetHeight - vh;
-    const T = clamp01(sy / heroRange) + 0.3 * clamp01((sy - heroRange) / vh) + 24.4 * clamp01((sy - storyTop) / storyRange)
+    const T = clamp01(sy / heroRange) + 0.3 * clamp01((sy - heroRange) / vh) + 26.95 * clamp01((sy - storyTop) / storyRange)
       + (sy > storyTop + storyRange ? 0.2 : 0);
     sPage = clamp01(sy / Math.max(1, document.documentElement.scrollHeight - vh));
 
     // ── Logo ──
     const pose = poseAt(T);
     const heroW = 1 - clamp01((T - 1) / 0.3);
-    const cornerW = window01(T, 15.4, 19.8, 0.15) + window01(T, 21.1, 25.2, 0.15);
-    const bgW = clamp01((T - 25.4) / 0.05);
+    const cornerW = window01(T, 2.4, 9.55, 0.15) + window01(T, 10.85, 14.95, 0.15);
+    const bgW = clamp01((T - 27.95) / 0.05);
     if (!reduce) spin += dt * 0.8 * bgW;
     const front = Math.round(spin / (Math.PI * 2)) * Math.PI * 2;
     spin += (front - spin) * Math.min(1, (1 - bgW) * 0.12);          // back in the story or hero it settles facing front
     pointer.x += (pointer.tx - pointer.x) * 0.05; pointer.y += (pointer.ty - pointer.y) * 0.05;
     const sway = reduce ? 0 : Math.sin(now * 0.5) * (small() ? 0.08 : 0.03);
     const osc = reduce ? 0 : Math.sin(now * 0.9) * 0.4 * cornerW;
-    const floatW = heroW + window01(T, 1.3, 2.05, 0.1) + window01(T, 14.4, 15.1, 0.1) + window01(T, 20.2, 20.8, 0.1);   // gentle float whenever it rests in the centre
+    const floatW = heroW + window01(T, 1.3, 2.05, 0.1) + window01(T, 9.95, 10.55, 0.1) + window01(T, 15.15, 15.85, 0.1);   // gentle float whenever it rests in the centre
     rig.position.set(pose.x, pose.y + (reduce ? 0 : Math.sin(now * 0.8) * 0.07) * floatW, pose.z);
     rig.rotation.set(pose.rx + pointer.y * 0.12 * heroW, pose.ry + (pointer.x * 0.22 + sway) * floatW + spin + osc, 0);
     rig.scale.setScalar(pose.s);
@@ -1426,7 +1448,7 @@ function start() {
       });
     }
 
-    const firstCross = stEls.find(s => s.cross);
+    const firstCross = stEls.find(s => s.cross && 'speedRef' in s.el.dataset) || stEls.find(s => s.cross);   // every giant line takes its speed from this one
     const crossSpeed = firstCross ? (innerWidth + firstCross.el.offsetWidth) / (firstCross.tout - firstCross.tin) : 1;
     // DOM headlines in and out with the timeline; giant lines cross the screen in front of everything
     for (const s of stEls) {
