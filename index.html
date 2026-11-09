@@ -243,7 +243,7 @@
     .caso-shot .win-bar span { margin-left: 6px; font-size: 11px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .caso-shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: #f4f6f7; }
     .caso-body { display: flex; flex-direction: column; flex: 1; padding: 22px 24px 24px; }
-    .caso-num { font-size: 46px; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); text-shadow: 0 0 30px rgba(43, 179, 163, .45); }
+    .caso-num { font-variant-numeric: tabular-nums; font-size: 46px; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); text-shadow: 0 0 30px rgba(43, 179, 163, .45); }
     .caso-num small { font-size: 22px; letter-spacing: -.01em; }
     .caso-num-label { color: var(--teal-2); font-size: 14px; font-weight: 600; margin: 8px 0 16px; }
     .caso-card h3 { font-size: 19px; letter-spacing: -.02em; margin-bottom: 6px; }
@@ -640,7 +640,7 @@
           <article class="caso-card glass reveal reveal-delay-1">
             <div class="caso-shot"><div class="win-bar"><i></i><i></i><i></i><span>APISA App · datos de prueba</span></div><img src="diagnostico/img/apisa-1.webp" width="800" height="500" loading="lazy" alt="Panel del día de la app de fichaje de APISA"></div>
             <div class="caso-body">
-              <div class="caso-num">49</div>
+              <div class="caso-num" data-count="49">49</div>
               <div class="caso-num-label">empleadas fichan cada día desde el móvil</div>
               <h3>APISA · Limpieza, Palencia</h3>
               <p>Cuadrantes semanales y el Excel para la Inspección de Trabajo en un clic. Sin papel ni aparatos.</p>
@@ -650,8 +650,8 @@
           <article class="caso-card glass reveal reveal-delay-2">
             <div class="caso-shot"><div class="win-bar"><i></i><i></i><i></i><span>AutoEs · Autoescuela de prueba</span></div><img src="diagnostico/img/controll-1.webp" width="800" height="500" loading="lazy" alt="Tablón de alumnos de AutoEs"></div>
             <div class="caso-body">
-              <div class="caso-num">219</div>
-              <div class="caso-num-label">clases reservadas en AutoEs en su primer mes y medio</div>
+              <div class="caso-num" data-count="200" data-prefix="+">+200</div>
+              <div class="caso-num-label">clases gestionadas con AutoEs en su primer mes y medio</div>
               <h3>AutoEs · Autoescuelas</h3>
               <p>Ya la usa una autoescuela cada día: alumnos, exámenes, bonos y pagos en un mismo sitio.</p>
               <a class="text-link" href="https://autoes.es" target="_blank" rel="noopener">Conocer AutoEs ↗</a>
@@ -862,6 +862,25 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     revealEls.forEach(el => observer.observe(el));
+
+    // Case numbers count up from 0 when they come into view (ease-out, so the last ones tick one by one)
+    const counters = document.querySelectorAll('[data-count]');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const runCount = (el) => {
+        const end = +el.dataset.count, pre = el.dataset.prefix || '', dur = Math.min(2200, 900 + end * 6);
+        const t0 = performance.now();
+        const tick = (now) => {
+          const p = Math.min(1, (now - t0) / dur);
+          el.textContent = pre + Math.round(end * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      const countObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { runCount(e.target); countObs.unobserve(e.target); } });
+      }, { threshold: 0.6 });
+      counters.forEach(el => { el.textContent = (el.dataset.prefix || '') + '0'; countObs.observe(el); });
+    }
 
     // Scroll to diagnóstico
     function scrollToDiag() {
