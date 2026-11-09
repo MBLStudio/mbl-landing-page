@@ -10,7 +10,9 @@
   <meta name="google-site-verification" content="dIcSsqe95RccHodtzSvBa58dPFnUY37hGkOKSDxS81E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <!-- fonts load without blocking the first paint (the hero fades in later anyway) -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"></noscript>
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mblcorporacion.es/" />
@@ -1226,7 +1228,12 @@ function start() {
   ].map(s => {
     const el = document.getElementById('win-' + s.id);
     const shots = [...el.querySelectorAll('.app-shot')];
-    shots.forEach(img => { const k = img.dataset.shot; if (SHOTS[k]) img.src = SHOTS[k]; });
+    // screenshots are only seen after scrolling: fetch them once the page has loaded, lighter copies on phones
+    const loadShots = () => shots.forEach(img => {
+      const k = img.dataset.shot; if (!SHOTS[k]) return;
+      img.src = small() ? SHOTS[k].replace('.webp', '-1440.webp') : SHOTS[k];
+    });
+    if (document.readyState === 'complete') loadShots(); else addEventListener('load', loadShots, { once: true });
     const path = el.querySelector('.steps-path'), head = el.querySelector('.steps-head');
     const nodes = [...el.querySelectorAll('.steps-node')];
     const pts = nodes.map(n => [+n.getAttribute('cx'), +n.getAttribute('cy')]);   // viewBox 1000 × 625
