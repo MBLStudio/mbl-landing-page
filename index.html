@@ -236,16 +236,21 @@
     .step-connector { position: absolute; top: 52px; right: -21px; width: 22px; height: 2px; background: linear-gradient(90deg, var(--teal), transparent); }
 
     /* Caso */
-    .caso-card { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; padding: clamp(28px, 4vw, 44px); margin-top: 36px; align-items: center; }
-    .caso-tag { display: inline-block; color: var(--teal-2); font-size: 13px; font-weight: 600; background: rgba(43, 179, 163, .12); border: 1px solid rgba(43, 179, 163, .3); padding: 5px 11px; border-radius: 999px; margin-bottom: 16px; }
-    .caso-card h3 { font-size: 24px; letter-spacing: -.02em; margin-bottom: 12px; }
-    .caso-card p { color: var(--muted); line-height: 1.65; }
-    .caso-links { display: flex; flex-direction: column; align-items: flex-start; margin-top: 18px; }
-    .caso-stats { display: grid; gap: 18px; }
-    .stat-item { padding: 6px 0; }
-    .stat-num { font-size: 44px; font-weight: 800; letter-spacing: -.03em; color: var(--ink); text-shadow: 0 0 30px rgba(43, 179, 163, .45); }
-    .stat-label { color: var(--muted); font-size: 14px; }
-    .stat-div { height: 1px; background: var(--line); }
+    .casos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 36px; }
+    .caso-card { display: flex; flex-direction: column; overflow: hidden; transition: transform .25s, border-color .25s; }
+    .caso-card:hover { transform: translateY(-4px); border-color: rgba(43, 179, 163, .45); }
+    .caso-shot { margin: 14px 14px 0; border-radius: 10px; overflow: hidden; background: #0d141c; box-shadow: 0 14px 34px rgba(0, 0, 0, .35); }
+    .caso-shot .win-bar span { margin-left: 6px; font-size: 11px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .caso-shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: #f4f6f7; }
+    .caso-body { display: flex; flex-direction: column; flex: 1; padding: 22px 24px 24px; }
+    .caso-num { font-size: 46px; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); text-shadow: 0 0 30px rgba(43, 179, 163, .45); }
+    .caso-num small { font-size: 22px; letter-spacing: -.01em; }
+    .caso-num-label { color: var(--teal-2); font-size: 14px; font-weight: 600; margin: 8px 0 16px; }
+    .caso-card h3 { font-size: 19px; letter-spacing: -.02em; margin-bottom: 6px; }
+    .caso-card p { color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 16px; }
+    .caso-card .text-link { margin-top: auto; }
+    .casos-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 28px; margin-top: 30px; }
+    .casos-cta .soft-link { margin-top: 0; font-size: 14px; }
 
     /* Diagnóstico */
     .diag-wrapper { margin-top: 40px; overflow: hidden; background: var(--glass-strong); }
@@ -388,7 +393,8 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
     @media (max-width: 900px) {
-      .web-card, .caso-card { grid-template-columns: 1fr; }
+      .web-card { grid-template-columns: 1fr; }
+      .casos-grid { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
       .web-card-right { display: none; }
       .steps-grid { grid-template-columns: 1fr; }
       .step-connector { display: none; }
@@ -554,7 +560,7 @@
         <div class="st-step" data-sys="apisa" data-step="2"><b>3</b><span>Los cuadrantes de la semana, con turnos y vacaciones</span></div>
         <div class="st-step" data-sys="apisa" data-step="3"><b>4</b><span>El Excel para la Inspección de Trabajo, en un clic</span></div>
 
-        <p class="st st-stat" data-in="4.0" data-out="4.5">APISA, empresa de limpieza de Palencia: <b>44 empleadas</b> fichan así cada día, sin papel ni aparatos.</p>
+        <p class="st st-stat" data-in="4.0" data-out="4.5">APISA, empresa de limpieza de Palencia: <b>49 empleadas</b> fichan así cada día, sin papel ni aparatos.</p>
 
         <div class="st-step" data-sys="controll" data-step="0"><b>1</b><span>Los alumnos nuevos esperan en el tablón hasta tener profesor</span></div>
         <div class="st-step" data-sys="controll" data-step="1"><b>2</b><span>Exámenes y aprobados, siempre a la vista</span></div>
@@ -628,25 +634,43 @@
     <!-- CASO REAL -->
     <section class="block" id="caso">
       <div class="container">
-        <p class="section-label reveal">Caso real</p>
+        <p class="section-label reveal">Casos reales</p>
         <h2 class="section-title reveal reveal-delay-1">Ya <em>funciona</em> en empresas reales.</h2>
-        <div class="caso-card glass reveal reveal-delay-2">
-          <div>
-            <span class="caso-tag">✓ En producción desde 2026</span>
-            <h3>APISA — Empresa de limpieza, Palencia</h3>
-            <p>44 empleadas gestionando su jornada laboral desde el móvil. Fichajes geolocalizados, cuadrantes semanales y Excel mensual para Inspección de Trabajo generado automáticamente. Sin papel, sin desplazamientos, sin complicaciones.</p>
-            <div class="caso-links">
-              <a class="text-link" href="#diagnostico" onclick="scrollToDiag()">Quiero algo similar para mi empresa →</a>
-              <a href="/casos/#apisa" class="soft-link">Ver caso completo →</a>
+        <div class="casos-grid">
+          <article class="caso-card glass reveal reveal-delay-1">
+            <div class="caso-shot"><div class="win-bar"><i></i><i></i><i></i><span>APISA App · datos de prueba</span></div><img src="/diagnostico/img/apisa-1.webp" width="800" height="500" loading="lazy" alt="Panel del día de la app de fichaje de APISA"></div>
+            <div class="caso-body">
+              <div class="caso-num">49</div>
+              <div class="caso-num-label">empleadas fichan cada día desde el móvil</div>
+              <h3>APISA · Limpieza, Palencia</h3>
+              <p>Cuadrantes semanales y el Excel para la Inspección de Trabajo en un clic. Sin papel ni aparatos.</p>
+              <a class="text-link" href="/casos/#apisa">Ver el caso →</a>
             </div>
-          </div>
-          <div class="caso-stats">
-            <div class="stat-item"><div class="stat-num">44</div><div class="stat-label">Empleadas activas</div></div>
-            <div class="stat-div"></div>
-            <div class="stat-item"><div class="stat-num">GPS</div><div class="stat-label">Fichajes geolocalizados desde el móvil</div></div>
-            <div class="stat-div"></div>
-            <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Aparatos que comprar: sin hardware</div></div>
-          </div>
+          </article>
+          <article class="caso-card glass reveal reveal-delay-2">
+            <div class="caso-shot"><div class="win-bar"><i></i><i></i><i></i><span>AutoEs · Autoescuela de prueba</span></div><img src="/diagnostico/img/controll-1.webp" width="800" height="500" loading="lazy" alt="Tablón de alumnos de AutoEs"></div>
+            <div class="caso-body">
+              <div class="caso-num">327</div>
+              <div class="caso-num-label">clases de una autoescuela, pasadas en una tarde</div>
+              <h3>AutoEs · Autoescuelas</h3>
+              <p>Ya la usa una autoescuela cada día: alumnos, exámenes, bonos y pagos en un mismo sitio.</p>
+              <a class="text-link" href="https://autoes.es" target="_blank" rel="noopener">Conocer AutoEs ↗</a>
+            </div>
+          </article>
+          <article class="caso-card glass reveal reveal-delay-3">
+            <div class="caso-shot"><div class="win-bar"><i></i><i></i><i></i><span>loscandiles.es</span></div><img src="/diagnostico/img/loscandiles-1.webp" width="800" height="500" loading="lazy" alt="Portada de la web de Los Candiles de Toño"></div>
+            <div class="caso-body">
+              <div class="caso-num">Cada <small>semana</small></div>
+              <div class="caso-num-label">su web y sus redes, al día</div>
+              <h3>Los Candiles de Toño · Restaurante</h3>
+              <p>Web propia con la carta siempre actualizada, y publicaciones en redes que hacemos nosotros.</p>
+              <a class="text-link" href="/casos/#los-candiles">Ver el caso →</a>
+            </div>
+          </article>
+        </div>
+        <div class="casos-cta reveal">
+          <a class="text-link" href="#diagnostico" onclick="scrollToDiag()">Quiero algo así para mi empresa →</a>
+          <a href="/casos/" class="soft-link">Ver todos los casos →</a>
         </div>
       </div>
     </section>
