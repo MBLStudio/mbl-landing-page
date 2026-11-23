@@ -13,15 +13,21 @@
       "permanent": true
     },
     {
-      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)",
+      "source": "/:page(software-a-medida-palencia|casos|control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)",
       "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
       "destination": "https://mblcorporacion.es/:page/",
       "permanent": true
     },
     {
-      "source": "/:page(control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)/",
+      "source": "/:page(software-a-medida-palencia|casos|control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)/",
       "has": [{ "type": "host", "value": "landing.mblcorporacion.es" }],
       "destination": "https://mblcorporacion.es/:page/",
+      "permanent": true
+    },
+    {
+      "source": "/:page(software-a-medida-palencia|casos|control-jornada|agenda-inteligente|empresas-limpieza|pagina-web|contacto|aviso-legal|privacidad|cookies)",
+      "has": [{ "type": "host", "value": "mblcorporacion.es" }],
+      "destination": "/:page/",
       "permanent": true
     }
   ],
