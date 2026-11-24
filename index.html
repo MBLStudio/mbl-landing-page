@@ -330,7 +330,7 @@
     @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-about { grid-column: 1 / -1; } }
 
     /* ── Story: scroll-driven scenes around the logo (webs, then systems) ── */
-    .story { height: 3915vh; position: relative; }
+    .story { height: 3420vh; position: relative; }
     .story-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; pointer-events: none; }
     .st { position: absolute; opacity: 0; will-change: opacity, transform; }
     .st-eyebrow { left: max(16px, 6vw); top: clamp(84px, 14vh, 130px); color: var(--teal); font-weight: 600; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; }
@@ -393,7 +393,7 @@
       .st-client { bottom: 9vh; right: 16px; }
       .st-step { width: auto; max-width: calc(100vw - 32px); }
       .st-big.st-center { font-size: clamp(34px, 10vw, 52px); }
-      #win-intrans .win-screen, #win-loscandiles .win-screen, #win-dysa .win-screen { aspect-ratio: 390 / 844; }   /* phone recordings */
+      #win-loscandiles .win-screen, #win-dysa .win-screen { aspect-ratio: 390 / 844; }   /* phone recordings */
     }
     @keyframes wheel { 0%, 100% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(9px); opacity: 0; } }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
@@ -433,7 +433,7 @@
   <!-- Cookie consent: loads Google Analytics only after the visitor accepts -->
   <script src="/assets/consent.js" defer></script>
   <noscript><style>.intro, .reveal { opacity: 1 !important; transform: none !important; } .story { display: none; }</style></noscript>
-  <script>window.SHOTS = {"apisa-movil": "escaparate/apisa-movil.webp", "apisa-panel": "escaparate/apisa-panel.webp", "apisa-cuadrante": "escaparate/apisa-cuadrante.webp", "apisa-excel": "escaparate/apisa-excel.webp", "app-tablon": "escaparate/app-tablon.webp", "app-examenes": "escaparate/app-examenes.webp", "app-pagos": "escaparate/app-pagos.webp", "app-alertas": "escaparate/app-alertas.webp", "cobros-factura": "escaparate/cobros-factura.webp", "cobros-facturas": "escaparate/cobros-facturas.webp", "cobros-panel": "escaparate/cobros-panel.webp", "cobros-tesoreria": "escaparate/cobros-tesoreria.webp", "intrans": "escaparate/intrans.mp4", "loscandiles": "escaparate/loscandiles.mp4", "dysa": "escaparate/dysa.mp4", "intrans-movil": "escaparate/intrans-movil.mp4", "loscandiles-movil": "escaparate/loscandiles-movil.mp4", "dysa-movil": "escaparate/dysa-movil.mp4"};</script>
+  <script>window.SHOTS = {"apisa-movil": "escaparate/apisa-movil.webp", "apisa-panel": "escaparate/apisa-panel.webp", "apisa-cuadrante": "escaparate/apisa-cuadrante.webp", "apisa-excel": "escaparate/apisa-excel.webp", "app-tablon": "escaparate/app-tablon.webp", "app-examenes": "escaparate/app-examenes.webp", "app-pagos": "escaparate/app-pagos.webp", "app-alertas": "escaparate/app-alertas.webp", "cobros-factura": "escaparate/cobros-factura.webp", "cobros-facturas": "escaparate/cobros-facturas.webp", "cobros-panel": "escaparate/cobros-panel.webp", "cobros-tesoreria": "escaparate/cobros-tesoreria.webp", "loscandiles": "escaparate/loscandiles.mp4", "dysa": "escaparate/dysa.mp4", "loscandiles-movil": "escaparate/loscandiles-movil.mp4", "dysa-movil": "escaparate/dysa-movil.mp4"};</script>
   <script type="importmap">
   { "imports": {
     "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -516,7 +516,6 @@
     <section class="story" id="escaparate" aria-label="Trabajos de MBL Studio">
       <div class="story-stage">
         <div class="edge-glow" id="edge-glow"></div>
-        <div class="win" id="win-intrans"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">Intrans · web a medida</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
         <div class="win" id="win-loscandiles"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">loscandiles.es</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
         <div class="win" id="win-dysa"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">dysapalencia.es</span></div><div class="win-screen"><video muted playsinline webkit-playsinline disableremoteplayback preload="none"></video></div></div>
         <div class="win" id="win-apisa"><div class="win-bar"><i></i><i></i><i></i><span class="win-url">APISA App · datos de prueba</span></div><div class="win-screen">
@@ -587,7 +586,7 @@
 
         <div class="st st-cross" data-in="13.4" data-out="15.05" data-cross>cobrar ya no te quita el sueño.</div>
 
-        <div class="st st-eyebrow" data-in="15.15" data-out="26.95">Webs a medida</div>
+        <div class="st st-eyebrow" data-in="15.15" data-out="23.45">Webs a medida</div>
         <h2 class="st st-big" data-in="15.15" data-out="15.85" data-move="left">No es solo<br><em>una web.</em></h2>
         <p class="st st-side" data-in="15.25" data-out="15.85" data-move="right">Es el primer sitio donde te busca un cliente. La diseñamos para que llame, reserve o venga, y la mantenemos funcionando.</p>
 
@@ -595,10 +594,8 @@
         <div class="st st-pill" data-in="17.09" data-out="19.22">Dentro de <b>loscandiles.es</b> · sigue bajando para recorrerla</div>
         <div class="st st-client" data-in="19.94" data-out="20.5" data-move="left"><span class="tag">Correduría de seguros · Palencia</span><h3>Dysa Seguros</h3><p>Presencia profesional para una correduría con más de 25 años en Palencia.</p></div>
         <div class="st st-pill" data-in="20.59" data-out="22.72">Dentro de <b>dysapalencia.es</b> · sigue bajando para recorrerla</div>
-        <div class="st st-client" data-in="23.44" data-out="24.0" data-move="left"><span class="tag">Transporte a granel · Palencia</span><h3>Intrans</h3><p>Una web con carácter: el camión se monta pieza a pieza al bajar.</p></div>
-        <div class="st st-pill" data-in="24.09" data-out="26.22">Así es la web de <b>Intrans</b> · sigue bajando</div>
 
-        <div class="st st-cross" data-in="26.75" data-out="28.05" data-cross data-speed-ref>es tu mejor comercial.</div>
+        <div class="st st-cross" data-in="23.25" data-out="24.55" data-cross data-speed-ref>es tu mejor comercial.</div>
 
         <div class="story-fallback" id="story-fallback"></div>
       </div>
@@ -1221,7 +1218,7 @@ function start() {
   function scrub(v, time) {
     if (v.readyState >= 1 && !v.seeking && Math.abs(v.currentTime - time) > 0.04) v.currentTime = time;
   }
-  const WEBS = [['loscandiles', 'loscandiles.es'], ['dysa', 'dysapalencia.es'], ['intrans', 'Intrans · web a medida']];
+  const WEBS = [['loscandiles', 'loscandiles.es'], ['dysa', 'dysapalencia.es']];
   const webs = WEBS.map(([k], i) => {
     const el = document.getElementById('win-' + k), v = el.querySelector('video');
     return { el, v, load: lazyVideo(v, (small() && SHOTS[k + '-movil']) || SHOTS[k]) };   // phones get the site as it looks on a phone
@@ -1293,7 +1290,7 @@ function start() {
     const bg = { x: 0, y: 0.6, z: -26, ry: 6 * TURN, rx: 0.12, s: 1 };
     KEYS = [[0, hero0], [1, hero0], [1.3, centre1], [2.05, centre1], [2.4, corner],
       [9.55, corner], [9.95, centre2], [10.55, centre2], [10.85, corner2], [14.95, corner2], [15.3, centre3], [15.85, centre3], [16.25, badge6],
-      [27.7, badge6], [27.95, bg]];
+      [24.2, badge6], [24.45, bg]];
   }
   // Centre of the free space between a story headline and its side text, measured on the real layout
   function gapPose(i) {
@@ -1398,7 +1395,7 @@ function start() {
     if (Math.abs(scrollY - sy) < 0.5) sy = scrollY;      // land exactly, or the smoothing never quite gets there
     const vh = innerHeight;
     const heroRange = hero.offsetHeight - vh, storyTop = storyEl.offsetTop, storyRange = storyEl.offsetHeight - vh;
-    const T = clamp01(sy / heroRange) + 0.3 * clamp01((sy - heroRange) / vh) + 26.95 * clamp01((sy - storyTop) / storyRange)
+    const T = clamp01(sy / heroRange) + 0.3 * clamp01((sy - heroRange) / vh) + 23.45 * clamp01((sy - storyTop) / storyRange)
       + (sy > storyTop + storyRange ? 0.2 : 0);
     sPage = clamp01(sy / Math.max(1, document.documentElement.scrollHeight - vh));
 
@@ -1406,7 +1403,7 @@ function start() {
     const pose = poseAt(T);
     const heroW = 1 - clamp01((T - 1) / 0.3);
     const cornerW = window01(T, 2.4, 9.55, 0.15) + window01(T, 10.85, 14.95, 0.15);
-    const bgW = clamp01((T - 27.95) / 0.05);
+    const bgW = clamp01((T - 24.45) / 0.05);
     if (!reduce) spin += dt * 0.8 * bgW;
     const front = Math.round(spin / (Math.PI * 2)) * Math.PI * 2;
     spin += (front - spin) * Math.min(1, (1 - bgW) * 0.12);          // back in the story or hero it settles facing front

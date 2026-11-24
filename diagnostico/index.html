@@ -70,6 +70,7 @@
     .lp-final-links .btn-wa { margin-top: 0; }
     .works-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 44px; }
     .work-card { overflow: hidden; padding: 0; }
+    @media (min-width: 901px) { .work-card:last-child:nth-child(odd) { grid-column: 1 / -1; width: calc(50% - 10px); justify-self: center; } }   /* odd count: centre the last one */
     .work-shot { display: block; text-decoration: none; border-bottom: 1px solid var(--line); }
     .work-bar { height: 30px; display: flex; align-items: center; gap: 7px; padding: 0 12px; background: #0d141c; }
     .work-bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
@@ -489,13 +490,6 @@
               <div class="work-screen"><img class="on" src="img/cobros-1.webp" width="800" height="500" loading="lazy" alt="MBL Studio Cobros: panel de ingresos y gastos"><img data-src="img/cobros-2.webp" alt=""><img data-src="img/cobros-3.webp" alt=""></div>
             </div>
             <div class="work-body"><span class="work-tag">Software · Facturación</span><h3>MBL Studio Cobros</h3><p>Contratos firmados en línea, facturas que salen solas cada mes y cobros por domiciliación. Lo usamos cada día.</p></div>
-          </article>
-          <article class="work-card glass reveal reveal-delay-2">
-            <div class="work-shot">
-              <div class="work-bar"><i></i><i></i><i></i><span>Intrans · web a medida</span></div>
-              <div class="work-screen"><img class="on" src="img/intrans-1.webp" width="800" height="500" loading="lazy" alt="Portada de la web de Intrans"><img data-src="img/intrans-2.webp" alt=""><img data-src="img/intrans-3.webp" alt=""></div>
-            </div>
-            <div class="work-body"><span class="work-tag">Web a medida · Transporte</span><h3>Intrans</h3><p>Una web con carácter: el camión se monta pieza a pieza al bajar.</p></div>
           </article>
         </div>
         <div class="works-cta reveal">
