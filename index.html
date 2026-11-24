@@ -255,6 +255,13 @@
     .caso-card h3 { font-size: 19px; letter-spacing: -.02em; margin-bottom: 6px; }
     .caso-card p { color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 16px; }
     .caso-card .text-link { margin-top: auto; }
+    .quotes { display: grid; max-width: 760px; grid-template-columns: 1fr; gap: 22px; margin: 28px auto 0; }
+    .quote { display: flex; flex-direction: column; margin: 0; padding: 28px 30px; }
+    .quote blockquote { margin: 0; color: var(--ink); font-size: 18px; line-height: 1.6; }
+    .quote figcaption { margin-top: auto; padding-top: 18px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .quote figcaption strong { display: block; color: var(--teal-2); font-size: 15px; font-weight: 600; }
+    .quote figcaption a { color: var(--muted); }
+    @media (max-width: 760px) { .quotes { grid-template-columns: 1fr; } .quote { padding: 24px; } }
     .casos-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 28px; margin-top: 30px; }
     .casos-cta .soft-link { margin-top: 0; font-size: 14px; }
 
@@ -670,6 +677,12 @@
               <a class="text-link" href="/casos/#los-candiles">Ver el caso →</a>
             </div>
           </article>
+        </div>
+        <div class="quotes">
+          <figure class="quote glass reveal reveal-delay-1">
+            <blockquote>«Estoy contentísimo. Trato rápido, formales, te solucionan rápido las dudas, incidencias, problemas. Son super solventes. Muy recomendable.»</blockquote>
+            <figcaption><strong>Carlos Cantera</strong>Autoescuela, cliente de AutoEs · <a href="https://share.google/ra83VbyMqOb64w9Xh" target="_blank" rel="noopener">Opiniones en Google</a></figcaption>
+          </figure>
         </div>
         <div class="casos-cta reveal">
           <a class="text-link" href="#diagnostico" onclick="scrollToDiag()">Quiero algo así para mi empresa →</a>
